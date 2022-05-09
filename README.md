@@ -1,6 +1,11 @@
 # MR25
 I love junyu
 
+## basic file directory
+All the frontend shit goes inside the client folder.
+
+All the backend shit goes inside the server folder. Inside the server folder there is the controllers and models folder which contains all the controllers and models for each collection inside the database.
+
 ## branch naming convention: 
 ```
 <name>_<branch type>_<branch name>
