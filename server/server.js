@@ -7,6 +7,10 @@
 const express = require('express')
 const mongoose = require('mongoose')
 
+// load env variables
+const dotenv = require('dotenv').config()
+const port = process.env.PORT
+
 // import controllers
 const userController = require("./controllers/user")
 
@@ -27,7 +31,7 @@ mongoose
     app.delete("/users/:id", userController.deleteUser)
 
     // start backend
-    app.listen(8000, () => { console.log("Server started on port 8000") })
+    app.listen(port, () => { console.log("Server started on port ${port}") })
   })
   .catch(() => {
     console.log("Database connection failed!")
