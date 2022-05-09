@@ -3,36 +3,31 @@
  * It would also become a basic HTTP web server replacing the role of something more traditional like Apache
  */
 
-// import express and mongoose
+// import express, mongoose and middleware
 const express = require('express')
 const mongoose = require('mongoose')
+const errorMiddleware = require('./middleware/errorMiddleware')
+const connectDB = require('./config/db')
 
 // load env variables
 const dotenv = require('dotenv').config()
 const port = process.env.PORT
 
-// import controllers
-const userController = require("./controllers/user")
+// connect database
+connectDB()
 
-mongoose
-  .connect("mongodb+srv://MR25-admin:MR25-password@mr25-cluster.9slgm.mongodb.net/test?retryWrites=true&w=majority")
-  .then(() => {
-    // create express app
-    const app = express()
+// create express app
+const app = express()
 
-    // middleware
-    app.use(express.json())
+// middleware
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 
-    // setup routes to mongodb
-    app.get("/users", userController.findUsers)
-    app.post("/users", userController.createUser)
-    app.get("/users/:id", userController.findUser)
-    app.patch("/users/:id", userController.updateUser)
-    app.delete("/users/:id", userController.deleteUser)
+// setup routes to mongodb
+app.use('/api/users', require('./routes/userRoutes'))
 
-    // start backend
-    app.listen(port, () => { console.log("Server started on port ${port}") })
-  })
-  .catch(() => {
-    console.log("Database connection failed!")
-  })
+// use error handling middleware last
+app.use(errorMiddleware.errorHandler)
+
+// start backend
+app.listen(port, () => { console.log(`Server started on port ${port}`) })
