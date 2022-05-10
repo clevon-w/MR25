@@ -25,6 +25,7 @@ app.use(express.urlencoded({ extended: false }))
 
 // setup routes to mongodb
 app.use('/api/users', require('./routes/userRoutes'))
+app.use('/api/events', require('./routes/eventRoutes'))
 
 // use error handling middleware last
 app.use(errorMiddleware.errorHandler)
