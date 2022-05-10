@@ -1,18 +1,33 @@
-// import express
-const express = require('express')
+/**
+ * server.js typically handles your app startup, routing and other functions of your application and does require other modules to add functionality.
+ * It would also become a basic HTTP web server replacing the role of something more traditional like Apache
+ */
 
-// in order to create our app
+// import express, mongoose and middleware
+const express = require('express')
+const mongoose = require('mongoose')
+const errorMiddleware = require('./middleware/errorMiddleware')
+const connectDB = require('./config/db')
+
+// load env variables
+const dotenv = require('dotenv').config()
+const port = process.env.PORT
+
+// connect database
+connectDB()
+
+// create express app
 const app = express()
 
-// setup route for api (this here is basically our backend api)
-// localhost:8000/api or /whatever you put inside the get
-app.get("/api", (req, res) => {
-    // sending a json array of users
-    res.json({"users": ["user1",  "user2", "user3"]})
-})
+// middleware
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 
-// in order to start our backend 
-// (our backend will be on port 5000, frontend will be default port 3000)
-// once the server is listening on port 5000 we need some sort of message to tall us that it is listening on port 5000
-// npm run <something> to run the scripts from package.json
-app.listen(8000, () => { console.log("Server started on port 8000") })
+// setup routes to mongodb
+app.use('/api/users', require('./routes/userRoutes'))
+
+// use error handling middleware last
+app.use(errorMiddleware.errorHandler)
+
+// start backend
+app.listen(port, () => { console.log(`Server started on port ${port}`) })
