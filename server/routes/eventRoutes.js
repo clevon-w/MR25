@@ -3,16 +3,17 @@ const express = require ('express')
 const router = express.Router()
 
 //import controller
-const eventController = require('../controllers/eventController')
+const {findEvents, createEvent, findEvent, updateEvent,deleteEvent} = require('../controllers/eventController')
+const { protect } = require('../middleware/authMiddleware')
 
 //set up routes
 router.route('/')
-      .get(eventController.findEvents)
-      .post(eventController.createEvent)
+      .get(findEvents)
+      .post(protect, createEvent)
 
 router.route('/:id')
-      .get(eventController.findEvent)
-      .patch(eventController.updateEvent)
-      .delete(eventController.deleteEvent)
+      .get(protect, findEvent)
+      .patch(protect, updateEvent)
+      .delete(protect, deleteEvent)
 
 module.exports = router
