@@ -3,12 +3,12 @@
  */
 
  import {useState, useEffect} from 'react'
- import {FaUser} from 'react-icons/fa'
+ import {FaSignInAlt, FaUser} from 'react-icons/fa'
  
  /**
   * Collects data from the user and stores it in formData to be used
   */
- function Register() {
+ function Login() {
      const [formData, setFromData] = useState({
          email: '',
          password: '',
@@ -43,7 +43,7 @@
      return <>
        <section className='header'>
          <h1>
-           <FaUser /> Login
+           <FaSignInAlt /> Login
          </h1>
          <p>Please create an account</p>
        </section>
