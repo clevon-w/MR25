@@ -31,7 +31,7 @@
         required: [true, 'Please enter number of loops']
     },
     runDate:{
-        type: String,
+        type: Date,
         required: [true, 'Please enter date of the run']
     },
     runTiming:{
