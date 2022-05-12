@@ -79,5 +79,5 @@
        </section>
      </>
  }
- export default Register
+ export default Login
  
