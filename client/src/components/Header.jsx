@@ -4,8 +4,8 @@ import{Link} from 'react-router-dom'
 function Header() {
   return (
     <header className='header'>
-        <div classname='logo'>
-            <Link to='/'>Event</Link>
+        <div className='logo'>
+            <Link to='/'>MR25 Dashboard</Link>
         </div>
         <ul>
             <li>
