@@ -1,12 +1,14 @@
 /**
  * Register Page
  */
-
+import { React } from 'react'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { useToast, Spinner, Button, Input, Stack, InputGroup, Center, FormControl } from '@chakra-ui/react'
+import { useToast, Select, Spinner, Button, Stack, InputGroup, Center, FormControl, Text, Box, Container } from '@chakra-ui/react'
 import { register, reset } from '../features/auth/authSlice'
+import { Input, InputRightElement, } from '@chakra-ui/react'
+import { Flex, Spacer } from '@chakra-ui/react'
 
 /**
  * Collects data from the user and stores it in formData to be used
@@ -21,9 +23,10 @@ function Register() {
     nric: '',
     password: '',
     password2: '',
+    insitution: '',
   })
 
-  const { firstName, lastName, email, gender, birthDate, nric, password, password2 } = formData
+  const { firstName, lastName, email, gender, birthDate, nric, password, password2, insitution } = formData
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -32,6 +35,8 @@ function Register() {
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   )
+
+  const [show, setShow] = useState(false)
 
   /**
    * useEffect is called when anything in the dependancy array is changed
@@ -60,6 +65,15 @@ function Register() {
     setFromData(e.target.value)
   }
 
+  const toLogin = (e) => {
+    navigate('/login')
+  }
+
+  const handleClick = () => {
+    setShow(!show)
+  }
+
+
   /**
    * onSubmit is called when the user clicks the submit button to register
    * @param {*} e is the event
@@ -81,7 +95,8 @@ function Register() {
         gender,
         birthDate,
         nric,
-        password
+        password,
+        insitution
       }
 
       dispatch(register(userData))
@@ -97,42 +112,76 @@ function Register() {
    */
   return (
   <>
-    <Center fontSize='40px'>Please register an account</Center>
+  <Container>
+    <Text fontSize='40px'>Create Account</Text>
     <FormControl onSubmit={onSubmit}>
-    <Stack spacing={3}>
-      <InputGroup>
-        <Input value={firstName} onChange={onChange} placeholder='firstName' />
-        <Input value={lastName} onChange={onChange} placeholder='lastName' />
-      </InputGroup>
+    <Stack spacing={0}>
+        <Flex>
+          <Box w='100%'>
+            <Text>First Name</Text>
+            <Input value={firstName} onChange={onChange} />
+          </Box>
+          <Box w='100%'>
+            <Text>Last Name</Text>
+            <Input value={lastName} onChange={onChange} />
+          </Box>
+          
+        </Flex>
+        
+        <Text>Email</Text>
+        <Input value={email} onChange={onChange} />
 
-      <InputGroup>
-        <Input value={email} onChange={onChange} placeholder='email' />
-      </InputGroup>
+        <Text>Password</Text>
+        <InputGroup size='md'>
+          <Input 
+            pr='4.5rem'
+            type={show ? 'text' : 'password'}
+          />
+          <InputRightElement width='4.5rem'>
+            <Button h='1.75rem' size='sm' onClick={handleClick}>
+              {show ? 'Hide' : 'Show'}
+            </Button>
+          </InputRightElement>
+        </InputGroup>
 
-      <InputGroup>
-        <Input value={gender} onChange={onChange} placeholder='Gender' />
-      </InputGroup>
+        <Text>Confirm Password</Text>
+        <InputGroup size='md'>
+          <Input 
+            pr='4.5rem'
+            type={show ? 'text' : 'password'}
+          />
+          <InputRightElement width='4.5rem'>
+            <Button h='1.75rem' size='sm' onClick={handleClick}>
+              {show ? 'Hide' : 'Show'}
+            </Button>
+          </InputRightElement>
+        </InputGroup>
 
-      <InputGroup>
-        <Input value={birthDate} onChange={onChange} placeholder='Birth Date' />
-      </InputGroup>
+        <Text>NRIC / FIN (last 3 dights and ending alphabet)</Text>
+        <Input value={nric} onChange={onChange} placeholder='789Z' />
 
-      <InputGroup>
-        <Input value={nric} onChange={onChange} placeholder='Last 4 characters of NRIC eg. 123X' />
-      </InputGroup>
+        <Text>Birth Date (DD/MM/YYYY)</Text>
+        <Input value={birthDate} onChange={onChange} placeholder = '01/01/2000'/>
 
-      <InputGroup>
-        <Input value={password} onChange={onChange} placeholder='Password' />
-      </InputGroup>
+        <Text>Gender</Text>
+        <Select placeholder='Gender'>
+          <option value={gender}>Male</option>
+          <option value={gender}>Female</option>
+        </Select>
 
-      <InputGroup>
-        <Input value={password2} onChange={onChange} placeholder='Re-enter Password' />
-      </InputGroup>
+        <Flex>
+          <Text>Institution(if applicable)</Text>
+          <Spacer />
+          <Text as='cite'>Optional</Text>
+        </Flex>
+        <Input value={insitution} onChange={onChange} />
 
+        <Button colorScheme='telegram' onClick={onSubmit} size='lg'>Create Account</Button>
+        <Button variant = 'ghost' onClick={toLogin}>Already have an account? Login here.</Button>        
     </Stack>
-
-    <Button onClick={onSubmit} >Submit</Button>
     </FormControl>
+  </Container>
+    
   </>
   )
 }
