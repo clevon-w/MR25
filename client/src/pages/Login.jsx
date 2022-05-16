@@ -3,10 +3,9 @@
  */
 
 import {useState, useEffect} from 'react'
-import {FaSignInAlt, FaUser} from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { useToast, Spinner } from '@chakra-ui/react'
+import { useToast, Spinner, Button, Input, Stack, InputGroup, Center, FormControl } from '@chakra-ui/react'
 import { login , reset } from '../features/auth/authSlice'
 
 /**
@@ -45,7 +44,7 @@ function Login() {
     }
 
     dispatch(reset())
-  }, [user, isError, isSuccess, message, navigate, dispatch])
+  }, [user, isError, isSuccess, message, navigate, dispatch, toast])
 
   /**
    * @param {*} e is the event
@@ -53,10 +52,7 @@ function Login() {
    * target.name is the field the cursor is in and target.value is the new value entered
    */
   const onChange = (e) => {
-    setFromData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value
-    }))
+    setFromData(e.target.value)
   }
 
   /**
@@ -84,42 +80,21 @@ function Login() {
    */
   return (
     <>
-      <section className='header'>
-        <h1>
-          <FaSignInAlt /> Login
-        </h1>
-        <p>Please create an account</p>
-      </section>
+      <Center fontSize='40px'>Login</Center>
+      <FormControl onSubmit={onSubmit}>
+        <Stack spacing={3}>
+          <InputGroup>
+            <Input value={email} onChange={onChange} placeholder='Enter your email' />
+          </InputGroup>
 
-      <section className='form'>
-        <form onSubmit = {onSubmit}>
-          <div className="form-group">
-            <input 
-              type='email' 
-              className='form-control' 
-              id='email' 
-              name='email'
-              value={email}
-              placeholder='Please enter your email'
-              onChange={onChange}/> 
-          </div>
+          <InputGroup>
+            <Input value={password} onChange={onChange} placeholder='Password' />
+          </InputGroup>
 
-          <div className="form-group">
-            <input 
-            type='password' 
-            className='form-control' 
-            id='password' 
-            name='password'
-            value={password}
-            placeholder='Please enter a password'
-            onChange={onChange}/> 
-          </div>
+        </Stack>
 
-          <div className="form-group">
-            <button type="sumbit" className='btn-submit'>Submit</button>
-          </div>
-        </form>
-    </section>
+        <Button onClick={onSubmit} >Submit</Button>
+      </FormControl>
   </>
   )
 }
