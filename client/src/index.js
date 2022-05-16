@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { extendTheme, ChakraProvider } from '@chakra-ui/react'
+import { Provider } from 'react-redux'
+import { store } from './app/store';
 
 // This is for customising the theme
 // currently it is not doing anything because we dont have a brand class?
@@ -19,9 +21,11 @@ const theme = extendTheme({ colors })
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <ChakraProvider theme={theme}>
-    <App />
-  </ChakraProvider>
+  <Provider store={store}>
+    <ChakraProvider theme={theme}>
+      <App />
+    </ChakraProvider>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,66 +1,102 @@
 /**
  * Register Page
  */
-import { Button, Input, Stack, InputGroup, Center,} from '@chakra-ui/react'
-import {FormControl} from '@chakra-ui/react'
-import {useState, useEffect} from 'react'
 
+import { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { useToast, Spinner, Button, Input, Stack, InputGroup, Center, FormControl } from '@chakra-ui/react'
+import { register, reset } from '../features/auth/authSlice'
 
 /**
  * Collects data from the user and stores it in formData to be used
  */
 function Register() {
-    const [formData, setFromData] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        gender: '',
-        birthDate: '',
-        nric: '',
-        password: '',
-        password2: '',
-    })
+  const [formData, setFromData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    gender: '',
+    birthDate: '',
+    nric: '',
+    password: '',
+    password2: '',
+  })
 
-    const {firstName, lastName, email, gender, birthDate, nric, password, password2} = formData
+  const { firstName, lastName, email, gender, birthDate, nric, password, password2 } = formData
 
-    /**
-     * 
-     * @Returns enables the placeholder to be editted
-     * target.name is the field the cursor is in and target.value is the new value entered
-     */
-    const onChange = (e) => {
-        setFromData(e.target.value)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const toast = useToast()
+
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  )
+
+  /**
+   * useEffect is called when anything in the dependancy array is changed
+   */
+  useEffect(() => {
+    if (isError) {
+      toast({
+        title: message,
+        status: "error",
+        isClosable: true
+      })
     }
 
-    /**
-     * 
-     * @param {} e 
-     * Event listner
-     */
-    const onSubmit = (e) => {
-      e.preventDefault()
+    if (isSuccess || user) {
+      navigate('/')
+    }
 
-      if(password !== password2){
-          
-      } else {
-          const userData={
-            firstName,
-            lastName,
-            email,
-            gender,
-            birthDate,
-            nric,
-            password,
-          }
+    dispatch(reset())
+  }, [user, isError, isSuccess, message, navigate, dispatch, toast])
 
-          //dispatch(register(userData))
+  /**
+   * onChange is called when the user types in the input fields
+   * @param {*} e is the event
+   */
+  const onChange = (e) => {
+    setFromData(e.target.value)
+  }
+
+  /**
+   * onSubmit is called when the user clicks the submit button to register
+   * @param {*} e is the event
+   */
+  const onSubmit = (e) => {
+    e.preventDefault()
+
+    if (password !== password2) {
+      toast({
+        title: 'Passwords do not match',
+        status: 'error',
+        isClosable: true
+      })
+    } else {
+      const userData = {
+        firstName,
+        lastName,
+        email,
+        gender,
+        birthDate,
+        nric,
+        password
       }
-    }
 
-    /**
-     * creating the register form
-     */
-    return <>
+      dispatch(register(userData))
+    }
+  }
+
+  if (isLoading) {
+    return <Spinner/>
+  }
+
+  /**
+   * creating the register form
+   */
+  return (
+  <>
     <Center fontSize='40px'>Please register an account</Center>
     <FormControl onSubmit={onSubmit}>
     <Stack spacing={3}>
@@ -95,9 +131,10 @@ function Register() {
 
     </Stack>
 
-    <Button>Submit</Button>
+    <Button onClick={onSubmit} >Submit</Button>
     </FormControl>
-    </>
+  </>
+  )
 }
 
 export default Register
