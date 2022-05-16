@@ -1,5 +1,5 @@
 /**
- * Register Page
+ * Register account Page
  */
 import { React } from 'react'
 import { useState, useEffect } from 'react'
@@ -10,11 +10,8 @@ import { register, reset } from '../features/auth/authSlice'
 import { Input, InputRightElement, } from '@chakra-ui/react'
 import { Flex, Spacer } from '@chakra-ui/react'
 
-/**
- * Collects data from the user and stores it in formData to be used
- */
 function Register() {
-  const [formData, setFromData] = useState({
+  const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
@@ -38,9 +35,6 @@ function Register() {
 
   const [show, setShow] = useState(false)
 
-  /**
-   * useEffect is called when anything in the dependancy array is changed
-   */
   useEffect(() => {
     if (isError) {
       toast({
@@ -57,12 +51,11 @@ function Register() {
     dispatch(reset())
   }, [user, isError, isSuccess, message, navigate, dispatch, toast])
 
-  /**
-   * onChange is called when the user types in the input fields
-   * @param {*} e is the event
-   */
   const onChange = (e) => {
-    setFromData(e.target.value)
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }))
   }
 
   const toLogin = (e) => {
@@ -73,11 +66,6 @@ function Register() {
     setShow(!show)
   }
 
-
-  /**
-   * onSubmit is called when the user clicks the submit button to register
-   * @param {*} e is the event
-   */
   const onSubmit = (e) => {
     e.preventDefault()
 
@@ -119,23 +107,26 @@ function Register() {
         <Flex>
           <Box w='100%'>
             <Text>First Name</Text>
-            <Input value={firstName} onChange={onChange} />
+            <Input name='firstName' value={firstName} onChange={onChange} />
           </Box>
           <Box w='100%'>
             <Text>Last Name</Text>
-            <Input value={lastName} onChange={onChange} />
+            <Input name='lastName' value={lastName} onChange={onChange} />
           </Box>
           
         </Flex>
         
         <Text>Email</Text>
-        <Input value={email} onChange={onChange} />
+        <Input name='email' value={email} onChange={onChange} />
 
         <Text>Password</Text>
         <InputGroup size='md'>
           <Input 
+            name='password'
+            value={password}
             pr='4.5rem'
             type={show ? 'text' : 'password'}
+            onChange={onChange}
           />
           <InputRightElement width='4.5rem'>
             <Button h='1.75rem' size='sm' onClick={handleClick}>
@@ -147,8 +138,11 @@ function Register() {
         <Text>Confirm Password</Text>
         <InputGroup size='md'>
           <Input 
+            name='password2'
+            value={password2}
             pr='4.5rem'
             type={show ? 'text' : 'password'}
+            onChange={onChange}
           />
           <InputRightElement width='4.5rem'>
             <Button h='1.75rem' size='sm' onClick={handleClick}>
@@ -158,15 +152,15 @@ function Register() {
         </InputGroup>
 
         <Text>NRIC / FIN (last 3 dights and ending alphabet)</Text>
-        <Input value={nric} onChange={onChange} placeholder='789Z' />
+        <Input name='nric' value={nric} onChange={onChange} placeholder='789Z' />
 
         <Text>Birth Date (DD/MM/YYYY)</Text>
-        <Input value={birthDate} onChange={onChange} placeholder = '01/01/2000'/>
+        <Input name='birthDate' value={birthDate} onChange={onChange} placeholder = '01/01/2000'/>
 
         <Text>Gender</Text>
-        <Select placeholder='Gender'>
-          <option value={gender}>Male</option>
-          <option value={gender}>Female</option>
+        <Select name='gender' placeholder='Gender' onChange={onChange}>
+          <option value='Male'>Male</option>
+          <option value='Female'>Female</option>
         </Select>
 
         <Flex>
@@ -174,9 +168,9 @@ function Register() {
           <Spacer />
           <Text as='cite'>Optional</Text>
         </Flex>
-        <Input value={insitution} onChange={onChange} />
+        <Input name='institution' value={insitution} onChange={onChange} />
 
-        <Button colorScheme='telegram' onClick={onSubmit} size='lg'>Create Account</Button>
+        <Button type='submit' colorScheme='telegram' size='lg'>Create Account</Button>
         <Button variant = 'ghost' onClick={toLogin}>Already have an account? Login here.</Button>        
     </Stack>
     </FormControl>
