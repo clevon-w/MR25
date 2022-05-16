@@ -3,7 +3,7 @@
  */
 
  import {useState, useEffect} from 'react'
- import {FaSignInAlt, FaUser} from 'react-icons/fa'
+import {FormControl, Stack, Input, InputGroup, Center, Button} from '@chakra-ui/react'
  
  /**
   * Collects data from the user and stores it in formData to be used
@@ -41,43 +41,22 @@
       * creating the register form
       */
      return <>
-       <section className='header'>
-         <h1>
-           <FaSignInAlt /> Login
-         </h1>
-         <p>Please create an account</p>
-       </section>
- 
-         <section className='form'>
-           <form onSubmit = {onSubmit}>
-             <div className="form-group">
-               <input 
-               type='email' 
-               className='form-control' 
-               id='email' 
-               name='email'
-               value={email}
-               placeholder='Please enter your email'
-               onChange={onChange}/> 
-             </div>
- 
-             <div className="form-group">
-               <input 
-               type='password' 
-               className='form-control' 
-               id='password' 
-               name='password'
-               value={password}
-               placeholder='Please enter a password'
-               onChange={onChange}/> 
-             </div>
+    <Center fontSize='40px'>Login</Center>
+      <FormControl onSubmit={onSubmit}>
+        <Stack spacing={3}>
+          <InputGroup>
+            <Input value={email} onChange={onChange} placeholder='Enter your email' />
+          </InputGroup>
 
-             <div className="form-group">
-                 <button type="sumbit" className='btn-submit'>Submit</button>
-             </div>
-           </form>
-       </section>
-     </>
+          <InputGroup>
+            <Input value={password} onChange={onChange} placeholder='Password' />
+          </InputGroup>
+
+        </Stack>
+
+        <Button>Submit</Button>
+    </FormControl>
+    </>
  }
  export default Login
  
