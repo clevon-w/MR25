@@ -1,21 +1,11 @@
 /**
- * Model for the event collection.
+ * Model for the result collection.
  * Contains the schema for the users collection.
  */
 
  const mongoose = require('mongoose')
 
- /**
-  * Input fields:
-  * user
-  * distance
-  * number of loops
-  * date of run
-  * time of run
-  * 
-  */
-
- const eventSchema = new mongoose.Schema(
+ const resultSchema = new mongoose.Schema(
    {
     user:{
       type: mongoose.Schema.Types.ObjectId,
@@ -44,4 +34,4 @@
    }
  )
  
- module.exports = mongoose.model("Event", eventSchema)
+ module.exports = mongoose.model("Result", resultSchema)
