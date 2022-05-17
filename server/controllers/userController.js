@@ -42,7 +42,7 @@ exports.createUser = asyncHandler(async (req, res) => {
   // Check if all fields are defined
   if (!firstName || !lastName || !email || !gender || !birthDate || !nric || !password) {
     res.status(400)
-    throw new Error('Please add all fields')
+    throw new Error('Please add all required fields')
   }
   
   // Check if user exists
