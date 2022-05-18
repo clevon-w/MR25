@@ -47,6 +47,14 @@ function Header() {
     navigate('/register')
   }
 
+  const toLeaderboard = () => {
+    navigate('/leaderboard')
+  }
+
+  const toMyAccount = () => {
+    navigate('/myAccount')
+  }
+
   const { isOpen, onToggle } = useDisclosure();
 
   return (
@@ -98,6 +106,27 @@ function Header() {
             onClick={onLogout}>
             Logout
           </Button>
+
+          <Button
+            as={'a'}
+            fontSize={'sm'}
+            fontWeight={400}
+            variant={'link'}
+            href={'#'}
+            onClick={toLeaderboard}>
+            Leaderboard
+          </Button>
+
+          <Button
+            as={'a'}
+            fontSize={'sm'}
+            fontWeight={400}
+            variant={'link'}
+            href={'#'}
+            onClick={toMyAccount}>
+            My Account
+          </Button>
+          
         </Stack>) : (<Stack
           flex={{ base: 1, md: 0 }}
           justify={'flex-end'}
