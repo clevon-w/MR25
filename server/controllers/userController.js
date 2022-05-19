@@ -26,8 +26,7 @@ exports.findUsers = asyncHandler(async (req, res) => {
  * @param {*} res the object to send back to the desired HTTP response
  */
  exports.getMe = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user.id)
-  res.status(200).send({ data: user })
+  res.status(200).json(req.user)
 })
 
 /**
