@@ -3,8 +3,7 @@
  * Contains the schema for the users collection.
  */
 
- const mongoose = require('mongoose')
-
+const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema(
   {
@@ -37,6 +36,13 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String, 
       required: [true, 'Please add a password']
+    },
+    allInstitutions: {
+      type: Array
+    },
+    registeredEvents: {
+      type: Map,
+      default: {}
     }
   }, 
   {
