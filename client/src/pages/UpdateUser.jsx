@@ -22,35 +22,53 @@ import {
   Input,
   InputRightElement 
 } from '@chakra-ui/react'
-import { register, reset } from '../features/auth/authSlice'
+import { update, reset } from '../features/auth/authSlice'
 
 function UpdateUser() {
   /**
    * creating the register form
    */
+  const dispatch = useDispatch()
 
-   const {data} = useSelector((state) => state.auth.user)
+  const {data} = useSelector((state) => state.auth.user)
 
-   const [formData, setFormData] = useState({
-    firstName: data.firstName,
+  const [formData, setFormData] = useState({
+    firstName: '',
     lastName: data.lastName,
     email: data.email,
     gender: data.gender,
     birthDate: data.birthDate,
-    nric: data.nric,
+    nric: data.nric
   })
 
-  const { firstName, lastName, email, gender, birthDate, nric, password, password2 } = formData
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  )
+
+
+  const { firstName, lastName, email, gender, birthDate, nric,} = formData
 
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
+      
     }))
   }
 
   const onSubmit = (e) => {
     e.preventDefault()
+
+    const userData = {
+      firstName,
+      lastName,
+      email,
+      gender,
+      birthDate,
+      nric,
+    }
+
+    dispatch(update(userData))
   }
 
   return (

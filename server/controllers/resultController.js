@@ -41,6 +41,7 @@ exports.createResult = asyncHandler(async (req, res) => {
     loops: req.body.loops,
     runDate: req.body.runDate,
     runTiming: req.body.runTiming,
+    ageCategory: req.body.ageGategory,
   })
 
   res.status(200).json(result)
