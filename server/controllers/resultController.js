@@ -72,7 +72,6 @@ exports.findUserResults = asyncHandler(async (req, res) => {
 exports.updateResult = asyncHandler(async (req, res) => {
   // Get the user and the result
   const result = await Result.findById(req.params.id)
-  const user = await User.findById(req.user.id)
 
   // Check if result exists
   if (!result) {
@@ -81,13 +80,13 @@ exports.updateResult = asyncHandler(async (req, res) => {
   }
 
   // Check if user exists
-  if (!user) {
+  if (!req.user) {
     res.status(401)
     throw new Error('User not found')
   }
 
   // Make sure the login user matches the result user
-  if (result.user.toString() != user.id) {
+  if (result.user.toString() != req.user.id) {
     res.status(401)
     throw new Error('User not authorised')
   }
@@ -106,7 +105,6 @@ exports.updateResult = asyncHandler(async (req, res) => {
 exports.deleteResult = asyncHandler(async (req, res) => {
   // Get the user and the result
   const result = await Result.findById(req.params.id)
-  const user = await User.findById(req.user.id)
 
   // Check if result exists
   if (!result) {
@@ -115,13 +113,13 @@ exports.deleteResult = asyncHandler(async (req, res) => {
   }
 
   // Check if user exists
-  if (!user) {
+  if (!req.user) {
     res.status(401)
     throw new Error('User not found')
   }
 
   // Make sure the login user matches the result user
-  if (result.user.toString() != user.id) {
+  if (result.user.toString() != req.user.id) {
     res.status(401)
     throw new Error('User not authorised')
   }
