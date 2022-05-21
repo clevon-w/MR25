@@ -4,7 +4,7 @@ import { Box, Text } from "@chakra-ui/react"
 function Logo(props) {
   return (
     <Box {...props}>
-      <Text fontSize="md" fontWeight={700} color={"primary.800"}>
+      <Text fontSize="md" fontWeight={700} color={"primary.800"} cursor={'pointer'}>
         MR25
       </Text>
     </Box>
