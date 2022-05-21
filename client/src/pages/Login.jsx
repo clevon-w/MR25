@@ -2,11 +2,11 @@
  * Login Page
  */
 
-import {useState, useEffect} from 'react'
+import { useState, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useToast, Spinner, Button, Input, InputRightElement, Stack, InputGroup, Center, FormControl, Flex, Text, Box, Container } from '@chakra-ui/react'
-import { login , reset, } from '../features/auth/authSlice'
+import { login, reset, } from '../features/auth/authSlice'
 
 function Login() {
   const [formData, setFormData] = useState({
