@@ -6,13 +6,8 @@
 import React from 'react'
 import { 
   Container, 
-  Flex, 
-  Heading, 
-  Spacer, 
-  Stack, 
   Tag, 
-  Text, 
-  useToast,
+  Text,
   TagLabel,
   TagLeftIcon,
   Button,
@@ -54,9 +49,6 @@ function Dashboard() {
       dispatch(reset())
     }
   }, [dispatch, isError, message])
-
-  console.log(events)
-  // console.log(user)
 
   const checkRegistered = (event) => {
     return Object.keys(user.data.registeredEvents).includes(event._id)
