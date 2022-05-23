@@ -17,7 +17,7 @@ const asyncHandler = require('express-async-handler')
   */
 exports.findAllEvents = asyncHandler(async (req, res) => {
   const events = await Event.find()
-  res.send({data: events})
+  res.send(events)
 })
 
 /**
@@ -73,7 +73,6 @@ exports.updateEvent = asyncHandler(async (req, res) => {
 exports.deleteEvent = asyncHandler(async (req, res) => {
   // Get the event
   const event = await Event.findById(req.params.id)
-  const user = await User.findById(req.user.id)
 
   // Check if event exists
   if (!event) {

@@ -13,8 +13,8 @@ function App() {
   return (
     <>
       <Router>
+        <Header />
         <Container maxW="container.xl" p={0}>
-          <Header />
           <Routes>
             <Route path='/' element={<Dashboard />} />
             <Route path='/register' element={<Register />} />
@@ -26,7 +26,7 @@ function App() {
         </Container>
       </Router>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
