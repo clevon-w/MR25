@@ -26,8 +26,7 @@ exports.findUsers = asyncHandler(async (req, res) => {
  * @param {*} res the object to send back to the desired HTTP response
  */
  exports.getMe = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user.id)
-  res.status(200).send({ data: user })
+  res.status(200).json(req.user)
 })
 
 /**
@@ -42,7 +41,7 @@ exports.createUser = asyncHandler(async (req, res) => {
   // Check if all fields are defined
   if (!firstName || !lastName || !email || !gender || !birthDate || !nric || !password) {
     res.status(400)
-    throw new Error('Please add all fields')
+    throw new Error('Please add all required fields')
   }
   
   // Check if user exists

@@ -12,15 +12,18 @@ import {
   Button,
   Stack,
   InputGroup,
-  Center,
   FormControl,
-  Text,
+  FormLabel,
+  FormHelperText,
+  Heading,
   Box,
   Container,
+  Flex,
+  Spacer,
+  Input,
+  InputRightElement,
 } from "@chakra-ui/react";
 import { register, reset } from "../features/auth/authSlice";
-import { Input, InputRightElement } from "@chakra-ui/react";
-import { Flex, Spacer } from "@chakra-ui/react";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -32,8 +35,8 @@ function Register() {
     nric: "",
     password: "",
     password2: "",
-    insitution: "",
   });
+  const [show, setShow] = useState(false);
 
   const {
     firstName,
@@ -44,7 +47,6 @@ function Register() {
     nric,
     password,
     password2,
-    insitution,
   } = formData;
 
   const navigate = useNavigate();
@@ -54,8 +56,6 @@ function Register() {
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
-
-  const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (isError) {
@@ -106,7 +106,6 @@ function Register() {
         birthDate,
         nric,
         password,
-        insitution,
       };
 
       dispatch(register(userData));
@@ -123,84 +122,100 @@ function Register() {
   return (
     <>
       <Container>
-        <Text fontSize="40px">Create Account</Text>
-        <FormControl onSubmit={onSubmit}>
-          <Stack spacing={0}>
+        <form onSubmit={onSubmit}>
+          <Stack spacing={4}>
+            <Heading>Create Account</Heading>
             <Flex>
               <Box w="45%">
-                <Text>First Name</Text>
-                <Input name="firstName" value={firstName} onChange={onChange} />
+                <FormControl isRequired>
+                  <FormLabel>First Name</FormLabel>
+                  <Input
+                    name="firstName"
+                    value={firstName}
+                    onChange={onChange}
+                  />
+                </FormControl>
               </Box>
               <Spacer />
               <Box w="45%">
-                <Text>Last Name</Text>
-                <Input name="lastName" value={lastName} onChange={onChange} />
+                <FormControl isRequired>
+                  <FormLabel>Last Name</FormLabel>
+                  <Input name="lastName" value={lastName} onChange={onChange} />
+                </FormControl>
               </Box>
             </Flex>
 
-            <Text>Email</Text>
-            <Input name="email" value={email} onChange={onChange} />
+            <FormControl isRequired>
+              <FormLabel>Email</FormLabel>
+              <Input name="email" value={email} onChange={onChange} />
+              <FormHelperText>We'll never share your email</FormHelperText>
+            </FormControl>
 
-            <Text>Password</Text>
-            <InputGroup size="md">
+            <FormControl isRequired>
+              <FormLabel>Password</FormLabel>
+              <InputGroup size="md">
+                <Input
+                  name="password"
+                  value={password}
+                  pr="4.5rem"
+                  type={show ? "text" : "password"}
+                  onChange={onChange}
+                />
+                <InputRightElement width="4.5rem">
+                  <Button h="1.75rem" size="sm" onClick={handleClick}>
+                    {show ? "Hide" : "Show"}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+            </FormControl>
+
+            <FormControl isRequired>
+              <FormLabel>Confirm Password</FormLabel>
+              <InputGroup size="md">
+                <Input
+                  name="password2"
+                  value={password2}
+                  pr="4.5rem"
+                  type={show ? "text" : "password"}
+                  onChange={onChange}
+                />
+                <InputRightElement width="4.5rem">
+                  <Button h="1.75rem" size="sm" onClick={handleClick}>
+                    {show ? "Hide" : "Show"}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+            </FormControl>
+
+            <FormControl isRequired>
+              <FormLabel>
+                NRIC / FIN (last 3 dights and ending alphabet)
+              </FormLabel>
               <Input
-                name="password"
-                value={password}
-                pr="4.5rem"
-                type={show ? "text" : "password"}
+                name="nric"
+                value={nric}
                 onChange={onChange}
+                placeholder="789Z"
               />
-              <InputRightElement width="4.5rem">
-                <Button h="1.75rem" size="sm" onClick={handleClick}>
-                  {show ? "Hide" : "Show"}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
+            </FormControl>
 
-            <Text>Confirm Password</Text>
-            <InputGroup size="md">
+            <FormControl isRequired>
+              <FormLabel>Birth Date (DD/MM/YYYY)</FormLabel>
               <Input
-                name="password2"
-                value={password2}
-                pr="4.5rem"
-                type={show ? "text" : "password"}
+                name="birthDate"
+                value={birthDate}
                 onChange={onChange}
+                placeholder="01/01/2000"
               />
-              <InputRightElement width="4.5rem">
-                <Button h="1.75rem" size="sm" onClick={handleClick}>
-                  {show ? "Hide" : "Show"}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
+            </FormControl>
 
-            <Text>NRIC / FIN (last 3 dights and ending alphabet)</Text>
-            <Input
-              name="nric"
-              value={nric}
-              onChange={onChange}
-              placeholder="789Z"
-            />
-
-            <Text>Birth Date (DD/MM/YYYY)</Text>
-            <Input
-              name="birthDate"
-              value={birthDate}
-              onChange={onChange}
-              placeholder="01/01/2000"
-            />
-
-            <Text>Gender</Text>
-            <Select name="gender" placeholder="Gender" onChange={onChange}>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </Select>
-
-            <Flex>
-              <Text>Institution(if applicable)</Text>
-              <Spacer />
-              <Text as="cite">Optional</Text>
-            </Flex>
-            <Input name="institution" value={insitution} onChange={onChange} />
+            <FormControl isRequired>
+              <FormLabel>Gender</FormLabel>
+              <Select name="gender" placeholder="Gender" onChange={onChange}>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </Select>
+            </FormControl>
 
             <Button type="submit" colorScheme="telegram" size="lg">
               Create Account
@@ -209,7 +224,7 @@ function Register() {
               Already have an account? Login here.
             </Button>
           </Stack>
-        </FormControl>
+        </form>
       </Container>
     </>
   );

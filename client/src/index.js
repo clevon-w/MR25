@@ -3,26 +3,16 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { extendTheme, ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider } from '@chakra-ui/react'
 import { Provider } from 'react-redux'
 import { store } from './app/store';
+import customTheme from "./utils/theme"
 
-// This is for customising the theme
-// currently it is not doing anything because we dont have a brand class?
-const colors = {
-  brand: {
-    900: '#1a365d',
-    800: '#153e75',
-    700: '#2a69ac',
-  },
-}
-
-const theme = extendTheme({ colors })
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <ChakraProvider theme={theme}>
+    <ChakraProvider theme={customTheme}>
       <App />
     </ChakraProvider>
   </Provider>
