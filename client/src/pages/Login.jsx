@@ -2,29 +2,41 @@
  * Login Page
  */
 
-import { useState, useEffect} from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { useToast, Spinner, Button, Input, InputRightElement, Stack, InputGroup, Center, FormControl, Flex, Text, Box, Container } from '@chakra-ui/react'
-import { login, reset, } from '../features/auth/authSlice'
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+  useToast,
+  Spinner,
+  Button,
+  Input,
+  InputRightElement,
+  Stack,
+  InputGroup,
+  Center,
+  FormControl,
+  Text,
+  Container
+} from "@chakra-ui/react";
+import { login, reset } from "../features/auth/authSlice";
 
 function Login() {
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  })
+    email: "",
+    password: ""
+  });
 
-  const { email, password } = formData
+  const { email, password } = formData;
 
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const toast = useToast()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const toast = useToast();
 
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
-  )
+  );
 
-  const[show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (isError) {
@@ -32,82 +44,92 @@ function Login() {
         title: message,
         status: "error",
         isClosable: true
-      })
+      });
     }
 
     if (isSuccess || user) {
-      navigate('/')
+      navigate("/");
     }
 
-    dispatch(reset())
-  }, [user, isError, isSuccess, message, navigate, dispatch, toast])
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch, toast]);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value
-    }))
-  }
-  
+    }));
+  };
+
   const onSubmit = (e) => {
-    e.preventDefault()
-    
+    e.preventDefault();
+
     const userData = {
       email,
       password
-    }
+    };
 
-    dispatch(login(userData))
-  }
+    dispatch(login(userData));
+  };
 
-  const handleClick = () =>{
-    setShow(!show)
-  }
+  const handleClick = () => {
+    setShow(!show);
+  };
 
-  const toRegister = (e) =>{
-    navigate('/register')
-  }
+  const toRegister = (e) => {
+    navigate("/register");
+  };
 
   if (isLoading) {
-    return <Spinner/>
+    return <Spinner />;
   }
-  
+
   return (
-    <>
-    <Container>
-      <Text fontSize='40px'>Login</Text>
-      <form onSubmit={onSubmit}>
-        <FormControl>
-          <Stack spacing={1}>
-            <Text>Email</Text>
-            <InputGroup>
-              <Input name='email' value={email} onChange={onChange} />
-            </InputGroup>
+    <Center h="100%">
+      <Container maxW="md">
+        <Text textStyle="heading_s" pb={4}>
+          Login
+        </Text>
+        <form onSubmit={onSubmit}>
+          <FormControl>
+            <Stack spacing={1}>
+              <Text>Email</Text>
+              <InputGroup>
+                <Input name="email" value={email} onChange={onChange} />
+              </InputGroup>
 
-            <Text>Password</Text>
-            <InputGroup size='md'>
-              <Input 
-                name='password'
-                value={password}
-                pr='4.5rem'
-                type={show ? 'text' : 'password'}
-                onChange={onChange}
-              />
-              <InputRightElement width='4.5rem'>
-                <Button h='1.75rem' size='sm' onClick={handleClick}>
-                  {show ? 'Hide' : 'Show'}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
+              <Text>Password</Text>
+              <InputGroup size="md" pb={4}>
+                <Input
+                  name="password"
+                  value={password}
+                  pr="4.5rem"
+                  type={show ? "text" : "password"}
+                  onChange={onChange}
+                />
+                <InputRightElement width="4.5rem">
+                  <Button h="1.75rem" size="sm" onClick={handleClick}>
+                    {show ? "Hide" : "Show"}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
 
-            <Button type='submit' colorScheme = 'telegram' size='lg'>Login</Button>
-            <Button variant='ghost' onClick={toRegister}>No account? Create account here.</Button>
-          </Stack>
-        </FormControl>
-      </form>
-    </Container>
-  </>
-  )
+              <Button
+                type="submit"
+                color="primary.white"
+                bg="primary.800"
+                size="lg"
+              >
+                Login
+              </Button>
+              <Button variant="ghost" size="lg" onClick={toRegister}>
+                No account? Create account here.
+              </Button>
+            </Stack>
+          </FormControl>
+        </form>
+      </Container>
+    </Center>
+  );
 }
-export default Login
- 
+export default Login;

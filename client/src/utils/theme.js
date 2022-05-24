@@ -1,4 +1,4 @@
-import { extendTheme } from "@chakra-ui/react"
+import { extendTheme } from "@chakra-ui/react";
 
 const colors = {
   primary: {
@@ -25,10 +25,19 @@ const colors = {
     lightGreen: "#D1FFD9",
     lightBlue: "#B0DCFF",
     lightPurple: "#F6D1FF",
-    lightRed: "#FFB8B8",
+    lightRed: "#FFB8B8"
   }
-}
+};
 
-const customTheme = extendTheme({ colors })
+const textStyles = {
+  heading_s: {
+    // you can also use responsive styles
+    fontSize: ["18px", "24px"],
+    fontWeight: "bold",
+    lineHeight: "140%"
+  }
+};
 
-export default customTheme
+const customTheme = extendTheme({ colors, textStyles });
+
+export default customTheme;

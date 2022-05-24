@@ -4,22 +4,25 @@ import Header from "./components/Header";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
-import { Container } from "@chakra-ui/react";
+import { Container, Box } from "@chakra-ui/react";
 
 function App() {
+  // var headerHeight = document.getElementById("header").clientHeight;
+
   return (
-    <>
-      <Router>
-        <Header />
-        <Container maxW="container.xl" p={0}>
+    <Router>
+      <Box h="100vh">
+        <Header id="header" />
+        {/* Height of Container needs to be 100vh - headerHeight but idk how to do */}
+        <Container maxW="container.xl" p={0} h="100%">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/register" element={<Register />} />
             <Route path="/Login" element={<Login />} />
           </Routes>
         </Container>
-      </Router>
-    </>
+      </Box>
+    </Router>
   );
 }
 
