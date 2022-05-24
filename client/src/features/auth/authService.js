@@ -30,8 +30,8 @@ const logout = () => {
 }
 
 // Update user
-const update = async (user) => {
-  const response = await axios.patch(API_URL + user._Id, user)
+const update = async (userData) => {
+  const response = await axios.patch(API_URL + userData._id, userData)
   if (response.data) {
     localStorage.setItem('user', JSON.stringify(response.data))
   }

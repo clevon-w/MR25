@@ -29,11 +29,14 @@ function UpdateUser() {
    * creating the register form
    */
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const toast = useToast()
 
   const {data} = useSelector((state) => state.auth.user)
 
   const [formData, setFormData] = useState({
-    firstName: '',
+    _id: data._id,
+    firstName: data.firstName,
     lastName: data.lastName,
     email: data.email,
     gender: data.gender,
@@ -46,7 +49,18 @@ function UpdateUser() {
   )
 
 
-  const { firstName, lastName, email, gender, birthDate, nric,} = formData
+  const { _id, firstName, lastName, email, gender, birthDate, nric,} = formData
+
+  useEffect(() => {
+    if (isError) {
+      toast({
+        title: message,
+        status: "error",
+        isClosable: true
+      })
+    }
+
+  }, [user, isError, isSuccess, message, navigate, dispatch, toast])
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -56,10 +70,12 @@ function UpdateUser() {
     }))
   }
 
+
   const onSubmit = (e) => {
     e.preventDefault()
 
     const userData = {
+      _id,
       firstName,
       lastName,
       email,
@@ -69,6 +85,10 @@ function UpdateUser() {
     }
 
     dispatch(update(userData))
+
+    if(isSuccess) {
+      navigate('/MyAccount')
+    }
   }
 
   return (

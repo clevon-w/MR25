@@ -13,7 +13,7 @@ import eventReducer from '../features/event/eventSlice'
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    results: resultReducer
-    events: eventReducer
+    results: resultReducer,
+    events: eventReducer,
   }
 })

@@ -31,35 +31,6 @@ import Logo from "./Logo";
 const Header = (props) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
-
-function Header() {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const { user } = useSelector((state) => state.auth)
-
-  const onLogout = () => {
-    dispatch(logout())
-    dispatch(reset())
-    navigate('/')
-  }
-
-  const toLogin = () => {
-    navigate('/login')
-  }
-
-  const toRegister = () => {
-    navigate('/register')
-  }
-
-  const toLeaderboard = () => {
-    navigate('/leaderboard')
-  }
-
-  const toMyAccount = () => {
-    navigate('/myAccount')
-  }
-
-  const { isOpen, onToggle } = useDisclosure();
   const toggle = () => setIsOpen(!isOpen);
 
   return (
