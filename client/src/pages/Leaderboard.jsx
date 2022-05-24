@@ -53,8 +53,19 @@ function Leaderboard() {
           <Box>
             <Heading size='sm'>Category</Heading>
             <Select placeholder='Select option'>
-              <option value="MU15">Men's under 15</option>
-              <option value='WU15'>Womans's under 15</option>
+              <option value='MU15'>Men's Under 15</option>
+              <option value='MU18'>Men's Under 18</option>
+              <option value='MU21'>Men's Under 21</option>
+              <option value='MU23'>Men's Under 15</option>
+              <option value='MOPEN'>Men's Open</option>
+              <option value='MO50'>Men's Above 50</option>
+              
+              <option value='WU15'>Women's under 15</option>
+              <option value='WU18'>Women's under 18</option>
+              <option value='WU21'>Women's Under 21</option>
+              <option value='WU23'>Women's Under 15</option>
+              <option value='WOPEN'>Women's Open</option>
+              <option value='WO50'>Women's Above 50</option>
             </Select>
           </Box>
           <Box>
@@ -66,15 +77,7 @@ function Leaderboard() {
           </Box>
         </Flex>
 
-        <Box>
-          {data.length > 0 ? (
-            <Box>
-              {data.map((result) => (
-                <ResultItem key={result._id} result = {result} />
-              ))}
-            </Box>
-          ) : <Text>No results to display at the moment</Text>}
-        </Box>
+      
       </Stack>
       
 
