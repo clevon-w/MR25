@@ -12,7 +12,7 @@
        required: [true, 'Please add a event name']
      },
      eventDetails: {
-       type: Map,
+       type: Object,
        default: {}
      }
    }, 
