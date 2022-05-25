@@ -5,14 +5,17 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import RegisterEvent from "./pages/RegisterEvent";
-import { Container } from "@chakra-ui/react";
+import { Container, Box } from "@chakra-ui/react";
 
 function App() {
+  // var headerHeight = document.getElementById("header").clientHeight;
+
   return (
-    <>
-      <Router>
-        <Header />
-        <Container maxW="container.md" p={8} centerContent >
+    <Router>
+      <Box h="100vh">
+        <Header id="header" />
+        {/* Height of Container needs to be 100vh - headerHeight but idk how to do */}
+        <Container maxW="container.xl" p={0} h="100%">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/register" element={<Register />} />
@@ -20,8 +23,8 @@ function App() {
             <Route path="/registerEvent" element={<RegisterEvent/>} />
           </Routes>
         </Container>
-      </Router>
-    </>
+      </Box>
+    </Router>
   );
 }
 
