@@ -9,6 +9,7 @@ import {
   useToast,
   Spinner,
   Button,
+  IconButton,
   Input,
   InputRightElement,
   Stack,
@@ -18,6 +19,7 @@ import {
   Text,
   Container
 } from "@chakra-ui/react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { login, reset } from "../features/auth/authSlice";
 
 function Login() {
@@ -94,7 +96,7 @@ function Login() {
           <FormControl>
             <Stack spacing={1}>
               <Text>Email</Text>
-              <InputGroup>
+              <InputGroup pb={2}>
                 <Input name="email" value={email} onChange={onChange} />
               </InputGroup>
 
@@ -107,10 +109,13 @@ function Login() {
                   type={show ? "text" : "password"}
                   onChange={onChange}
                 />
-                <InputRightElement width="4.5rem">
-                  <Button h="1.75rem" size="sm" onClick={handleClick}>
-                    {show ? "Hide" : "Show"}
-                  </Button>
+                <InputRightElement>
+                  <IconButton
+                    size="sm"
+                    onClick={handleClick}
+                    variant="ghost"
+                    icon={show ? <ViewOffIcon /> : <ViewIcon />}
+                  />
                 </InputRightElement>
               </InputGroup>
 
