@@ -37,6 +37,7 @@ function Register() {
     password2: "",
   });
   const [show, setShow] = useState(false);
+  const [show2, setShow2] = useState(false);
 
   const {
     firstName,
@@ -86,6 +87,10 @@ function Register() {
 
   const handleClick = () => {
     setShow(!show);
+  };
+
+  const handleClick2 = () => {
+    setShow2(!show2);
   };
 
   const onSubmit = (e) => {
@@ -176,12 +181,12 @@ function Register() {
                   name="password2"
                   value={password2}
                   pr="4.5rem"
-                  type={show ? "text" : "password"}
+                  type={show2 ? "text" : "password"}
                   onChange={onChange}
                 />
                 <InputRightElement width="4.5rem">
-                  <Button h="1.75rem" size="sm" onClick={handleClick}>
-                    {show ? "Hide" : "Show"}
+                  <Button h="1.75rem" size="sm" onClick={handleClick2}>
+                    {show2 ? "Hide" : "Show"}
                   </Button>
                 </InputRightElement>
               </InputGroup>
