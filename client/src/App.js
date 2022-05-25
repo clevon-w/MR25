@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
+import RegisterEvent from "./pages/RegisterEvent";
 import { Container } from "@chakra-ui/react";
 
 function App() {
@@ -11,11 +12,12 @@ function App() {
     <>
       <Router>
         <Header />
-        <Container maxW="container.xl" p={0}>
+        <Container maxW="container.md" p={8} centerContent >
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/Login" element={<Login />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/registerEvent" element={<RegisterEvent/>} />
           </Routes>
         </Container>
       </Router>

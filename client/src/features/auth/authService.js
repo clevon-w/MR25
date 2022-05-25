@@ -24,6 +24,15 @@ const login = async (userData) => {
   return response.data
 }
 
+// Update user 
+const update = async (userData) => {
+  const response = await axios.patch(API_URL + userData.id, userData.data)
+  if (response.data) {
+    localStorage.setItem('user', JSON.stringify(response.data))
+  }
+  return response.data
+}
+
 // Logout user
 const logout = () => {
   localStorage.removeItem('user')
@@ -32,6 +41,7 @@ const logout = () => {
 const authService = {
   register,
   logout,
+  update,
   login
 }
 
