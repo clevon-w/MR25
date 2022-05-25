@@ -91,7 +91,7 @@ function Login() {
     <Center h="100%">
       <Container maxW="md">
         <Text textStyle="heading_s" pb={4}>
-          Login
+          Welcome
         </Text>
         <form onSubmit={onSubmit}>
           <FormControl>
