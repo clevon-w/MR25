@@ -9,9 +9,10 @@ import {
   useToast,
   Spinner,
   Button,
-  IconButton,
+  Icon,
   Input,
   InputRightElement,
+  InputLeftElement,
   Stack,
   InputGroup,
   Center,
@@ -19,7 +20,7 @@ import {
   Text,
   Container
 } from "@chakra-ui/react";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import { login, reset } from "../features/auth/authSlice";
 
 function Login() {
@@ -95,27 +96,43 @@ function Login() {
         <form onSubmit={onSubmit}>
           <FormControl>
             <Stack spacing={1}>
-              <Text>Email</Text>
               <InputGroup pb={2}>
-                <Input name="email" value={email} onChange={onChange} />
+                <InputLeftElement
+                  pointerEvents="none"
+                  children={<Icon as={FiMail} color="primary.600" />}
+                />
+                <Input
+                  name="email"
+                  placeholder="E-mail"
+                  value={email}
+                  onChange={onChange}
+                />
               </InputGroup>
 
-              <Text>Password</Text>
               <InputGroup size="md" pb={4}>
+                <InputLeftElement
+                  pointerEvents="none"
+                  children={<Icon as={FiLock} color="primary.600" />}
+                />
                 <Input
+                  placeholder="Password"
                   name="password"
                   value={password}
                   pr="4.5rem"
                   type={show ? "text" : "password"}
                   onChange={onChange}
                 />
-                <InputRightElement>
-                  <IconButton
-                    size="sm"
-                    onClick={handleClick}
-                    variant="ghost"
-                    icon={show ? <ViewOffIcon /> : <ViewIcon />}
-                  />
+                <InputRightElement
+                  onClick={handleClick}
+                  _hover={{
+                    cursor: "pointer"
+                  }}
+                >
+                  {show ? (
+                    <Icon as={FiEyeOff} color="primary.800" />
+                  ) : (
+                    <Icon as={FiEye} color="primary.800" />
+                  )}
                 </InputRightElement>
               </InputGroup>
 
