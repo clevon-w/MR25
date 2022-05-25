@@ -15,14 +15,16 @@ import {
   FormControl,
   FormLabel,
   FormHelperText,
-  Heading,
+  Text,
   Box,
   Container,
   Flex,
   Spacer,
   Input,
   InputRightElement,
+  Icon,
 } from "@chakra-ui/react";
+import { FiEyeOff, FiEye } from "react-icons/fi";
 import { register, reset } from "../features/auth/authSlice";
 
 function Register() {
@@ -126,38 +128,46 @@ function Register() {
    */
   return (
     <>
-      <Container>
+      <Container maxW="md">
         <form onSubmit={onSubmit}>
           <Stack spacing={4}>
-            <Heading>Create Account</Heading>
+            <Text textStyle="heading_s" pb={4}>
+              Create Account
+            </Text>
             <Flex>
               <Box w="45%">
                 <FormControl isRequired>
-                  <FormLabel>First Name</FormLabel>
                   <Input
                     name="firstName"
                     value={firstName}
                     onChange={onChange}
+                    placeholder="First Name"
                   />
                 </FormControl>
               </Box>
               <Spacer />
               <Box w="45%">
                 <FormControl isRequired>
-                  <FormLabel>Last Name</FormLabel>
-                  <Input name="lastName" value={lastName} onChange={onChange} />
+                  <Input
+                    name="lastName"
+                    value={lastName}
+                    onChange={onChange}
+                    placeholder="Last Name"
+                  />
                 </FormControl>
               </Box>
             </Flex>
 
             <FormControl isRequired>
-              <FormLabel>Email</FormLabel>
-              <Input name="email" value={email} onChange={onChange} />
-              <FormHelperText>We'll never share your email</FormHelperText>
+              <Input
+                name="email"
+                value={email}
+                onChange={onChange}
+                placeholder="E-mail"
+              />
             </FormControl>
 
             <FormControl isRequired>
-              <FormLabel>Password</FormLabel>
               <InputGroup size="md">
                 <Input
                   name="password"
@@ -165,17 +175,24 @@ function Register() {
                   pr="4.5rem"
                   type={show ? "text" : "password"}
                   onChange={onChange}
+                  placeholder="Password"
                 />
-                <InputRightElement width="4.5rem">
-                  <Button h="1.75rem" size="sm" onClick={handleClick}>
-                    {show ? "Hide" : "Show"}
-                  </Button>
+                <InputRightElement
+                  onClick={handleClick}
+                  _hover={{
+                    cursor: "pointer",
+                  }}
+                >
+                  {show ? (
+                    <Icon as={FiEyeOff} color="primary.800" />
+                  ) : (
+                    <Icon as={FiEye} color="primary.800" />
+                  )}
                 </InputRightElement>
               </InputGroup>
             </FormControl>
 
             <FormControl isRequired>
-              <FormLabel>Confirm Password</FormLabel>
               <InputGroup size="md">
                 <Input
                   name="password2"
@@ -183,46 +200,54 @@ function Register() {
                   pr="4.5rem"
                   type={show2 ? "text" : "password"}
                   onChange={onChange}
+                  placeholder="Confirm Password"
                 />
-                <InputRightElement width="4.5rem">
-                  <Button h="1.75rem" size="sm" onClick={handleClick2}>
-                    {show2 ? "Hide" : "Show"}
-                  </Button>
+                <InputRightElement
+                  onClick={handleClick2}
+                  _hover={{
+                    cursor: "pointer",
+                  }}
+                >
+                  {show2 ? (
+                    <Icon as={FiEyeOff} color="primary.800" />
+                  ) : (
+                    <Icon as={FiEye} color="primary.800" />
+                  )}
                 </InputRightElement>
               </InputGroup>
             </FormControl>
 
             <FormControl isRequired>
-              <FormLabel>
-                NRIC / FIN (last 3 dights and ending alphabet)
-              </FormLabel>
               <Input
                 name="nric"
                 value={nric}
                 onChange={onChange}
-                placeholder="789Z"
+                placeholder="NRIC/FIN (e.g. 789Z)"
               />
+              <FormHelperText>Last 3 digits and ending alphabet</FormHelperText>
             </FormControl>
 
             <FormControl isRequired>
-              <FormLabel>Birth Date (DD/MM/YYYY)</FormLabel>
               <Input
                 name="birthDate"
                 value={birthDate}
                 onChange={onChange}
-                placeholder="01/01/2000"
+                placeholder="Birth Date (DD/MM/YYYY)"
               />
             </FormControl>
 
             <FormControl isRequired>
-              <FormLabel>Gender</FormLabel>
-              <Select name="gender" placeholder="Gender" onChange={onChange}>
-                <option value="Male">Male</option>
+              <Select name="gender" placeholder="Male" onChange={onChange}>
                 <option value="Female">Female</option>
               </Select>
             </FormControl>
 
-            <Button type="submit" colorScheme="telegram" size="lg">
+            <Button
+              type="submit"
+              color="primary.white"
+              bg="primary.800"
+              size="lg"
+            >
               Create Account
             </Button>
             <Button variant="ghost" onClick={toLogin}>
