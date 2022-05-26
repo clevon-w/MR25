@@ -17,6 +17,7 @@ import {
   InputGroup,
   Center,
   FormControl,
+  FormErrorMessage,
   Text,
   Container
 } from "@chakra-ui/react";
@@ -39,7 +40,13 @@ function Login() {
     (state) => state.auth
   );
 
+  // For showing/hiding password:
   const [show, setShow] = useState(false);
+
+  // For validating email input:
+  // eslint-disable-next-line
+  const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  const validEmail = emailRegex.test(formData.email); // True if email is valid.
 
   useEffect(() => {
     if (isError) {
@@ -62,6 +69,8 @@ function Login() {
       ...prevState,
       [e.target.name]: e.target.value
     }));
+    console.log(formData);
+    console.log(validEmail);
   };
 
   const onSubmit = (e) => {
@@ -94,22 +103,30 @@ function Login() {
           Welcome
         </Text>
         <form onSubmit={onSubmit}>
-          <FormControl>
-            <Stack spacing={1}>
-              <InputGroup pb={2}>
+          <Stack spacing={1}>
+            {/* Email input */}
+            <FormControl pb={2} isInvalid={!validEmail}>
+              <InputGroup>
                 <InputLeftElement
                   pointerEvents="none"
                   children={<Icon as={FiMail} color="primary.600" />}
                 />
                 <Input
                   name="email"
+                  type="email"
                   placeholder="E-mail"
                   value={email}
                   onChange={onChange}
                 />
               </InputGroup>
+              {!validEmail ? (
+                <FormErrorMessage>Invalid e-mail address.</FormErrorMessage>
+              ) : null}
+            </FormControl>
 
-              <InputGroup size="md" pb={4}>
+            {/* Password input */}
+            <FormControl pb={4}>
+              <InputGroup>
                 <InputLeftElement
                   pointerEvents="none"
                   children={<Icon as={FiLock} color="primary.600" />}
@@ -135,20 +152,20 @@ function Login() {
                   )}
                 </InputRightElement>
               </InputGroup>
+            </FormControl>
 
-              <Button
-                type="submit"
-                color="primary.white"
-                bg="primary.800"
-                size="lg"
-              >
-                Login
-              </Button>
-              <Button variant="ghost" size="lg" onClick={toRegister}>
-                No account? Create account here.
-              </Button>
-            </Stack>
-          </FormControl>
+            <Button
+              type="submit"
+              color="primary.white"
+              bg="primary.800"
+              size="lg"
+            >
+              Login
+            </Button>
+            <Button variant="ghost" size="lg" onClick={toRegister}>
+              No account? Create account here.
+            </Button>
+          </Stack>
         </form>
       </Container>
     </Center>
