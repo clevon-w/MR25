@@ -13,7 +13,6 @@ import {
   Stack,
   InputGroup,
   FormControl,
-  FormLabel,
   FormHelperText,
   Text,
   Box,
@@ -25,6 +24,10 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import { FiEyeOff, FiEye } from "react-icons/fi";
+
+// import DatePicker from "react-datepicker";
+// import "react-datepicker/dist/react-datepicker.css";
+
 import { register, reset } from "../features/auth/authSlice";
 
 function Register() {
@@ -41,16 +44,7 @@ function Register() {
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
 
-  const {
-    firstName,
-    lastName,
-    email,
-    gender,
-    birthDate,
-    nric,
-    password,
-    password2,
-  } = formData;
+  console.log(formData);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -95,27 +89,20 @@ function Register() {
     setShow2(!show2);
   };
 
+  // For date-picker:
+  // const [date, setDate] = useState(null);
+
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if (password !== password2) {
+    if (formData.password !== formData.password2) {
       toast({
         title: "Passwords do not match",
         status: "error",
         isClosable: true,
       });
     } else {
-      const userData = {
-        firstName,
-        lastName,
-        email,
-        gender,
-        birthDate,
-        nric,
-        password,
-      };
-
-      dispatch(register(userData));
+      dispatch(register(formData));
     }
   };
 
@@ -135,22 +122,22 @@ function Register() {
               Create Account
             </Text>
             <Flex>
-              <Box w="45%">
+              <Box w="48.25%">
                 <FormControl isRequired>
                   <Input
                     name="firstName"
-                    value={firstName}
+                    value={formData.firstName}
                     onChange={onChange}
                     placeholder="First Name"
                   />
                 </FormControl>
               </Box>
               <Spacer />
-              <Box w="45%">
+              <Box w="48.25%">
                 <FormControl isRequired>
                   <Input
                     name="lastName"
-                    value={lastName}
+                    value={formData.lastName}
                     onChange={onChange}
                     placeholder="Last Name"
                   />
@@ -161,7 +148,7 @@ function Register() {
             <FormControl isRequired>
               <Input
                 name="email"
-                value={email}
+                value={formData.email}
                 onChange={onChange}
                 placeholder="E-mail"
               />
@@ -171,7 +158,7 @@ function Register() {
               <InputGroup size="md">
                 <Input
                   name="password"
-                  value={password}
+                  value={formData.password}
                   pr="4.5rem"
                   type={show ? "text" : "password"}
                   onChange={onChange}
@@ -196,7 +183,7 @@ function Register() {
               <InputGroup size="md">
                 <Input
                   name="password2"
-                  value={password2}
+                  value={formData.password2}
                   pr="4.5rem"
                   type={show2 ? "text" : "password"}
                   onChange={onChange}
@@ -220,7 +207,7 @@ function Register() {
             <FormControl isRequired>
               <Input
                 name="nric"
-                value={nric}
+                value={formData.nric}
                 onChange={onChange}
                 placeholder="NRIC/FIN (e.g. 789Z)"
               />
@@ -230,14 +217,33 @@ function Register() {
             <FormControl isRequired>
               <Input
                 name="birthDate"
-                value={birthDate}
+                value={formData.birthDate}
+                pr="9px"
+                type="date"
                 onChange={onChange}
-                placeholder="Birth Date (DD/MM/YYYY)"
               />
+              <FormHelperText>Birth date</FormHelperText>
+              {/* <DatePicker
+                placeholderText="Birth Date (MM/DD/YYY)"
+                selected={date} // Need this prop to display the selected date in the UI.
+                onChange={(datePickerValue) => {
+                  setFormData((prevState) => ({
+                    ...prevState,
+                    birthDate: datePickerValue,
+                  }));
+                  setDate(datePickerValue);
+                }}
+                showPopperArrow={false}
+                isClearable
+                showYearDropdown
+                showMonthDropdown
+                dropdownMode="select"
+              /> */}
             </FormControl>
 
             <FormControl isRequired>
-              <Select name="gender" placeholder="Male" onChange={onChange}>
+              <Select name="gender" placeholder="Gender" onChange={onChange}>
+                <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </Select>
             </FormControl>
