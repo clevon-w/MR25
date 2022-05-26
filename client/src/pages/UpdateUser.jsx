@@ -84,7 +84,12 @@ function UpdateUser() {
       nric,
     }
 
-    dispatch(update(userData))
+    const args = {
+      'id': _id,
+      'data': userData
+    }
+
+    dispatch(update(args))
 
     if(isSuccess) {
       navigate('/MyAccount')
