@@ -108,7 +108,7 @@ const NavBarLinks = ({ isOpen }) => {
   };
 
   const toUploadResult = () => {
-    navigate("/uploadResult");
+    navigate("/UploadResults");
   };
 
   const toLogout = () => {

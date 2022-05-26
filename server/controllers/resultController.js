@@ -28,20 +28,23 @@ exports.findAllResults = asyncHandler(async (req, res) => {
   * @param {*} res the object to send back to the desired HTTP response
   */
 exports.createResult = asyncHandler(async (req, res) => {
-  const {distance, loops, runDate, runTiming} = req.body
+  const {user, event, runTiming, ageCategory, institution, screenshot, verified} = req.body
 
-  if (!distance || !loops || !runDate || !runTiming) {
+  if (!firstName || !lastName || !ageCategory || !runTiming || !institution || !screenshot) {
     res.status(400)
     throw new Error('Please add an result')
   }
 
   const result = await Result.create({
-    user: req.user.id,
-    distance: req.body.distance,
-    loops: req.body.loops,
-    runDate: req.body.runDate,
+    userId: req.user.id,
+    eventId: req.event.id,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    institution: req.body.institution,
+    ageCategory: req.body.ageCategory,
     runTiming: req.body.runTiming,
-    ageCategory: req.body.ageGategory,
+    screenshot: req.body.screenshot,
+    verified: req.body.verified,
   })
 
   res.status(200).json(result)
