@@ -14,6 +14,7 @@ import {
   InputGroup,
   FormControl,
   FormHelperText,
+  FormErrorMessage,
   Text,
   Box,
   Container,
@@ -21,7 +22,7 @@ import {
   Spacer,
   Input,
   InputRightElement,
-  Icon,
+  Icon
 } from "@chakra-ui/react";
 import { FiEyeOff, FiEye } from "react-icons/fi";
 
@@ -29,6 +30,7 @@ import { FiEyeOff, FiEye } from "react-icons/fi";
 // import "react-datepicker/dist/react-datepicker.css";
 
 import { register, reset } from "../features/auth/authSlice";
+import { emailRegex, nricRegex } from "../utils/regex";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -39,12 +41,10 @@ function Register() {
     birthDate: "",
     nric: "",
     password: "",
-    password2: "",
+    password2: ""
   });
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
-
-  console.log(formData);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -54,12 +54,21 @@ function Register() {
     (state) => state.auth
   );
 
+  // For validating email input. True if email is INVALID.
+  const invalidEmail =
+    !emailRegex.test(formData.email) && formData.email !== "";
+  // For validating NRIC input. True if NRIC is INVALID.
+  const invalidNric = !nricRegex.test(formData.nric) && formData.nric !== "";
+  // For matching passwords. True if passwords DONT match.
+  const passwordNoMatch =
+    formData.password !== formData.password2 && formData.password2 !== "";
+
   useEffect(() => {
     if (isError) {
       toast({
         title: message,
         status: "error",
-        isClosable: true,
+        isClosable: true
       });
     }
 
@@ -73,7 +82,7 @@ function Register() {
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     }));
   };
 
@@ -99,7 +108,7 @@ function Register() {
       toast({
         title: "Passwords do not match",
         status: "error",
-        isClosable: true,
+        isClosable: true
       });
     } else {
       dispatch(register(formData));
@@ -145,13 +154,17 @@ function Register() {
               </Box>
             </Flex>
 
-            <FormControl isRequired>
+            <FormControl isRequired isInvalid={invalidEmail}>
               <Input
                 name="email"
+                type="email"
                 value={formData.email}
                 onChange={onChange}
                 placeholder="E-mail"
               />
+              {invalidEmail ? (
+                <FormErrorMessage>Invalid e-mail address.</FormErrorMessage>
+              ) : null}
             </FormControl>
 
             <FormControl isRequired>
@@ -167,7 +180,7 @@ function Register() {
                 <InputRightElement
                   onClick={handleClick}
                   _hover={{
-                    cursor: "pointer",
+                    cursor: "pointer"
                   }}
                 >
                   {show ? (
@@ -179,7 +192,7 @@ function Register() {
               </InputGroup>
             </FormControl>
 
-            <FormControl isRequired>
+            <FormControl isRequired isInvalid={passwordNoMatch}>
               <InputGroup size="md">
                 <Input
                   name="password2"
@@ -192,7 +205,7 @@ function Register() {
                 <InputRightElement
                   onClick={handleClick2}
                   _hover={{
-                    cursor: "pointer",
+                    cursor: "pointer"
                   }}
                 >
                   {show2 ? (
@@ -202,9 +215,12 @@ function Register() {
                   )}
                 </InputRightElement>
               </InputGroup>
+              {passwordNoMatch ? (
+                <FormErrorMessage>Passwords do not match.</FormErrorMessage>
+              ) : null}
             </FormControl>
 
-            <FormControl isRequired>
+            <FormControl isRequired isInvalid={invalidNric}>
               <Input
                 name="nric"
                 value={formData.nric}
@@ -212,6 +228,9 @@ function Register() {
                 placeholder="NRIC/FIN (e.g. 789Z)"
               />
               <FormHelperText>Last 3 digits and ending alphabet</FormHelperText>
+              {invalidNric ? (
+                <FormErrorMessage>Invalid NRIC or FIN format.</FormErrorMessage>
+              ) : null}
             </FormControl>
 
             <FormControl isRequired>
