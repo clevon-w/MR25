@@ -23,6 +23,7 @@ import {
 } from "@chakra-ui/react";
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import { login, reset } from "../features/auth/authSlice";
+import { emailRegex } from "../utils/regex";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -43,10 +44,9 @@ function Login() {
   // For showing/hiding password:
   const [show, setShow] = useState(false);
 
-  // For validating email input:
-  // eslint-disable-next-line
-  const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  const validEmail = emailRegex.test(formData.email); // True if email is valid.
+  // For validating email input. True if email is INVALID.
+  const invalidEmail =
+    !emailRegex.test(formData.email) && formData.email !== "";
 
   useEffect(() => {
     if (isError) {
@@ -69,8 +69,6 @@ function Login() {
       ...prevState,
       [e.target.name]: e.target.value
     }));
-    console.log(formData);
-    console.log(validEmail);
   };
 
   const onSubmit = (e) => {
@@ -105,7 +103,7 @@ function Login() {
         <form onSubmit={onSubmit}>
           <Stack spacing={1}>
             {/* Email input */}
-            <FormControl pb={2} isInvalid={!validEmail}>
+            <FormControl pb={2} isInvalid={invalidEmail} isRequired>
               <InputGroup>
                 <InputLeftElement
                   pointerEvents="none"
@@ -119,13 +117,13 @@ function Login() {
                   onChange={onChange}
                 />
               </InputGroup>
-              {!validEmail ? (
+              {invalidEmail ? (
                 <FormErrorMessage>Invalid e-mail address.</FormErrorMessage>
               ) : null}
             </FormControl>
 
             {/* Password input */}
-            <FormControl pb={4}>
+            <FormControl pb={4} isRequired>
               <InputGroup>
                 <InputLeftElement
                   pointerEvents="none"
