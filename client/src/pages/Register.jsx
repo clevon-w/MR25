@@ -25,8 +25,8 @@ import {
 } from "@chakra-ui/react";
 import { FiEyeOff, FiEye } from "react-icons/fi";
 
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+// import DatePicker from "react-datepicker";
+// import "react-datepicker/dist/react-datepicker.css";
 
 import { register, reset } from "../features/auth/authSlice";
 
@@ -90,7 +90,7 @@ function Register() {
   };
 
   // For date-picker:
-  const [date, setDate] = useState(null);
+  // const [date, setDate] = useState(null);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -218,10 +218,11 @@ function Register() {
               <Input
                 name="birthDate"
                 value={formData.birthDate}
-                pr="4.5rem"
+                pr="9px"
                 type="date"
                 onChange={onChange}
               />
+              <FormHelperText>Birth date</FormHelperText>
               {/* <DatePicker
                 placeholderText="Birth Date (MM/DD/YYY)"
                 selected={date} // Need this prop to display the selected date in the UI.
