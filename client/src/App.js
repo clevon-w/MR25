@@ -1,31 +1,36 @@
-import React, { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Header from './components/Header'
-import Register from './pages/Register' 
-import Dashboard from './pages/Dashboard'
-import Login from './pages/Login'
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
+import RegisterEvent from "./pages/RegisterEvent";
 import Leaderboard from './pages/Leaderboard'
 import MyAccount from './pages/MyAccount'
 import UpdateUser from './pages/UpdateUser'
-import { Container } from '@chakra-ui/react'
+import { Container, Box } from "@chakra-ui/react";
 
 function App() {
+  // var headerHeight = document.getElementById("header").clientHeight;
+
   return (
-    <>
-      <Router>
-        <Header />
-        <Container maxW="container.xl" p={0}>
+    <Router>
+      <Box h="100vh">
+        <Header id="header" />
+        {/* Height of Container needs to be 100vh - headerHeight but idk how to do */}
+        <Container maxW="container.xl" p={0} h="100%">
           <Routes>
-            <Route path='/' element={<Dashboard />} />
-            <Route path='/register' element={<Register />} />
-            <Route path='/Login' element={<Login />} />
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/registerEvent" element={<RegisterEvent />} />
             <Route path ='/Leaderboard' element={<Leaderboard />} />
             <Route path ='/MyAccount' element={<MyAccount />} />
             <Route path ='/UpdateUser' element={<UpdateUser />} />
           </Routes>
         </Container>
-      </Router>
-    </>
+      </Box>
+    </Router>
   );
 }
 

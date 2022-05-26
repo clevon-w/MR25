@@ -51,7 +51,9 @@ function Dashboard() {
   }, [dispatch, isError, message])
 
   const checkRegistered = (event) => {
-    return Object.keys(user.data.registeredEvents).includes(event._id)
+    let eventIdArr = []
+    eventIdArr = user.data.registeredEvents.flatMap((obj) => eventIdArr.concat(Object.keys(obj)))
+    return eventIdArr.includes(event._id)
   }
 
   const formatDate = (uglyDate) => {
@@ -72,119 +74,117 @@ function Dashboard() {
   }
 
   return (
-    <Container p={8} maxW={'3xl'} centerContent>
-      {events.map(event => (
-        <VStack spacing={8} align={'flex-start'}>
-          <Grid w={'100%'} templateColumns='repeat(5, 1fr)' gap={4}>
-            <GridItem colSpan={4}>
-              <Text fontSize={'lg'} fontWeight={700}>{event.name}</Text>
-            </GridItem>
-            <GridItem colSpan={1}>
-              {user ? (
-                <Tag size={'sm'} variant='subtle' borderRadius={'full'}>
-                  <TagLeftIcon 
-                    boxSize={'12px'} 
-                    as={checkRegistered(event) ? CheckIcon : CloseIcon}
-                    color={checkRegistered(event) ? 'accents.green' : 'accents.red'} />
-                  <TagLabel>{checkRegistered(event) ? 'Registered' : 'Not Registered'}</TagLabel>
-                </Tag>
-              ) : (<></>)}
-            </GridItem>
-            <GridItem colSpan={5}>
-              {user ? (
-                <Button w={'100%'} color={'primary.white'} bg={'primary.800'} onClick={toRegisterEvent}>Register Now</Button>
-              ) : (
-                <Button w={'100%'} color={'primary.white'} bg={'primary.800'} onClick={toLogin}>Login to Register</Button>
-              )}
-            </GridItem>
-          </Grid>
-          
-          <VStack spacing={4} align={'flex-start'}>
-            <Text fontWeight={700} fontSize={'md'} >Description</Text>
-            <Text fontWeight={400} fontSize={'sm'} >{event.eventDetails.eventDescription}</Text>
-          </VStack>
-
-          <Grid w={'100%'} templateColumns='repeat(2, 1fr)' gap={4}>
-            <GridItem colSpan={2}>
-              <Text fontWeight={700} fontSize={'md'} >Event details</Text>
-            </GridItem>
-            <GridItem colSpan={[2, 1]}>
-                <Tag size={'lg'} variant='subtle' w={'100%'} >
-                  <TagLeftIcon boxSize={'24px'} as={CalendarIcon} />
-                  <TagLabel >
-                    {
-                      formatDate(event.eventDetails.eventStart) + 
-                      ' - ' + 
-                      formatDate(event.eventDetails.eventEnd)
-                    }
-                  </TagLabel>
-                </Tag>
-            </GridItem>
-            <GridItem colSpan={[2, 1]}>
-                <Tag size={'lg'} variant='subtle' w={'100%'} >
-                  <TagLeftIcon boxSize={'24px'} as={IoLocationOutline} />
-                  <TagLabel>
-                    {event.eventDetails.eventLocation}
-                  </TagLabel>
-                </Tag>
-            </GridItem>
-          </Grid>
-
-          <VStack spacing={4} align={'flex-start'}>
-            <Text fontWeight={700} fontSize={'md'} >Route</Text>
-            <Image src={routeMap} alt={'route-map-image'} />
-            <Text fontWeight={400} fontSize={'sm'} >{event.eventDetails.eventRoute}</Text>
-          </VStack>
-
-          <VStack spacing={4} align={'flex-start'} >
-            <Text fontWeight={700} fontSize={'md'} >Finisher medal</Text>
-            <Text fontWeight={400} fontSize={'sm'} >{event.eventDetails.finisherPrize}</Text>
-          </VStack>
-
-          <VStack spacing={4} align={'flex-start'} >
-            <Text fontWeight={700} fontSize={'md'} >Age-gender categories</Text>
-            <Text fontWeight={400} fontSize={'sm'} >The event will be split into the following age-gender categories</Text>
-            <UnorderedList>
-              {event.eventDetails.ageCategories.map(ageCat => (
-                <ListItem key={ageCat} fontWeight={400} fontSize={'sm'} >{ageCat}</ListItem>
-              ))}
-            </UnorderedList>
-            <Text fontWeight={400} fontSize={'sm'} fontStyle={'italic'} >Age is calculated based on age as at 31 Dec 2022</Text>
-          </VStack>
-
-          <VStack spacing={4} align={'flex-start'} >
-            <Text fontWeight={700} fontSize={'md'} >Leaderboard - Inidividual</Text>
-            <Text fontWeight={400} fontSize={'sm'} >{event.eventDetails.indivLB}</Text>
-          </VStack>
-
-          <VStack spacing={4} align={'flex-start'} >
-            <Text fontWeight={700} fontSize={'md'} >Leaderboard - Team</Text>
-            <Text fontWeight={400} fontSize={'sm'} >{event.eventDetails.teamLB}</Text>
-          </VStack>
-
-          <Grid w={'100%'} templateColumns='repeat(2, 1fr)' gap={4}>
-            <GridItem colSpan={2}>
-              <Text fontWeight={700} fontSize={'md'} >Grand Finale</Text>
-            </GridItem>
-            <GridItem colSpan={[2, 1]}>
-                <Tag size={'lg'} variant='subtle' w={'100%'} >
-                  <TagLeftIcon boxSize={'24px'} as={CalendarIcon} />
-                  <TagLabel >{formatDate(event.eventDetails.finalDate)}</TagLabel>
-                </Tag>
-            </GridItem>
-            <GridItem colSpan={[2, 1]}>
-                <Tag size={'lg'} variant='subtle' w={'100%'} >
-                  <TagLeftIcon boxSize={'24px'} as={IoLocationOutline} />
-                  <TagLabel>{event.eventDetails.finalLocation}</TagLabel>
-                </Tag>
-            </GridItem>
-            <GridItem colSpan={2}>
-              <Text fontWeight={400} fontSize={'sm'} >{event.eventDetails.finalDescription}</Text>
-            </GridItem>
-          </Grid>
+    events.map(event => (
+      <VStack spacing={8} align={'flex-start'} key={event} >
+        <Grid w={'100%'} templateColumns='repeat(5, 1fr)' gap={4}>
+          <GridItem colSpan={4}>
+            <Text fontSize={'lg'} fontWeight={700}>{event.name}</Text>
+          </GridItem>
+          <GridItem colSpan={1}>
+            {user ? (
+              <Tag size={'sm'} variant='subtle' borderRadius={'full'}>
+                <TagLeftIcon 
+                  boxSize={'12px'} 
+                  as={checkRegistered(event) ? CheckIcon : CloseIcon}
+                  color={checkRegistered(event) ? 'accents.green' : 'accents.red'} />
+                <TagLabel>{checkRegistered(event) ? 'Registered' : 'Not Registered'}</TagLabel>
+              </Tag>
+            ) : (<></>)}
+          </GridItem>
+          <GridItem colSpan={5}>
+            {user ? (
+              <Button w={'100%'} color={'primary.white'} bg={'primary.800'} onClick={toRegisterEvent}>Register Now</Button>
+            ) : (
+              <Button w={'100%'} color={'primary.white'} bg={'primary.800'} onClick={toLogin}>Login to Register</Button>
+            )}
+          </GridItem>
+        </Grid>
+        
+        <VStack spacing={4} align={'flex-start'}>
+          <Text fontWeight={700} fontSize={'md'} >Description</Text>
+          <Text fontWeight={400} fontSize={'sm'} >{event.eventDetails.eventDescription}</Text>
         </VStack>
-      ))}
-    </Container>
+
+        <Grid w={'100%'} templateColumns='repeat(2, 1fr)' gap={4}>
+          <GridItem colSpan={2}>
+            <Text fontWeight={700} fontSize={'md'} >Event details</Text>
+          </GridItem>
+          <GridItem colSpan={[2, 1]}>
+              <Tag size={'lg'} variant='subtle' w={'100%'} >
+                <TagLeftIcon boxSize={'24px'} as={CalendarIcon} />
+                <TagLabel >
+                  {
+                    formatDate(event.eventDetails.eventStart) + 
+                    ' - ' + 
+                    formatDate(event.eventDetails.eventEnd)
+                  }
+                </TagLabel>
+              </Tag>
+          </GridItem>
+          <GridItem colSpan={[2, 1]}>
+              <Tag size={'lg'} variant='subtle' w={'100%'} >
+                <TagLeftIcon boxSize={'24px'} as={IoLocationOutline} />
+                <TagLabel>
+                  {event.eventDetails.eventLocation}
+                </TagLabel>
+              </Tag>
+          </GridItem>
+        </Grid>
+
+        <VStack spacing={4} align={'flex-start'}>
+          <Text fontWeight={700} fontSize={'md'} >Route</Text>
+          <Image src={routeMap} alt={'route-map-image'} />
+          <Text fontWeight={400} fontSize={'sm'} >{event.eventDetails.eventRoute}</Text>
+        </VStack>
+
+        <VStack spacing={4} align={'flex-start'} >
+          <Text fontWeight={700} fontSize={'md'} >Finisher medal</Text>
+          <Text fontWeight={400} fontSize={'sm'} >{event.eventDetails.finisherPrize}</Text>
+        </VStack>
+
+        <VStack spacing={4} align={'flex-start'} >
+          <Text fontWeight={700} fontSize={'md'} >Age-gender categories</Text>
+          <Text fontWeight={400} fontSize={'sm'} >The event will be split into the following age-gender categories</Text>
+          <UnorderedList>
+            {event.eventDetails.ageCategories.map(ageCat => (
+              <ListItem key={ageCat} fontWeight={400} fontSize={'sm'} >{ageCat}</ListItem>
+            ))}
+          </UnorderedList>
+          <Text fontWeight={400} fontSize={'sm'} fontStyle={'italic'} >Age is calculated based on age as at 31 Dec 2022</Text>
+        </VStack>
+
+        <VStack spacing={4} align={'flex-start'} >
+          <Text fontWeight={700} fontSize={'md'} >Leaderboard - Inidividual</Text>
+          <Text fontWeight={400} fontSize={'sm'} >{event.eventDetails.indivLB}</Text>
+        </VStack>
+
+        <VStack spacing={4} align={'flex-start'} >
+          <Text fontWeight={700} fontSize={'md'} >Leaderboard - Team</Text>
+          <Text fontWeight={400} fontSize={'sm'} >{event.eventDetails.teamLB}</Text>
+        </VStack>
+
+        <Grid w={'100%'} templateColumns='repeat(2, 1fr)' gap={4}>
+          <GridItem colSpan={2}>
+            <Text fontWeight={700} fontSize={'md'} >Grand Finale</Text>
+          </GridItem>
+          <GridItem colSpan={[2, 1]}>
+              <Tag size={'lg'} variant='subtle' w={'100%'} >
+                <TagLeftIcon boxSize={'24px'} as={CalendarIcon} />
+                <TagLabel >{formatDate(event.eventDetails.finalDate)}</TagLabel>
+              </Tag>
+          </GridItem>
+          <GridItem colSpan={[2, 1]}>
+              <Tag size={'lg'} variant='subtle' w={'100%'} >
+                <TagLeftIcon boxSize={'24px'} as={IoLocationOutline} />
+                <TagLabel>{event.eventDetails.finalLocation}</TagLabel>
+              </Tag>
+          </GridItem>
+          <GridItem colSpan={2}>
+            <Text fontWeight={400} fontSize={'sm'} >{event.eventDetails.finalDescription}</Text>
+          </GridItem>
+        </Grid>
+      </VStack>
+    ))
   )
 }
 

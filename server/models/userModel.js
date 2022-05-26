@@ -41,8 +41,7 @@ const userSchema = new mongoose.Schema(
       type: Array
     },
     registeredEvents: {
-      type: Map,
-      default: {}
+      type: Array
     }
   }, 
   {

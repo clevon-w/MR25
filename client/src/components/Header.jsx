@@ -1,11 +1,10 @@
-import React, { useState } from "react"
-import { 
-  Box, 
-  Flex, 
-  Text, 
-  Button, 
-  Stack, 
-  Divider, 
+import React from "react";
+import {
+  Box,
+  Flex,
+  Button,
+  Stack,
+  Divider,
   Menu,
   MenuButton,
   MenuList,
@@ -34,7 +33,7 @@ const Header = (props) => {
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <>
+    <Box bg="primary.white" w="100%">
       <NavBarContainer {...props}>
         <Logo w="100px" />
         <NavBarToggle toggle={toggle} isOpen={isOpen} />
@@ -45,7 +44,7 @@ const Header = (props) => {
         opacity={1}
         borderBottomWidth={1.5}
       />
-    </>
+    </Box>
   );
 };
 
@@ -78,7 +77,6 @@ const NavBarItem = ({ children, isSelected, to, ...rest }) => {
     </Button>
   );
 };
-
 
 const NavBarLinks = ({ isOpen }) => {
   const navigate = useNavigate();
