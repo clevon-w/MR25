@@ -25,6 +25,10 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import { FiEyeOff, FiEye } from "react-icons/fi";
+
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 import { register, reset } from "../features/auth/authSlice";
 
 function Register() {
@@ -95,6 +99,8 @@ function Register() {
     setShow2(!show2);
   };
 
+  const [date, setDate] = useState(null);
+
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -135,7 +141,7 @@ function Register() {
               Create Account
             </Text>
             <Flex>
-              <Box w="45%">
+              <Box w="48.25%">
                 <FormControl isRequired>
                   <Input
                     name="firstName"
@@ -146,7 +152,7 @@ function Register() {
                 </FormControl>
               </Box>
               <Spacer />
-              <Box w="45%">
+              <Box w="48.25%">
                 <FormControl isRequired>
                   <Input
                     name="lastName"
@@ -228,11 +234,14 @@ function Register() {
             </FormControl>
 
             <FormControl isRequired>
-              <Input
-                name="birthDate"
-                value={birthDate}
-                onChange={onChange}
-                placeholder="Birth Date (DD/MM/YYYY)"
+              <DatePicker
+                placeholderText="Birth Date (MM/DD/YYY)"
+                selected={date}
+                onChange={(date) => setDate(date)}
+                isClearable
+                showYearDropdown
+                showMonthDropdown
+                scrollableYearDropdown
               />
             </FormControl>
 
