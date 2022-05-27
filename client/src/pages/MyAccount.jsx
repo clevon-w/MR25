@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { formatDate } from "../utils/helperFunctions";
+import { formatDateYYYYMMDD } from "../utils/helperFunctions";
 
 function MyAccount() {
   const navigate = useNavigate();
@@ -58,7 +58,9 @@ function MyAccount() {
 
               <HStack spacing={4} fontSize={"sm"}>
                 <Text fontWeight={700}>DOB:</Text>
-                <Text fontWeight={400}>{formatDate(data.birthDate)}</Text>
+                <Text fontWeight={400}>
+                  {formatDateYYYYMMDD(data.birthDate)}
+                </Text>
               </HStack>
 
               <HStack spacing={4} fontSize={"sm"}>

@@ -17,6 +17,7 @@ import {
   UnorderedList,
   ListItem
 } from "@chakra-ui/react";
+import { formatDateDDMonYYYY } from "../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getEvents, reset } from "../features/event/eventSlice";
@@ -50,28 +51,6 @@ function Dashboard() {
       eventIdArr.concat(Object.keys(obj))
     );
     return eventIdArr.includes(event._id);
-  };
-
-  const formatDate = (uglyDate) => {
-    const monthArr = [
-      " Jan ",
-      " Feb ",
-      " Mar ",
-      " Apr ",
-      " May ",
-      " Jun ",
-      " Jul ",
-      " Aug ",
-      " Sep ",
-      " Oct ",
-      " Nov ",
-      " Dec "
-    ];
-    const year = uglyDate.substring(0, 4);
-    const month = monthArr[parseInt(uglyDate.substring(5, 7)) - 1];
-    const day = uglyDate.substring(8, 10);
-    const prettyDate = day + month + year;
-    return prettyDate;
   };
 
   const toLogin = () => {
@@ -153,9 +132,9 @@ function Dashboard() {
           <Tag size={"lg"} variant="subtle" w={"100%"} p={4}>
             <TagLeftIcon boxSize={"24px"} as={FiCalendar} />
             <TagLabel>
-              {formatDate(event.eventDetails.eventStart) +
+              {formatDateDDMonYYYY(event.eventDetails.eventStart) +
                 " - " +
-                formatDate(event.eventDetails.eventEnd)}
+                formatDateDDMonYYYY(event.eventDetails.eventEnd)}
             </TagLabel>
           </Tag>
         </GridItem>
@@ -232,7 +211,9 @@ function Dashboard() {
         <GridItem colSpan={[2, 1]}>
           <Tag size={"lg"} variant="subtle" w={"100%"} p={4}>
             <TagLeftIcon boxSize={"24px"} as={FiCalendar} />
-            <TagLabel>{formatDate(event.eventDetails.finalDate)}</TagLabel>
+            <TagLabel>
+              {formatDateDDMonYYYY(event.eventDetails.finalDate)}
+            </TagLabel>
           </Tag>
         </GridItem>
         <GridItem colSpan={[2, 1]}>

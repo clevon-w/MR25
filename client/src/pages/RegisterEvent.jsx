@@ -25,6 +25,7 @@ import { useEffect, useState } from "react";
 import FormRadio from "../components/FormRadio";
 import FormCheckbox from "../components/FormCheckbox";
 import { update } from "../features/auth/authSlice";
+import { formatDateDDMonYYYY } from "../utils/helperFunctions";
 
 function RegisterEvent() {
   const dispatch = useDispatch();
@@ -106,28 +107,6 @@ function RegisterEvent() {
           : eventObj[eventId][param];
       }
     }
-  };
-
-  const formatDate = (uglyDate) => {
-    const monthArr = [
-      " Jan ",
-      " Feb ",
-      " Mar ",
-      " Apr ",
-      " May ",
-      " Jun ",
-      " Jul ",
-      " Aug ",
-      " Sep ",
-      " Oct ",
-      " Nov ",
-      " Dec "
-    ];
-    const year = uglyDate.substring(0, 4);
-    const month = monthArr[parseInt(uglyDate.substring(5, 7)) - 1];
-    const day = uglyDate.substring(8, 10);
-    const prettyDate = day + month + year;
-    return prettyDate;
   };
 
   const yesNoRadio = {
@@ -312,7 +291,7 @@ function RegisterEvent() {
                   <HStack spacing={4} fontSize={"sm"}>
                     <Text fontWeight={700}>DOB:</Text>
                     <Text fontWeight={400}>
-                      {formatDate(user.data.birthDate)}
+                      {formatDateDDMonYYYY(user.data.birthDate)}
                     </Text>
                   </HStack>
                   <HStack spacing={4} fontSize={"sm"}>

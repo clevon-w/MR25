@@ -6,10 +6,8 @@ import {
   Text,
   useToast,
   Select,
-  Spinner,
   Button,
   Stack,
-  InputGroup,
   FormControl,
   FormLabel,
   FormHelperText,
@@ -19,11 +17,10 @@ import {
   Container,
   Flex,
   Spacer,
-  Input,
-  InputRightElement,
+  Input
 } from "@chakra-ui/react";
-import { update, reset } from "../features/auth/authSlice";
-import { formatDate } from "../utils/helperFunctions";
+import { update } from "../features/auth/authSlice";
+import { formatDateYYYYMMDD } from "../utils/helperFunctions";
 
 //checkicon for Update button
 import { CheckIcon } from "@chakra-ui/icons";
@@ -47,7 +44,7 @@ function UpdateUser() {
     email: data.email,
     gender: data.gender,
     birthDate: data.birthDate,
-    nric: data.nric,
+    nric: data.nric
   });
 
   // For validating email input. True if email is INVALID.
@@ -57,7 +54,7 @@ function UpdateUser() {
   const invalidNric =
     !nricRegex.test(formData.nric.toUpperCase()) && formData.nric !== "";
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const { user, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
 
@@ -68,7 +65,7 @@ function UpdateUser() {
       toast({
         title: message,
         status: "error",
-        isClosable: true,
+        isClosable: true
       });
     }
   }, [user, isError, isSuccess, message, navigate, dispatch, toast]);
@@ -76,7 +73,7 @@ function UpdateUser() {
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     }));
   };
 
@@ -90,12 +87,12 @@ function UpdateUser() {
       email,
       gender,
       birthDate,
-      nric,
+      nric
     };
 
     const args = {
       id: _id,
-      data: userData,
+      data: userData
     };
 
     dispatch(update(args));
@@ -163,7 +160,7 @@ function UpdateUser() {
                 onChange={(e) => {
                   setFormData((prevState) => ({
                     ...prevState,
-                    [e.target.name]: e.target.value.toUpperCase(),
+                    [e.target.name]: e.target.value.toUpperCase()
                   }));
                 }}
                 placeholder="NRIC/FIN (e.g. 789Z)"
@@ -191,7 +188,7 @@ function UpdateUser() {
               <Input
                 name="birthDate"
                 type="date"
-                value={formatDate(formData.birthDate)}
+                value={formatDateYYYYMMDD(formData.birthDate)}
                 onChange={onChange}
               />
             </FormControl>
@@ -199,10 +196,10 @@ function UpdateUser() {
             <FormControl isRequired>
               <FormLabel>Gender</FormLabel>
               <Select name="gender" placeholder="Gender" onChange={onChange}>
-                <option selected={gender == "Male"} value="Male">
+                <option selected={gender === "Male"} value="Male">
                   Male
                 </option>
-                <option selected={gender == "Female"} value="Female">
+                <option selected={gender === "Female"} value="Female">
                   Female
                 </option>
               </Select>
