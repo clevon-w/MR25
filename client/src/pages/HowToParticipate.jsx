@@ -10,8 +10,11 @@ import {
   Text,
   Image,
   UnorderedList,
-  ListItem
+  ListItem,
+  Link,
+  Icon
 } from "@chakra-ui/react";
+import { FiExternalLink } from "react-icons/fi";
 import MR25_paynowQR from "../images/MR25_paynowQR.jpeg";
 import joinStravaClub from "../images/join-strava-club.jpeg";
 
@@ -23,7 +26,11 @@ function HowToParticipate() {
       </Text>
       <Text textStyle="heading_xs">Step 1: Register</Text>
       <Text pb={4}>
-        Create an account and submit the registration form here.
+        Create an account and submit the registration form{" "}
+        <Link color="teal.500" href="./registerEvent">
+          here
+        </Link>
+        .
       </Text>
       <Text textStyle="heading_xs">Step 2: Registration fee</Text>
       <Text>
@@ -52,7 +59,15 @@ function HowToParticipate() {
       </Text>
       <UnorderedList pb={4}>
         <ListItem>
-          <b>Club name: </b>VA MacRitchie Trail 5km Blended Challenge 2022
+          <b>Club name: </b>
+          <Link
+            color="teal.500"
+            href=" https://www.strava.com/clubs/VAMR5km"
+            isExternal
+          >
+            VA MacRitchie Trail 5km Blended Challenge 2022
+            <Icon as={FiExternalLink} mx="2px" />
+          </Link>
         </ListItem>
       </UnorderedList>
       <Center w="100%" pb={4}>
@@ -63,9 +78,10 @@ function HowToParticipate() {
         />
       </Center>
       <Text as="i" color="primary.600">
-        Note: The Vision Athletics Strava "club" is created for result
-        verification purposes. You have to remain in the club throughout the
-        race period. This club will be disbanded once the event is over.
+        Please note that by joining the “club” VA MacRitchie Trail 5km Blended
+        Challenge 2022 on Strava, all your run records will be visible to the
+        organiser for the purpose of result verification. This Strava club will
+        be deleted once the event is over.
       </Text>
       <Text textStyle="heading_xs" pt={4}>
         Done 🎉

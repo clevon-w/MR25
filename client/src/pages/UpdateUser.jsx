@@ -98,6 +98,11 @@ function UpdateUser() {
     dispatch(update(args));
 
     if (isSuccess) {
+      toast({
+        title: "Personal particulars updated!",
+        status: "success",
+        isClosable: true
+      });
       navigate("/MyAccount");
     }
   };
