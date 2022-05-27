@@ -44,8 +44,6 @@ function Register() {
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
 
-  console.log(formData);
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const toast = useToast();

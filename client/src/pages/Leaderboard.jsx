@@ -128,9 +128,7 @@ function Leaderboard() {
         if (duplicatesRemoved.length === 4) {
           finalEntries.push([inst, duplicatesRemoved, totalRunTime])
         }
-        console.log([inst, duplicatesRemoved, totalRunTime])
       }
-      console.log(finalEntries)
       return finalEntries
     }
   }
