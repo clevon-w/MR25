@@ -557,7 +557,7 @@ function RegisterEvent() {
               borderWidth={"thin"}
             >
               <AlertIcon color={"accents.blue"} />
-              Login to upload results and view full leaderboard.
+              Login to register for the event.
             </Alert>
           </VStack>
         )}
