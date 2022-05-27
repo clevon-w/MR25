@@ -9,6 +9,7 @@ import UploadResults from "./pages/UploadResults";
 import Leaderboard from './pages/Leaderboard'
 import MyAccount from './pages/MyAccount'
 import UpdateUser from './pages/UpdateUser'
+import UploadSuccess from "./pages/UploadSuccess";
 import { Container, Box } from "@chakra-ui/react";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Route path ='/Leaderboard' element={<Leaderboard />} />
             <Route path ='/MyAccount' element={<MyAccount />} />
             <Route path ='/UpdateUser' element={<UpdateUser />} />
+            <Route path ='/UploadSuccess' element={<UploadSuccess />} />
           </Routes>
         </Container>
       </Box>
