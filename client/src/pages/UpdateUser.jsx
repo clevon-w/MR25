@@ -19,7 +19,7 @@ import {
   Spacer,
   Input
 } from "@chakra-ui/react";
-import { update } from "../features/auth/authSlice";
+import { update, reset } from "../features/auth/authSlice";
 import { formatDateYYYYMMDD } from "../utils/helperFunctions";
 
 //checkicon for Update button
@@ -68,6 +68,17 @@ function UpdateUser() {
         isClosable: true
       });
     }
+    if (isSuccess) {
+      toast({
+        title: "Updated personal particulars successfully!",
+        status: "success",
+        isClosable: true
+      });
+      navigate("/MyAccount");
+      return () => {
+        dispatch(reset());
+      };
+    }
   }, [user, isError, isSuccess, message, navigate, dispatch, toast]);
 
   const onChange = (e) => {
@@ -96,10 +107,6 @@ function UpdateUser() {
     };
 
     dispatch(update(args));
-
-    if (isSuccess) {
-      navigate("/MyAccount");
-    }
   };
 
   return (
@@ -213,6 +220,15 @@ function UpdateUser() {
             >
               Update
               <CheckIcon w={8} />
+            </Button>
+            <Button
+              variant="ghost"
+              size="lg"
+              onClick={() => {
+                navigate("/MyAccount");
+              }}
+            >
+              Cancel
             </Button>
           </Stack>
         </form>

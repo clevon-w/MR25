@@ -42,7 +42,7 @@ function ResultTeamItem(props) {
             <Spacer />
             <HStack>
               <Text fontWeight={400} fontSize={"sm"} color={"primary.600"}>
-                {formatDateDDMonYYYY(result.createdAt)}
+                {formatDateDDMonYYYY(result.runDate)}
               </Text>
               {result.verified ? <MdVerified /> : null}
             </HStack>
