@@ -1,14 +1,13 @@
-import React from "react"
-import { Box, Text } from "@chakra-ui/react"
+import React from "react";
+import { Center, Image } from "@chakra-ui/react";
+import logo from "../images/logo.png";
 
 function Logo(props) {
   return (
-    <Box {...props}>
-      <Text fontSize="md" fontWeight={700} color={"primary.800"} cursor={'pointer'}>
-        MR25
-      </Text>
-    </Box>
-  )
+    <Center {...props}>
+      <Image src={logo} alt="Logo" maxH="50px" />
+    </Center>
+  );
 }
 
-export default Logo
+export default Logo;

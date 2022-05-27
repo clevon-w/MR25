@@ -37,7 +37,9 @@ const Header = (props) => {
     <Box bg="primary.white" w="100%">
       <NavBarContainer {...props}>
         <Logo
-          w="100px"
+          _hover={{
+            cursor: "pointer"
+          }}
           onClick={() => {
             navigate("/");
           }}
