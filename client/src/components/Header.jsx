@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import {
   Box,
   Flex,
@@ -8,8 +8,7 @@ import {
   Menu,
   MenuButton,
   MenuList,
-  MenuItem,
-  ButtonGroup
+  MenuItem
 } from "@chakra-ui/react";
 import {
   CloseIcon,
@@ -20,6 +19,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
+import { getResults } from "../features/results/resultSlice";
+import { getEvents } from "../features/event/eventSlice";
 import Logo from "./Logo";
 
 /**
@@ -28,14 +29,19 @@ import Logo from "./Logo";
  * To add more stuff into the tabs, just add it into the menu links component.
  */
 const Header = (props) => {
-  const [isOpen, setIsOpen] = React.useState(false);
-
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
   return (
     <Box bg="primary.white" w="100%">
       <NavBarContainer {...props}>
-        <Logo w="100px" />
+        <Logo
+          w="100px"
+          onClick={() => {
+            navigate("/");
+          }}
+        />
         <NavBarToggle toggle={toggle} isOpen={isOpen} />
         <NavBarLinks isOpen={isOpen} />
       </NavBarContainer>
@@ -97,6 +103,8 @@ const NavBarLinks = ({ isOpen }) => {
 
   const toLeaderboard = () => {
     navigate("/leaderboard");
+    dispatch(getResults())
+    dispatch(getEvents())
   };
 
   const toAccount = () => {
@@ -129,26 +137,24 @@ const NavBarLinks = ({ isOpen }) => {
         direction={["column", "row", "row", "row"]}
         pt={[4, 4, 0, 0]}
       >
-        <ButtonGroup gap="2">
-          <NavBarItem
-            isSelected={window.location.pathname === "/"}
-            to={toDashboard}
-          >
-            About MR25
-          </NavBarItem>
-          <NavBarItem
-            isSelected={window.location.pathname === "/registerEvent"}
-            to={toRegisterEvent}
-          >
-            Register
-          </NavBarItem>
-          <NavBarItem
-            isSelected={window.location.pathname === "/leaderboard"}
-            to={toLeaderboard}
-          >
-            Leaderboard
-          </NavBarItem>
-        </ButtonGroup>
+        <NavBarItem
+          isSelected={window.location.pathname === "/"}
+          to={toDashboard}
+        >
+          About MR25
+        </NavBarItem>
+        <NavBarItem
+          isSelected={window.location.pathname === "/registerEvent"}
+          to={toRegisterEvent}
+        >
+          Register
+        </NavBarItem>
+        <NavBarItem
+          isSelected={window.location.pathname === "/leaderboard"}
+          to={toLeaderboard}
+        >
+          Leaderboard
+        </NavBarItem>
         {user ? (
           <Flex>
             <Stack

@@ -84,7 +84,12 @@ function UpdateUser() {
       nric,
     }
 
-    dispatch(update(userData))
+    const args = {
+      'id': _id,
+      'data': userData
+    }
+
+    dispatch(update(args))
 
     if(isSuccess) {
       navigate('/MyAccount')
@@ -134,8 +139,8 @@ function UpdateUser() {
           <FormControl isRequired>
             <FormLabel>Gender</FormLabel>
             <Select name='gender' placeholder='Gender' onChange={onChange}>
-              <option value='Male'>Male</option>
-              <option value='Female'>Female</option>
+              <option selected={gender == 'Male'} value='Male'>Male</option>
+              <option selected={gender == 'Female'} value='Female'>Female</option>
             </Select>
           </FormControl>
 

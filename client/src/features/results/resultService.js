@@ -5,7 +5,6 @@ const API_URL = '/api/results/'
 //Get results
 const getResults = async () => {
   const response = await axios.get(API_URL)
-  
   return response.data
 }
 
