@@ -103,8 +103,8 @@ const NavBarLinks = ({ isOpen }) => {
 
   const toLeaderboard = () => {
     navigate("/leaderboard");
-    dispatch(getResults())
-    dispatch(getEvents())
+    dispatch(getResults());
+    dispatch(getEvents());
   };
 
   const toAccount = () => {
@@ -137,12 +137,6 @@ const NavBarLinks = ({ isOpen }) => {
         direction={["column", "row", "row", "row"]}
         pt={[4, 4, 0, 0]}
       >
-        <NavBarItem
-          isSelected={window.location.pathname === "/"}
-          to={toDashboard}
-        >
-          About MR25
-        </NavBarItem>
         <NavBarItem
           isSelected={window.location.pathname === "/registerEvent"}
           to={toRegisterEvent}
