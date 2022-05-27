@@ -6,6 +6,7 @@ import ResultItem from "../components/ResultItem";
 import ResultTeamItem from "../components/ResultTeamItem";
 import {
   Stack,
+  VStack,
   Select,
   Grid,
   Text,
@@ -168,9 +169,7 @@ function Leaderboard() {
   } else {
     return (
       <Stack spacing={8}>
-        <Text fontWeight={700} fontSize={"2xl"}>
-          Leaderboard
-        </Text>
+        <Text textStyle="heading_s">Leaderboard</Text>
 
         <Grid w={"100%"} templateColumns="repeat(2, 1fr)" gap={4}>
           <GridItem colSpan={1}>
@@ -225,13 +224,15 @@ function Leaderboard() {
           <InputRightElement children={<SearchIcon />} />
         </InputGroup>
 
-        {filterParam.eventType === "Individual"
-          ? search(results).map((result, index) => (
-              <ResultItem result={result} user={user} index={index} />
-            ))
-          : search(results).map((entry, idx) => (
-              <ResultTeamItem entry={entry} idx={idx} user={user} />
-            ))}
+        <VStack align="stretch">
+          {filterParam.eventType === "Individual"
+            ? search(results).map((result, index) => (
+                <ResultItem result={result} user={user} index={index} />
+              ))
+            : search(results).map((entry, idx) => (
+                <ResultTeamItem entry={entry} idx={idx} user={user} />
+              ))}
+        </VStack>
       </Stack>
     );
   }
