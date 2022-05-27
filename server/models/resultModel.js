@@ -29,6 +29,14 @@
         type: String,
         required: [true, 'Please enter run timing']
     },
+    runDistance:{
+      type: Number,
+      required: [true, 'Please enter run distancd']
+    },
+    runDate:{
+      type:Date,
+      required: [true, 'Please add run date']
+    },
     screenshot:{
       type: String,
       required: [true, 'Please upload a screenshot']

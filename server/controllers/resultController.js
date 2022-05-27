@@ -46,6 +46,8 @@ exports.createResult = asyncHandler(async (req, res) => {
     institution: institution,
     ageCategory: ageCategory,
     runTiming: runTiming,
+    runDistance,
+    runDate,
     screenshot: `http://localhost:8000/api/results/file/${screenshot.filename}`,
     verified: verified,
   })

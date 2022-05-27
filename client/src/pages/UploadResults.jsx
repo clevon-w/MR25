@@ -19,7 +19,8 @@ import {
   GridItem,
   NumberInput,
   NumberInputField, 
-  useToast
+  useToast,
+  FormHelperText
 } from "@chakra-ui/react";
 // import { FiImage } from 'react-icons/fi'
 import { createResult, reset } from "../features/results/resultSlice"
@@ -54,6 +55,8 @@ function UploadResults() {
     ageCategory: data.registeredEvents[0]['62864db1e76d2b7a270da2df'].category,
     institution: data.registeredEvents[0]['62864db1e76d2b7a270da2df'].institution,
     runTiming: '',
+    runDate: '',
+    runDistance: '',
     screenshot: null,
     verified: false,
   });
@@ -69,7 +72,9 @@ function UploadResults() {
     institution,
     runtiming,
     screenshot,
-    verified
+    verified,
+    runDistance,
+    runDate
   } = formData
 
   useEffect(() => {
@@ -201,6 +206,25 @@ function UploadResults() {
                 </Text>
               </HStack>
             </Stack>
+          </Stack>
+
+          <Stack>
+          <FormControl isRequired>
+              <Input
+                name="runDate"
+                value={formData.runDate}
+                pr="9px"
+                type="date"
+                onChange={onChange}
+              />
+              <FormHelperText>Date of run</FormHelperText>
+          </FormControl>
+          <FormControl isRequired>
+            <NumberInput min={5} max={50} precision={2}>
+                <NumberInputField placeholder='Distance (in KM)' name='hours' value={runTime.hours} onChange={onChange} />
+              </NumberInput>
+            <FormHelperText>Run Distance as reflected in screenshot</FormHelperText>
+          </FormControl>
           </Stack>
 
           <Stack spacing={4}>
