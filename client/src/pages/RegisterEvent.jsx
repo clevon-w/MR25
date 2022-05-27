@@ -18,13 +18,14 @@ import {
   Input,
   Link
 } from "@chakra-ui/react";
-import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
 import { getEvents, reset } from "../features/event/eventSlice";
 import { useEffect, useState } from "react";
 import FormRadio from "../components/FormRadio";
 import FormCheckbox from "../components/FormCheckbox";
 import { update } from "../features/auth/authSlice";
+import { formatDateDDMonYYYY } from "../utils/helperFunctions";
 
 function RegisterEvent() {
   const dispatch = useDispatch();
@@ -106,28 +107,6 @@ function RegisterEvent() {
     }
   };
 
-  const formatDate = (uglyDate) => {
-    const monthArr = [
-      " Jan ",
-      " Feb ",
-      " Mar ",
-      " Apr ",
-      " May ",
-      " Jun ",
-      " Jul ",
-      " Aug ",
-      " Sep ",
-      " Oct ",
-      " Nov ",
-      " Dec "
-    ];
-    const year = uglyDate.substring(0, 4);
-    const month = monthArr[parseInt(uglyDate.substring(5, 7)) - 1];
-    const day = uglyDate.substring(8, 10);
-    const prettyDate = day + month + year;
-    return prettyDate;
-  };
-
   const yesNoRadio = {
     yes: "Yes",
     no: "No"
@@ -189,18 +168,24 @@ function RegisterEvent() {
   return events.map((event) => (
     <form onSubmit={onSubmit} key={event}>
       <VStack spacing={8} align={"flex-start"}>
-        <Grid w={"100%"} templateColumns="repeat(5, 1fr)" gap={4}>
+        <Grid w={"100%"} templateColumns="repeat(6, 1fr)" gap={4}>
           <GridItem colSpan={4}>
-            <Text fontSize={"lg"} fontWeight={700}>
+            <Text fontSize={"xl"} fontWeight={700}>
               {"Register: " + event.name}
             </Text>
           </GridItem>
-          <GridItem colSpan={1}>
+          <GridItem colSpan={2}>
             {user ? (
-              <Tag size={"sm"} variant="subtle" borderRadius={"full"}>
+              <Tag
+                size={"sm"}
+                variant="subtle"
+                borderRadius={"full"}
+                px={3}
+                py={2}
+              >
                 <TagLeftIcon
                   boxSize={"12px"}
-                  as={checkRegistered(event) ? CheckIcon : CloseIcon}
+                  as={checkRegistered(event) ? FiCheckCircle : FiXCircle}
                   color={
                     checkRegistered(event) ? "accents.green" : "accents.red"
                   }
@@ -307,7 +292,7 @@ function RegisterEvent() {
                   <HStack spacing={4} fontSize={"sm"}>
                     <Text fontWeight={700}>DOB:</Text>
                     <Text fontWeight={400}>
-                      {formatDate(user.data.birthDate)}
+                      {formatDateDDMonYYYY(user.data.birthDate)}
                     </Text>
                   </HStack>
                   <HStack spacing={4} fontSize={"sm"}>
@@ -573,7 +558,7 @@ function RegisterEvent() {
               borderWidth={"thin"}
             >
               <AlertIcon color={"accents.blue"} />
-              Login to upload results and view full leaderboard.
+              Login to register for the event.
             </Alert>
           </VStack>
         )}

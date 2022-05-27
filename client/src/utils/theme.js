@@ -32,8 +32,13 @@ const colors = {
 const textStyles = {
   heading_s: {
     // you can also use responsive styles
-    fontSize: ["18px", "24px"],
+    fontSize: ["20px", "24px"],
     fontWeight: "bold",
+    lineHeight: "140%"
+  },
+  heading_xs: {
+    fontSize: ["18px", "20px"],
+    fontWeight: "semibold",
     lineHeight: "140%"
   }
 };

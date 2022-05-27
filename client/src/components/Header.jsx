@@ -37,7 +37,9 @@ const Header = (props) => {
     <Box bg="primary.white" w="100%">
       <NavBarContainer {...props}>
         <Logo
-          w="100px"
+          _hover={{
+            cursor: "pointer"
+          }}
           onClick={() => {
             navigate("/");
           }}
@@ -93,6 +95,10 @@ const NavBarLinks = ({ isOpen }) => {
     navigate("/");
   };
 
+  const toHowToParticipate = () => {
+    navigate("/howToParticipate");
+  };
+
   const toLogin = () => {
     navigate("/login");
   };
@@ -103,8 +109,8 @@ const NavBarLinks = ({ isOpen }) => {
 
   const toLeaderboard = () => {
     navigate("/leaderboard");
-    dispatch(getResults())
-    dispatch(getEvents())
+    dispatch(getResults());
+    dispatch(getEvents());
   };
 
   const toAccount = () => {
@@ -138,10 +144,10 @@ const NavBarLinks = ({ isOpen }) => {
         pt={[4, 4, 0, 0]}
       >
         <NavBarItem
-          isSelected={window.location.pathname === "/"}
-          to={toDashboard}
+          isSelected={window.location.pathname === "/howToParticipate"}
+          to={toHowToParticipate}
         >
-          About MR25
+          How to participate
         </NavBarItem>
         <NavBarItem
           isSelected={window.location.pathname === "/registerEvent"}

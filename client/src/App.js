@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import HowToParticipate from "./pages/HowToParticipate";
 import Login from "./pages/Login";
 import RegisterEvent from "./pages/RegisterEvent";
 import UploadResults from "./pages/UploadResults";
@@ -23,6 +24,7 @@ function App() {
         <Container maxW="2xl" my={[5, 10]} pb={["40px", "80px"]}>
           <Routes>
             <Route path="/" element={<Dashboard />} />
+            <Route path="/howToParticipate" element={<HowToParticipate />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/registerEvent" element={<RegisterEvent/>} />
