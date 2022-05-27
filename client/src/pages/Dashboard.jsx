@@ -66,7 +66,7 @@ function Dashboard() {
       <Grid w={"100%"} templateColumns="repeat(6, 1fr)" gap={4}>
         <GridItem colSpan={4}>
           <Text fontSize={"xl"} fontWeight={700}>
-            {event.name}
+            About: {event.name}
           </Text>
         </GridItem>
         <GridItem colSpan={2}>
