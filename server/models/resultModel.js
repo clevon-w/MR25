@@ -16,6 +16,14 @@
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Event'
+     },
+    firstName:{
+      type: String,
+      required: [true, 'Please enter first name'],
+     },
+    lastName:{
+      type: String,
+      required: [true, 'Please enter last name'],
     },
     institution:{
       type: String,

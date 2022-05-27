@@ -28,7 +28,7 @@ exports.findAllResults = asyncHandler(async (req, res) => {
   * @param {*} res the object to send back to the desired HTTP response
   */
 exports.createResult = asyncHandler(async (req, res) => {
-  const {userId, eventId, firstName, lastName, runTiming, ageCategory, institution, verified} = req.body
+  const {userId, eventId, firstName, lastName, runTiming, runDistance, runDate, ageCategory, institution, verified} = req.body
 
   if (!ageCategory || !runTiming || !institution) {
     res.status(400)

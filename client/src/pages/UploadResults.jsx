@@ -41,8 +41,11 @@ function UploadResults() {
    */
   const {user} = useSelector((state) => state.auth)
   const {data} = useSelector((state) => state.auth.user)
-  const { events, isLoading, isError, isSuccess, message } = useSelector(
+  const { events } = useSelector(
     (state) => state.events
+  )
+  const { results, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.results
   )
 
   // category and institution is hard coded at the moment
@@ -67,7 +70,11 @@ function UploadResults() {
     seconds: ''
   })
 
-  const {
+  let {
+    userId,
+    eventId,
+    firstName,
+    lastName,
     ageCategory,
     institution,
     runTiming,
@@ -111,14 +118,25 @@ function UploadResults() {
     const m = runTime.minutes === '' ? '00' : runTime.minutes > 59 ? '59' : String(runTime.minutes).padStart(2, '0')
     const s = runTime.seconds === '' ? '00' : runTime.seconds > 59 ? '59' : String(runTime.seconds).padStart(2, '0')
 
-    setFormData((prevState) => ({
-      ...prevState,
-      runTiming: h + ':' + m + ':' + s,
-    }))
+    runTiming = h + ':' + m + ':' + s
 
-    console.log(formData)
+    const resultData = {
+      userId,
+      eventId,
+      firstName,
+      lastName,
+      ageCategory,
+      institution,
+      runTiming,
+      // screenshot,
+      verified,
+      runDistance,
+      runDate
+    }
 
-    dispatch(createResult(formData))
+    console.log(resultData)
+  
+    dispatch(createResult(resultData))
 
     if (isSuccess) {
       toast({
@@ -217,7 +235,7 @@ function UploadResults() {
               <FormHelperText>Date of run</FormHelperText>
           </FormControl>
           <FormControl isRequired>
-            <NumberInput min={5} max={50} precision={2}>
+            <NumberInput precision={2}>
                 <NumberInputField placeholder='Distance (in KM)' name='runDistance' value={runDistance} onChange={onChange} />
               </NumberInput>
             <FormHelperText>Run Distance as reflected in screenshot</FormHelperText>
