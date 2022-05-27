@@ -22,7 +22,7 @@ import {
   Spacer,
   Input,
   InputRightElement,
-  Icon
+  Icon,
 } from "@chakra-ui/react";
 import { FiEyeOff, FiEye } from "react-icons/fi";
 
@@ -41,7 +41,7 @@ function Register() {
     birthDate: "",
     nric: "",
     password: "",
-    password2: ""
+    password2: "",
   });
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
@@ -58,7 +58,8 @@ function Register() {
   const invalidEmail =
     !emailRegex.test(formData.email) && formData.email !== "";
   // For validating NRIC input. True if NRIC is INVALID.
-  const invalidNric = !nricRegex.test(formData.nric) && formData.nric !== "";
+  const invalidNric =
+    !nricRegex.test(formData.nric.toUpperCase()) && formData.nric !== "";
   // For matching passwords. True if passwords DONT match.
   const passwordNoMatch =
     formData.password !== formData.password2 && formData.password2 !== "";
@@ -68,7 +69,7 @@ function Register() {
       toast({
         title: message,
         status: "error",
-        isClosable: true
+        isClosable: true,
       });
     }
 
@@ -82,7 +83,7 @@ function Register() {
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -108,7 +109,7 @@ function Register() {
       toast({
         title: "Passwords do not match",
         status: "error",
-        isClosable: true
+        isClosable: true,
       });
     } else {
       dispatch(register(formData));
@@ -180,7 +181,7 @@ function Register() {
                 <InputRightElement
                   onClick={handleClick}
                   _hover={{
-                    cursor: "pointer"
+                    cursor: "pointer",
                   }}
                 >
                   {show ? (
@@ -205,7 +206,7 @@ function Register() {
                 <InputRightElement
                   onClick={handleClick2}
                   _hover={{
-                    cursor: "pointer"
+                    cursor: "pointer",
                   }}
                 >
                   {show2 ? (
@@ -223,8 +224,13 @@ function Register() {
             <FormControl isRequired isInvalid={invalidNric}>
               <Input
                 name="nric"
-                value={formData.nric}
-                onChange={onChange}
+                value={formData.nric.toUpperCase()}
+                onChange={(e) => {
+                  setFormData((prevState) => ({
+                    ...prevState,
+                    [e.target.name]: e.target.value.toUpperCase(),
+                  }));
+                }}
                 placeholder="NRIC/FIN (e.g. 789Z)"
               />
               <FormHelperText>Last 3 digits and ending alphabet</FormHelperText>
