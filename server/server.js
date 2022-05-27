@@ -41,16 +41,16 @@ app.use('/api/results', require('./routes/resultRoutes'))
 app.use('/api/events', require('./routes/eventRoutes'))
 
 // route for seeing screenshot
-app.get('/api/results/file/:filename',async (req, res) => {
-  try {
-    const file = await gfs.files.findOne({ filename: req.params.filename });
-    const readStream = gridfsBucket.openDownloadStreamByName(file.filename)
-    readStream.pipe(res);
-  } catch (error) {
-    console.log(error)
-    res.send("not found");
-  }
-})
+// app.get('/api/results/file/:filename',async (req, res) => {
+//   try {
+//     const file = await gfs.files.findOne({ filename: req.params.filename });
+//     const readStream = gridfsBucket.openDownloadStreamByName(file.filename)
+//     readStream.pipe(res);
+//   } catch (error) {
+//     console.log(error)
+//     res.send("not found");
+//   }
+// })
 
 // use error handling middleware last
 app.use(errorMiddleware.errorHandler)

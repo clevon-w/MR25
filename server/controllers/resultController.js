@@ -28,9 +28,9 @@ exports.findAllResults = asyncHandler(async (req, res) => {
   * @param {*} res the object to send back to the desired HTTP response
   */
 exports.createResult = asyncHandler(async (req, res) => {
-  const {userId, eventId, firstName, lastName, runTiming, ageCategory, institution, screenshot, verified} = req.body
+  const {userId, eventId, firstName, lastName, runTiming, ageCategory, institution, verified} = req.body
 
-  if (!ageCategory || !runTiming || !institution || !screenshot) {
+  if (!ageCategory || !runTiming || !institution) {
     res.status(400)
     throw new Error('Please input all fields and select a file')
   }
@@ -48,7 +48,7 @@ exports.createResult = asyncHandler(async (req, res) => {
     runTiming: runTiming,
     runDistance,
     runDate,
-    screenshot: `http://localhost:8000/api/results/file/${screenshot.filename}`,
+    // screenshot: `http://localhost:8000/api/results/file/${screenshot.filename}`,
     verified: verified,
   })
 

@@ -57,7 +57,7 @@ function UploadResults() {
     runTiming: '',
     runDate: '',
     runDistance: '',
-    screenshot: null,
+    // screenshot: null,
     verified: false,
   });
 
@@ -71,7 +71,7 @@ function UploadResults() {
     ageCategory,
     institution,
     runtiming,
-    screenshot,
+    // screenshot,
     verified,
     runDistance,
     runDate
@@ -90,7 +90,7 @@ function UploadResults() {
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.name === 'screenshot' ? e.target.files[0] : e.target.value
+      [e.target.name]: e.target.value
     }))
     console.log(formData)
   }
@@ -258,13 +258,13 @@ function UploadResults() {
               </GridItem>
             </SimpleGrid>
 
-            <Input
+            {/* <Input
               type={'file'}
               name='screenshot'
               onChange={onChange}
               accept='image/*'
               multiple={false}
-            />
+            /> */}
 
             {/* <Text
               fontWeight={700}

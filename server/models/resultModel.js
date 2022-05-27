@@ -37,10 +37,10 @@
       type:Date,
       required: [true, 'Please add run date']
     },
-    screenshot:{
-      type: String,
-      required: [true, 'Please upload a screenshot']
-    },
+    // screenshot:{
+    //   type: String,
+    //   required: [true, 'Please upload a screenshot']
+    // },
     verified:{
       type: Boolean,
     },

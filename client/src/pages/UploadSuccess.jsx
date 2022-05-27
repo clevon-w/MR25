@@ -50,10 +50,10 @@ function UploadSuccess() {
                 <Text fontWeight={400} >{formatDate(result.runTiming)}</Text>
               </HStack>
 
-              <HStack spacing={4} fontSize={'sm'} >
+              {/* <HStack spacing={4} fontSize={'sm'} >
                 <Text fontWeight={700} >Strava Screenshot:</Text>
                 <Text fontWeight={400} >{result.screenshot}</Text>
-              </HStack>
+              </HStack> */}
 
               <HStack spacing={4} fontSize={'sm'} >
                 <Text fontWeight={700} >Category:</Text>
