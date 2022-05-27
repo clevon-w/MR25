@@ -48,7 +48,7 @@ function ResultItem(props) {
             <Text fontWeight={700} fontSize={'md'} color={'primary.800'} >{props.result.runTiming}</Text>
             {props.result.verified ? (
               <MdVerified/>
-            ) : (<></>)}
+            ) : (null)}
           </HStack>
           <Text fontWeight={400} fontSize={'sm'} color={'primary.600'} >{ formatDate(props.result.createdAt) }</Text>
         </Flex>

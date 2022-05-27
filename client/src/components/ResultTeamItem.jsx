@@ -53,7 +53,7 @@ function ResultTeamItem(props) {
               <Text fontWeight={400} fontSize={'sm'} color={'primary.600'} >{formatDate(result.createdAt)}</Text>
               {result.verified ? (
                 <MdVerified/>
-              ) : (<></>)}
+              ) : (null)}
             </HStack>
           </Flex>
         ))}

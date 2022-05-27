@@ -47,7 +47,7 @@ function Leaderboard() {
     let sumSeconds = 0;
       
     results.forEach(result => {
-      let a = result.runTime.split(":");
+      let a = result.runTiming.split(":");
       let seconds = +a[0] * 60 * 60 + +a[1] * 60 + +a[2];
       sumSeconds += seconds;
     });
@@ -105,7 +105,7 @@ function Leaderboard() {
           return false
         })
 
-        // Sort the results based on runTime
+        // Sort the results based on runTiming
         let sortedResArr = verifiedResArr.sort((resultA, resultB) => {
           return resultA.runTiming.localeCompare(resultB.runTiming)
         })
@@ -121,12 +121,12 @@ function Leaderboard() {
           return false
         }).slice(0, 4)
 
-        // Find the sum of the top 4 runTimes
-        let totalRunTime = sumTime(duplicatesRemoved)
+        // Find the sum of the top 4 runTimings
+        let totalRunTiming = sumTime(duplicatesRemoved)
 
-        // Check if there are 4 runTimes, if less than 4, institution not qualified for team event
+        // Check if there are 4 runTimings, if less than 4, institution not qualified for team event
         if (duplicatesRemoved.length === 4) {
-          finalEntries.push([inst, duplicatesRemoved, totalRunTime])
+          finalEntries.push([inst, duplicatesRemoved, totalRunTiming])
         }
       }
       return finalEntries
@@ -177,9 +177,7 @@ function Leaderboard() {
                 filterParam.eventType === 'Team' && (ageCat === "Men's Open (individual event only)" ||
                 ageCat === "Men's Above 50 (individual event only)" ||
                 ageCat === "Women's Open (individual event only)" ||
-                ageCat === "Women's Above 50 (individual event only)") ? (
-                  <></>
-                ) : (
+                ageCat === "Women's Above 50 (individual event only)") ? (null) : (
                   <option value={ageCat} key={ageCat}>{ageCat}</option>
                 )
               ))}
@@ -210,11 +208,11 @@ function Leaderboard() {
         </InputGroup>
         
         {filterParam.eventType === 'Individual' ? (
-          search(results.data).map((result, index) => (
+          search(results).map((result, index) => (
             <ResultItem result={result} user={user} index={index} />
           ))
         ) : (
-          search(results.data).map((entry, idx) => (
+          search(results).map((entry, idx) => (
             <ResultTeamItem entry={entry} idx={idx} user={user} />
           )) 
         )}

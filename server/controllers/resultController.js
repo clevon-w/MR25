@@ -17,7 +17,7 @@ const asyncHandler = require('express-async-handler')
   */
 exports.findAllResults = asyncHandler(async (req, res) => {
   const results = await Result.find()
-  res.send({data: results})
+  res.send(results)
 })
 
 /**
@@ -28,9 +28,9 @@ exports.findAllResults = asyncHandler(async (req, res) => {
   * @param {*} res the object to send back to the desired HTTP response
   */
 exports.createResult = asyncHandler(async (req, res) => {
-  const {user, event, runTiming, ageCategory, institution, screenshot, verified} = req.body
+  const {firstName, lastName, runTiming, ageCategory, institution, screenshot, verified} = req.body
 
-  if (!firstName || !lastName || !ageCategory || !runTiming || !institution || !screenshot) {
+  if (!ageCategory || !runTiming || !institution || !screenshot) {
     res.status(400)
     throw new Error('Please add an result')
   }
@@ -38,13 +38,13 @@ exports.createResult = asyncHandler(async (req, res) => {
   const result = await Result.create({
     userId: req.user.id,
     eventId: req.event.id,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    institution: req.body.institution,
-    ageCategory: req.body.ageCategory,
-    runTiming: req.body.runTiming,
-    screenshot: req.body.screenshot,
-    verified: req.body.verified,
+    firstName: firstName,
+    lastName: lastName,
+    institution: institution,
+    ageCategory: ageCategory,
+    runTiming: runTiming,
+    screenshot: screenshot,
+    verified: verified,
   })
 
   res.status(200).json(result)

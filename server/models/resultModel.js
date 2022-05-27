@@ -22,11 +22,11 @@
       required: [true, 'Please enter institution'],
     },
     ageCategory: {
-      type:String,
+      type: String,
       required: [true, 'Please enter age category']
     },
     runTiming:{
-        type: Date,
+        type: String,
         required: [true, 'Please enter run timing']
     },
     screenshot:{
