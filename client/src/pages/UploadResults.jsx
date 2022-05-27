@@ -43,12 +43,11 @@ function UploadResults() {
     eventId: "62864db1e76d2b7a270da2df",
     firstName: data.firstName,
     lastName: data.lastName,
-    ageCategory: data.registeredEvents[0]["62864db1e76d2b7a270da2df"].category,
-    institution:
-      data.registeredEvents[0]["62864db1e76d2b7a270da2df"].institution,
-    runTiming: "",
-    runDate: "",
-    runDistance: "",
+    ageCategory: '',
+    institution: '',
+    runTiming: '',
+    runDate: '',
+    runDistance: '',
     // screenshot: null,
     verified: false
   });
@@ -76,6 +75,15 @@ function UploadResults() {
   useEffect(() => {
     if (isError) {
       console.log(message);
+    }
+
+    if (data.registeredEvents.length === 0){
+      toast({
+        title: 'No registered event. Please register for the event to upload results',
+        status: "error",
+        isClosable: true
+      })
+      navigate('/registerEvent')
     }
 
     if (isSuccess) {
@@ -111,6 +119,10 @@ function UploadResults() {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    
+    ageCategory = data.registeredEvents[0]['62864db1e76d2b7a270da2df'].category
+    institution = data.registeredEvents[0]['62864db1e76d2b7a270da2df'].institution
+    
     const h =
       runTime.hours === ""
         ? "00"
@@ -149,15 +161,6 @@ function UploadResults() {
     console.log(resultData);
 
     dispatch(createResult(resultData));
-
-    if (isSuccess) {
-      toast({
-        title: "Uploaded results successfully!",
-        status: "success",
-        isClosable: true
-      });
-      navigate("/");
-    }
   };
 
   return (
@@ -354,3 +357,4 @@ function UploadResults() {
 }
 
 export default UploadResults;
+

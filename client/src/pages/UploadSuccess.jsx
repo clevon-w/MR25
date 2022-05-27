@@ -138,6 +138,7 @@ function UploadSuccess() {
         <Button colorScheme="primary.800" size="lg" onClick={toLeaderBoard}>
           View LeaderBoard
         </Button>
+
         <Button variant="ghost" size="lg" onClick={toUploadResults}>
           Upload another result
         </Button>
