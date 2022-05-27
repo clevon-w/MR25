@@ -93,6 +93,10 @@ const NavBarLinks = ({ isOpen }) => {
     navigate("/");
   };
 
+  const toHowToParticipate = () => {
+    navigate("/howToParticipate");
+  };
+
   const toLogin = () => {
     navigate("/login");
   };
@@ -137,6 +141,12 @@ const NavBarLinks = ({ isOpen }) => {
         direction={["column", "row", "row", "row"]}
         pt={[4, 4, 0, 0]}
       >
+        <NavBarItem
+          isSelected={window.location.pathname === "/howToParticipate"}
+          to={toHowToParticipate}
+        >
+          How to participate
+        </NavBarItem>
         <NavBarItem
           isSelected={window.location.pathname === "/registerEvent"}
           to={toRegisterEvent}

@@ -35,6 +35,11 @@ const textStyles = {
     fontSize: ["18px", "24px"],
     fontWeight: "bold",
     lineHeight: "140%"
+  },
+  heading_xs: {
+    fontSize: ["16px", "20px"],
+    fontWeight: "semibold",
+    lineHeight: "140%"
   }
 };
 
