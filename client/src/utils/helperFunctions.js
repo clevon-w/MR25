@@ -7,10 +7,10 @@ export const formatDateYYYYMMDD = (uglyDate) => {
   //   const month = monthArr[parseInt(uglyDate.substring(5, 7)) - 1];
   const month = uglyDate.substring(5, 7);
   const day = uglyDate.substring(8, 10);
-  const prettyDate = year + "-" + month + "-" + day;
+  const yyyyMmDddd = year + "-" + month + "-" + day;
 
   // Returns date as YYYY-MM-DD
-  return prettyDate;
+  return yyyyMmDddd;
 };
 
 export const formatDateDDMonYYYY = (uglyDate) => {
@@ -31,7 +31,7 @@ export const formatDateDDMonYYYY = (uglyDate) => {
   const year = uglyDate.substring(0, 4);
   const month = monthArr[parseInt(uglyDate.substring(5, 7)) - 1];
   const day = uglyDate.substring(8, 10);
-  const formatDateDDMonYYYY = day + month + year;
+  const DdMonYyyy = day + month + year;
   // Returns date as DD Mon YYYY
-  return formatDateDDMonYYYY;
+  return DdMonYyyy;
 };
