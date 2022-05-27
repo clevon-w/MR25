@@ -4,6 +4,7 @@
  */
 
 // import express, mongoose and middleware
+const path = require('path')
 const express = require('express')
 const mongoose = require('mongoose')
 const errorMiddleware = require('./middleware/errorMiddleware')
@@ -51,6 +52,15 @@ app.use('/api/events', require('./routes/eventRoutes'))
 //     res.send("not found");
 //   }
 // })
+
+// Serve frontend
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')))
+
+  app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, '../', 'client', 'build', 'index.html')))
+} else {
+  app.get('/', (req, res) => res.send('Please set to production'))
+}
 
 // use error handling middleware last
 app.use(errorMiddleware.errorHandler)
