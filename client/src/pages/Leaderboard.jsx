@@ -60,7 +60,7 @@ function Leaderboard() {
     if (filterParam.eventType === 'Individual') {
       // Filtered based on category and search
       let filteredResults = results.filter((result) => {
-        if (result.category === filterParam.category) {
+        if (result.ageCategory === filterParam.category) {
           return searchParam.some((attr) => {
             return result[attr].toString().toLowerCase().indexOf(query.toLowerCase()) > -1
           })
@@ -70,7 +70,7 @@ function Leaderboard() {
 
       // Sort the filtered results based on time
       let sortedFilteredResults = filteredResults.sort((resultA, resultB) => {
-        return resultA.runTime.localeCompare(resultB.runTime)
+        return resultA.runTiming.localeCompare(resultB.runTiming)
       })
 
       const uniqueIds = []
@@ -99,7 +99,7 @@ function Leaderboard() {
       for (let [inst, resultsArr] of Object.entries(groupedResults)) {
         // Filter verified and category
         let verifiedResArr = resultsArr.filter((res) => {
-          if (res.category === filterParam.category) {
+          if (res.ageCategory === filterParam.category) {
             return res.verified
           }
           return false
@@ -107,7 +107,7 @@ function Leaderboard() {
 
         // Sort the results based on runTime
         let sortedResArr = verifiedResArr.sort((resultA, resultB) => {
-          return resultA.runTime.localeCompare(resultB.runTime)
+          return resultA.runTiming.localeCompare(resultB.runTiming)
         })
 
         const uniqueIds = []

@@ -45,7 +45,7 @@ function ResultItem(props) {
 
         <Flex direction={'column'} >
           <HStack>
-            <Text fontWeight={700} fontSize={'md'} color={'primary.800'} >{props.result.runTime}</Text>
+            <Text fontWeight={700} fontSize={'md'} color={'primary.800'} >{props.result.runTiming}</Text>
             {props.result.verified ? (
               <MdVerified/>
             ) : (<></>)}
