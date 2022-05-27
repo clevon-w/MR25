@@ -111,8 +111,6 @@ function UploadSuccess() {
           View LeaderBoard
         </Button>
         </Stack>
-
-        
       </Container>
     </>
   )
