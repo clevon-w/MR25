@@ -85,7 +85,7 @@ function Dashboard() {
               </TagLabel>
             </Tag>
           ) : (
-            <></>
+            null
           )}
         </GridItem>
         <GridItem colSpan={6}>

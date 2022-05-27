@@ -17,7 +17,7 @@ const asyncHandler = require('express-async-handler')
   */
 exports.findAllResults = asyncHandler(async (req, res) => {
   const results = await Result.find()
-  res.send({data: results})
+  res.send(results)
 })
 
 /**
@@ -28,20 +28,28 @@ exports.findAllResults = asyncHandler(async (req, res) => {
   * @param {*} res the object to send back to the desired HTTP response
   */
 exports.createResult = asyncHandler(async (req, res) => {
-  const {distance, loops, runDate, runTiming} = req.body
+  const {userId, eventId, firstName, lastName, runTiming, runDistance, runDate, ageCategory, institution, verified} = req.body
 
-  if (!distance || !loops || !runDate || !runTiming) {
+  if (!ageCategory || !runTiming || !institution) {
     res.status(400)
-    throw new Error('Please add an result')
+    throw new Error('Please input all fields and select a file')
   }
 
+  // req.user is put in by authMiddleware because of the authentication token
+  // we dont have a eventMiddleware to get the event entry
+  // so we are just hardcoding the eventId in for now
   const result = await Result.create({
-    user: req.user.id,
-    distance: req.body.distance,
-    loops: req.body.loops,
-    runDate: req.body.runDate,
-    runTiming: req.body.runTiming,
-    ageCategory: req.body.ageGategory,
+    userId: userId,
+    eventId: eventId,
+    firstName: firstName,
+    lastName: lastName,
+    institution: institution,
+    ageCategory: ageCategory,
+    runTiming: runTiming,
+    runDistance,
+    runDate,
+    // screenshot: `http://localhost:8000/api/results/file/${screenshot.filename}`,
+    verified: verified,
   })
 
   res.status(200).json(result)

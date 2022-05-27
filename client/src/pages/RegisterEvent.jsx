@@ -52,12 +52,10 @@ function RegisterEvent() {
     parentMobile: "",
     dataConsent: false,
     pending: "pending",
-    registeredDate: new Date().toLocaleString("en-US", {
-      timeZone: "Asia/Singapore"
-    })
+    registeredDate: ""
   });
 
-  const {
+  let {
     category,
     institution,
     heartCondition,
@@ -121,6 +119,9 @@ function RegisterEvent() {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    registeredDate = new Date().toLocaleString("en-US", {
+      timeZone: "Asia/Singapore"
+    })
     const userData = [
       ...user.data.registeredEvents,
       {
@@ -194,7 +195,7 @@ function RegisterEvent() {
                 </TagLabel>
               </Tag>
             ) : (
-              <></>
+              null
             )}
           </GridItem>
         </Grid>

@@ -7,27 +7,52 @@
 
  const resultSchema = new mongoose.Schema(
    {
-    user:{
+    userId:{
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: 'User'
     },
-    distance:{
-        type: Number,
-        required: [true, 'Please enter run distance']
+    eventId:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Event'
+     },
+    firstName:{
+      type: String,
+      required: [true, 'Please enter first name'],
+     },
+    lastName:{
+      type: String,
+      required: [true, 'Please enter last name'],
     },
-    loops:{
-        type: Number,
-        required: [true, 'Please enter number of loops']
+    institution:{
+      type: String,
+      required: [true, 'Please enter institution'],
     },
-    runDate:{
-        type: Date,
-        required: [true, 'Please enter date of the run']
+    ageCategory: {
+      type: String,
+      required: [true, 'Please enter age category']
     },
     runTiming:{
-        type: Number,
+        type: String,
         required: [true, 'Please enter run timing']
     },
+    runDistance:{
+      type: Number,
+      required: [true, 'Please enter run distancd']
+    },
+    runDate:{
+      type:Date,
+      required: [true, 'Please add run date']
+    },
+    // screenshot:{
+    //   type: String,
+    //   required: [true, 'Please upload a screenshot']
+    // },
+    verified:{
+      type: Boolean,
+    },
+
    }, 
    {
      timestamps: true

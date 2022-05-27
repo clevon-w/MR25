@@ -6,9 +6,11 @@ import Dashboard from "./pages/Dashboard";
 import HowToParticipate from "./pages/HowToParticipate";
 import Login from "./pages/Login";
 import RegisterEvent from "./pages/RegisterEvent";
-import Leaderboard from "./pages/Leaderboard";
-import MyAccount from "./pages/MyAccount";
-import UpdateUser from "./pages/UpdateUser";
+import UploadResults from "./pages/UploadResults";
+import Leaderboard from './pages/Leaderboard'
+import MyAccount from './pages/MyAccount'
+import UpdateUser from './pages/UpdateUser'
+import UploadSuccess from "./pages/UploadSuccess";
 import { Container, Box } from "@chakra-ui/react";
 
 function App() {
@@ -25,10 +27,12 @@ function App() {
             <Route path="/howToParticipate" element={<HowToParticipate />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/registerEvent" element={<RegisterEvent />} />
-            <Route path="/Leaderboard" element={<Leaderboard />} />
-            <Route path="/MyAccount" element={<MyAccount />} />
-            <Route path="/UpdateUser" element={<UpdateUser />} />
+            <Route path="/registerEvent" element={<RegisterEvent/>} />
+            <Route path="/UploadResults" element={<UploadResults/>} />
+            <Route path ='/Leaderboard' element={<Leaderboard />} />
+            <Route path ='/MyAccount' element={<MyAccount />} />
+            <Route path ='/UpdateUser' element={<UpdateUser />} />
+            <Route path ='/UploadSuccess' element={<UploadSuccess />} />
           </Routes>
         </Container>
       </Box>
