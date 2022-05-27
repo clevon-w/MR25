@@ -13,6 +13,7 @@ import {
   ListItem
 } from "@chakra-ui/react";
 import MR25_paynowQR from "../images/MR25_paynowQR.jpeg";
+import joinStravaClub from "../images/join-strava-club.jpeg";
 
 function HowToParticipate() {
   return (
@@ -44,14 +45,23 @@ function HowToParticipate() {
         Please email a screenshot of your payment to{" "}
         <b>vision_athletics@yahoo.com</b>
       </Text>
-      <Text textStyle="heading_xs">
-        Step 3: Join the Vision Athletics Strava club
-      </Text>
+      <Text textStyle="heading_xs">Step 3: Join our Strava club</Text>
       <Text pb={4}>
-        Submit a request to join the Vision Athletics Strava club here. Your
-        request will be approved once Step 1 and 2 are completed and verified by
-        the organisers.
+        Submit a request to join our Strava club. Your request to join will be
+        approved once you have completed steps 1 and 2.
       </Text>
+      <UnorderedList pb={4}>
+        <ListItem>
+          <b>Club name: </b>VA MacRitchie Trail 5km Blended Challenge 2022
+        </ListItem>
+      </UnorderedList>
+      <Center w="100%" pb={4}>
+        <Image
+          src={joinStravaClub}
+          alt="Join Strava Club screenshot."
+          maxH="560px"
+        />
+      </Center>
       <Text as="i" color="primary.600">
         Note: The Vision Athletics Strava "club" is created for result
         verification purposes. You have to remain in the club throughout the
@@ -62,7 +72,7 @@ function HowToParticipate() {
       </Text>
       <Text>
         You will receive a confirmation email from vision_athletics@yahoo.com
-        after completion of the above.
+        upon completion of the above steps. Welcome to the event!
       </Text>
     </Container>
   );
