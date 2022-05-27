@@ -19,7 +19,6 @@ function UploadSuccess() {
    * state.auth retrieves the states of the user
    * state.auth.user retrieves the data stored in the paylaod
    */
-  const { user } = useSelector((state) => state.auth);
   const { data } = useSelector((state) => state.auth.user);
   const { result } = useSelector((state) => state.result.result);
 

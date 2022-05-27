@@ -35,13 +35,13 @@ function ResultItem(props) {
 
         <Flex direction={"column"}>
           <HStack>
-            <Text fontWeight={700} fontSize={'md'} color={'primary.800'} >{props.result.runTiming}</Text>
-            {props.result.verified ? (
-              <MdVerified/>
-            ) : (null)}
+            <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
+              {props.result.runTiming}
+            </Text>
+            {props.result.verified ? <MdVerified /> : null}
           </HStack>
           <Text fontWeight={400} fontSize={"sm"} color={"primary.600"}>
-            {formatDateDDMonYYYY(props.result.createdAt)}
+            {formatDateDDMonYYYY(props.result.runDate)}
           </Text>
         </Flex>
       </Flex>

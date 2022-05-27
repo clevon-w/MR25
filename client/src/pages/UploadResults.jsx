@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import {
   Stack,
   FormControl,
+  FormLabel,
   Text,
   Container,
   Input,
@@ -14,8 +15,7 @@ import {
   GridItem,
   NumberInput,
   NumberInputField,
-  useToast,
-  FormHelperText
+  useToast
 } from "@chakra-ui/react";
 // import { FiImage } from 'react-icons/fi'
 import { createResult, reset } from "../features/results/resultSlice";
@@ -32,12 +32,9 @@ function UploadResults() {
    * state.auth retrieves the states of the user
    * state.auth.user retrieves the data stored in the paylaod
    */
-  const { user } = useSelector((state) => state.auth);
   const { data } = useSelector((state) => state.auth.user);
-  const { events } = useSelector((state) => state.events);
-  const { results, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.results
-  );
+  // const { events } = useSelector((state) => state.events);
+  const { isError, isSuccess, message } = useSelector((state) => state.results);
 
   // category and institution is hard coded at the moment
   // as we only have one event
@@ -81,10 +78,18 @@ function UploadResults() {
       console.log(message);
     }
 
-    return () => {
-      dispatch(reset());
-    };
-  }, [dispatch, isError, message]);
+    if (isSuccess) {
+      toast({
+        title: "Uploaded results successfully!",
+        status: "success",
+        isClosable: true
+      });
+      navigate("/");
+      return () => {
+        dispatch(reset());
+      };
+    }
+  }, [dispatch, navigate, isSuccess, isError, message, toast]);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -147,21 +152,13 @@ function UploadResults() {
 
     if (isSuccess) {
       toast({
-        title: "Uploaded results successfully",
+        title: "Uploaded results successfully!",
         status: "success",
         isClosable: true
       });
       navigate("/");
     }
   };
-
-  // const {
-  // 	handleSubmit,
-  // 	register,
-  // 	setError,
-  // 	control,
-  // 	formState: { field },
-  // } = useForm()
 
   return (
     <Container>
@@ -220,6 +217,7 @@ function UploadResults() {
 
           <Stack>
             <FormControl isRequired>
+              <FormLabel>Date of run</FormLabel>
               <Input
                 name="runDate"
                 value={formData.runDate}
@@ -227,9 +225,9 @@ function UploadResults() {
                 type="date"
                 onChange={onChange}
               />
-              <FormHelperText>Date of run</FormHelperText>
             </FormControl>
             <FormControl isRequired>
+              <FormLabel>Run Distance (as reflected on Strava)</FormLabel>
               <NumberInput precision={2}>
                 <NumberInputField
                   placeholder="Distance (in KM)"
@@ -238,15 +236,15 @@ function UploadResults() {
                   onChange={onChange}
                 />
               </NumberInput>
-              <FormHelperText>
+              {/* <FormHelperText>
                 Run Distance as reflected in screenshot
-              </FormHelperText>
+              </FormHelperText> */}
             </FormControl>
           </Stack>
 
           <Stack spacing={4}>
             <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
-              Time clocked
+              Time clocked (as reflected on Strava)
             </Text>
             <SimpleGrid columns={3} spacing={4}>
               <GridItem>
