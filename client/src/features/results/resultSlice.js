@@ -11,18 +11,14 @@ const initialState ={
 }
 
 // Get user results
-export const getResults = createAsyncThunk('results',
-    async ( _ , thunkAPI) => {
-        try {
-            return await resultService.getResults()
-        } catch (error) {
-            const message = (error.response && error.response.data && error.response.data.message)
-            || error.message || 
-            error.toString()
-            return thunkAPI.rejectWithValue(message)
-        }
-    }
-)
+export const getResults = createAsyncThunk('results/getResults', async ( _ , thunkAPI) => {
+  try {
+    return await resultService.getResults()
+  } catch (error) {
+      const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
 
 
 export const resultSlice = createSlice({
@@ -40,7 +36,7 @@ export const resultSlice = createSlice({
         .addCase(getResults.fulfilled, (state, action) => {
           state.isLoading = false
           state.isSuccess = true
-          state.results = action.payload //returns new result created
+          state.results = action.payload
         })
         .addCase(getResults.rejected, (state, action) => {
           state.isLoading = false

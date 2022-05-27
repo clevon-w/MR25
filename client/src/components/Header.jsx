@@ -20,6 +20,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
+import { getResults } from "../features/results/resultSlice";
+import { getEvents } from "../features/event/eventSlice";
 import Logo from "./Logo";
 
 /**
@@ -97,6 +99,8 @@ const NavBarLinks = ({ isOpen }) => {
 
   const toLeaderboard = () => {
     navigate("/leaderboard");
+    dispatch(getResults())
+    dispatch(getEvents())
   };
 
   const toAccount = () => {

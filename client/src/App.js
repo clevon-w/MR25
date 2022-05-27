@@ -18,7 +18,7 @@ function App() {
       <Box h="100vh">
         <Header id="header" />
         {/* Height of Container needs to be 100vh - headerHeight but idk how to do */}
-        <Container maxW="container.xl" p={0} h="100%">
+        <Container maxW="2xl" my={[5, 10]} pb={["40px", "80px"]}>
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/register" element={<Register />} />
