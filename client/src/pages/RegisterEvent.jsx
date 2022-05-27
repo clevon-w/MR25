@@ -121,7 +121,7 @@ function RegisterEvent() {
     e.preventDefault();
     registeredDate = new Date().toLocaleString("en-US", {
       timeZone: "Asia/Singapore"
-    })
+    });
     const userData = [
       ...user.data.registeredEvents,
       {
@@ -170,9 +170,7 @@ function RegisterEvent() {
       <VStack spacing={8} align={"flex-start"}>
         <Grid w={"100%"} templateColumns="repeat(6, 1fr)" gap={4}>
           <GridItem colSpan={4}>
-            <Text fontSize={"xl"} fontWeight={700}>
-              {"Register: " + event.name}
-            </Text>
+            <Text textStyle="heading_s">{"Register: " + event.name}</Text>
           </GridItem>
           <GridItem colSpan={2}>
             {user ? (
@@ -194,9 +192,7 @@ function RegisterEvent() {
                   {checkRegistered(event) ? "Registered" : "Not Registered"}
                 </TagLabel>
               </Tag>
-            ) : (
-              null
-            )}
+            ) : null}
           </GridItem>
         </Grid>
 

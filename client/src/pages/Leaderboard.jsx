@@ -169,9 +169,7 @@ function Leaderboard() {
   } else {
     return (
       <Stack spacing={8}>
-        <Text fontWeight={700} fontSize={"2xl"}>
-          Leaderboard
-        </Text>
+        <Text textStyle="heading_s">Leaderboard</Text>
 
         <Grid w={"100%"} templateColumns="repeat(2, 1fr)" gap={4}>
           <GridItem colSpan={1}>
