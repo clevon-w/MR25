@@ -70,7 +70,7 @@ function UploadResults() {
   const {
     ageCategory,
     institution,
-    runtiming,
+    runTiming,
     // screenshot,
     verified,
     runDistance,
@@ -92,7 +92,6 @@ function UploadResults() {
       ...prevState,
       [e.target.name]: e.target.value
     }))
-    console.log(formData)
   }
 
   const handleTimeChange = (e) => {
@@ -100,8 +99,6 @@ function UploadResults() {
       ...prevState,
       [e.target.name]: e.target.value
     }))
-    console.log(runTime)
-    console.log(formData)
   }
 
   const toHome = () => {
@@ -221,7 +218,7 @@ function UploadResults() {
           </FormControl>
           <FormControl isRequired>
             <NumberInput min={5} max={50} precision={2}>
-                <NumberInputField placeholder='Distance (in KM)' name='hours' value={runTime.hours} onChange={onChange} />
+                <NumberInputField placeholder='Distance (in KM)' name='runDistance' value={runDistance} onChange={onChange} />
               </NumberInput>
             <FormHelperText>Run Distance as reflected in screenshot</FormHelperText>
           </FormControl>

@@ -9,7 +9,7 @@ const getResults = async () => {
 }
 
 //Creates new result
-const createResult = async (resultData, token) => {
+const createResult = async (resultData) => {
   // const config = {
   //   header: {
   //     Authorization: `Bearer ${token}`
