@@ -5,6 +5,9 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import RegisterEvent from "./pages/RegisterEvent";
+import Leaderboard from './pages/Leaderboard'
+import MyAccount from './pages/MyAccount'
+import UpdateUser from './pages/UpdateUser'
 import { Container, Box } from "@chakra-ui/react";
 
 function App() {
@@ -21,6 +24,9 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/registerEvent" element={<RegisterEvent />} />
+            <Route path ='/Leaderboard' element={<Leaderboard />} />
+            <Route path ='/MyAccount' element={<MyAccount />} />
+            <Route path ='/UpdateUser' element={<UpdateUser />} />
           </Routes>
         </Container>
       </Box>
