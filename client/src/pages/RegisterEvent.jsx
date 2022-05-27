@@ -54,7 +54,7 @@ function RegisterEvent() {
     registeredDate: ""
   });
 
-  const {
+  let {
     category,
     institution,
     heartCondition,

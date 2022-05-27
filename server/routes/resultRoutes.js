@@ -5,11 +5,12 @@ const router = express.Router()
 //import controller
 const resultController = require('../controllers/resultController')
 const { protect } = require('../middleware/authMiddleware')
+const { upload } = require('../middleware/uploadMiddleware')
 
 //set up routes
 router.route('/')
       .get(resultController.findAllResults)
-      .post(protect, resultController.createResult)
+      .post(upload.single('screenshot'), resultController.createResult)
 
 router.route('/:id')
       .get(protect, resultController.findUserResults)

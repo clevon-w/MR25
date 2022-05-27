@@ -61,9 +61,17 @@ exports.createUser = asyncHandler(async (req, res) => {
   }
 
   // Check if NRIC/FIN is in the correct format
-  if (nric != RegExp("^[0-9]{3}[A-Z]$")) {
+  const nric_re = /^[0-9]{3}[A-Z]{1}$/;
+  if (!nric_re.test(nric)) {
     res.status(400);
     throw new Error("Invalid NRIC/FIN");
+  }
+
+  // Check if E-mail is valid
+  const email_re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  if (!email_re.test(email)) {
+    res.status(400);
+    throw new Error("Invalid E-mail");
   }
 
   // Hash password

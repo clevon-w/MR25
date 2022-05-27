@@ -28,22 +28,25 @@ exports.findAllResults = asyncHandler(async (req, res) => {
   * @param {*} res the object to send back to the desired HTTP response
   */
 exports.createResult = asyncHandler(async (req, res) => {
-  const {firstName, lastName, runTiming, ageCategory, institution, screenshot, verified} = req.body
+  const {userId, eventId, firstName, lastName, runTiming, ageCategory, institution, screenshot, verified} = req.body
 
   if (!ageCategory || !runTiming || !institution || !screenshot) {
     res.status(400)
-    throw new Error('Please add an result')
+    throw new Error('Please input all fields and select a file')
   }
 
+  // req.user is put in by authMiddleware because of the authentication token
+  // we dont have a eventMiddleware to get the event entry
+  // so we are just hardcoding the eventId in for now
   const result = await Result.create({
-    userId: req.user.id,
-    eventId: req.event.id,
+    userId: userId,
+    eventId: eventId,
     firstName: firstName,
     lastName: lastName,
     institution: institution,
     ageCategory: ageCategory,
     runTiming: runTiming,
-    screenshot: screenshot,
+    screenshot: `http://localhost:8000/api/results/file/${screenshot.filename}`,
     verified: verified,
   })
 
