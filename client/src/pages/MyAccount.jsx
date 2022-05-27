@@ -1,12 +1,11 @@
 import {
-  Heading,
   Container,
   Text,
   Stack,
   Button,
   Flex,
   Spacer,
-  HStack,
+  HStack
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +18,6 @@ function MyAccount() {
    * state.auth retrieves the states of the user
    * state.auth.user retrieves the data stored in the paylaod
    */
-  const { user } = useSelector((state) => state.auth);
   const { data } = useSelector((state) => state.auth.user);
 
   const toUpdateUser = (e) => {
@@ -40,14 +38,14 @@ function MyAccount() {
                 Personal particulars
               </Text>
               <Spacer />
-              <Button variant="ghost" size="sm" onClick={toUpdateUser}>
+              <Button variant="link" size="sm" onClick={toUpdateUser}>
                 Update
               </Button>
             </Flex>
 
             <Text fontWeight={400} fontSize={"sm"}>
               Your personal particulars will be autofilled when you register for
-              events or upload results
+              events or upload results.
             </Text>
 
             <Stack spacing={2}>

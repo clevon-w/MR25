@@ -17,13 +17,12 @@ import {
   UnorderedList,
   ListItem
 } from "@chakra-ui/react";
-import { CalendarIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import { IoLocationOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getEvents, reset } from "../features/event/eventSlice";
 import { useEffect } from "react";
 import routeMap from "../images/routeMap.jpeg";
+import { FiCalendar, FiMapPin, FiCheckCircle, FiXCircle } from "react-icons/fi";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -85,18 +84,23 @@ function Dashboard() {
 
   return events.map((event) => (
     <VStack spacing={8} align={"flex-start"} key={event}>
-      <Grid w={"100%"} templateColumns="repeat(5, 1fr)" gap={4}>
+      <Grid w={"100%"} templateColumns="repeat(6, 1fr)" gap={4}>
         <GridItem colSpan={4}>
-          <Text fontSize={"lg"} fontWeight={700}>
+          <Text fontSize={"xl"} fontWeight={700}>
             {event.name}
           </Text>
         </GridItem>
-        <GridItem colSpan={1}>
+        <GridItem colSpan={2}>
           {user ? (
-            <Tag size={"sm"} variant="subtle" borderRadius={"full"}>
+            <Tag
+              size={"sm"}
+              variant="subtle"
+              borderRadius={"full"}
+              px={3}
+              py={2}
+            >
               <TagLeftIcon
-                boxSize={"12px"}
-                as={checkRegistered(event) ? CheckIcon : CloseIcon}
+                as={checkRegistered(event) ? FiCheckCircle : FiXCircle}
                 color={checkRegistered(event) ? "accents.green" : "accents.red"}
               />
               <TagLabel>
@@ -107,7 +111,7 @@ function Dashboard() {
             <></>
           )}
         </GridItem>
-        <GridItem colSpan={5}>
+        <GridItem colSpan={6}>
           {user ? (
             <Button
               w={"100%"}
@@ -115,7 +119,7 @@ function Dashboard() {
               bg={"primary.800"}
               onClick={toRegisterEvent}
             >
-              Register Now
+              {checkRegistered(event) ? "View registration" : "Register now"}
             </Button>
           ) : (
             <Button
@@ -146,8 +150,8 @@ function Dashboard() {
           </Text>
         </GridItem>
         <GridItem colSpan={[2, 1]}>
-          <Tag size={"lg"} variant="subtle" w={"100%"}>
-            <TagLeftIcon boxSize={"24px"} as={CalendarIcon} />
+          <Tag size={"lg"} variant="subtle" w={"100%"} p={4}>
+            <TagLeftIcon boxSize={"24px"} as={FiCalendar} />
             <TagLabel>
               {formatDate(event.eventDetails.eventStart) +
                 " - " +
@@ -156,8 +160,8 @@ function Dashboard() {
           </Tag>
         </GridItem>
         <GridItem colSpan={[2, 1]}>
-          <Tag size={"lg"} variant="subtle" w={"100%"}>
-            <TagLeftIcon boxSize={"24px"} as={IoLocationOutline} />
+          <Tag size={"lg"} variant="subtle" w={"100%"} p={4}>
+            <TagLeftIcon boxSize={"24px"} as={FiMapPin} />
             <TagLabel>{event.eventDetails.eventLocation}</TagLabel>
           </Tag>
         </GridItem>
@@ -226,14 +230,14 @@ function Dashboard() {
           </Text>
         </GridItem>
         <GridItem colSpan={[2, 1]}>
-          <Tag size={"lg"} variant="subtle" w={"100%"}>
-            <TagLeftIcon boxSize={"24px"} as={CalendarIcon} />
+          <Tag size={"lg"} variant="subtle" w={"100%"} p={4}>
+            <TagLeftIcon boxSize={"24px"} as={FiCalendar} />
             <TagLabel>{formatDate(event.eventDetails.finalDate)}</TagLabel>
           </Tag>
         </GridItem>
         <GridItem colSpan={[2, 1]}>
-          <Tag size={"lg"} variant="subtle" w={"100%"}>
-            <TagLeftIcon boxSize={"24px"} as={IoLocationOutline} />
+          <Tag size={"lg"} variant="subtle" w={"100%"} p={4}>
+            <TagLeftIcon boxSize={"24px"} as={FiMapPin} />
             <TagLabel>{event.eventDetails.finalLocation}</TagLabel>
           </Tag>
         </GridItem>
