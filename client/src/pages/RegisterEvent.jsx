@@ -26,8 +26,10 @@ import FormRadio from "../components/FormRadio";
 import FormCheckbox from "../components/FormCheckbox";
 import { update } from "../features/auth/authSlice";
 import { formatDateDDMonYYYY } from "../utils/helperFunctions";
+import { useNavigate } from "react-router-dom";
 
 function RegisterEvent() {
+  const navigate = useNavigate()
   const dispatch = useDispatch();
 
   const { events, isError, message } = useSelector((state) => state.events);
@@ -163,6 +165,10 @@ function RegisterEvent() {
       ...prevState,
       [e.target.name]: e.target.value
     }));
+  };
+
+  const toLogin = () => {
+    navigate("/login");
   };
 
   return events.map((event) => (
@@ -552,6 +558,8 @@ function RegisterEvent() {
               borderRadius={"lg"}
               borderColor={"accents.blue"}
               borderWidth={"thin"}
+              onClick={toLogin}
+              cursor={'pointer'}  
             >
               <AlertIcon color={"accents.blue"} />
               Login to register for the event.
