@@ -65,7 +65,7 @@ function Dashboard() {
     <VStack spacing={8} align={"flex-start"} key={event}>
       <Grid w={"100%"} templateColumns="repeat(6, 1fr)" gap={4}>
         <GridItem colSpan={4}>
-          <Text textStyle="heading_s">About: {event.name}</Text>
+          <Text textStyle="heading_s">{event.name}</Text>
         </GridItem>
         <GridItem colSpan={2}>
           {user ? (
