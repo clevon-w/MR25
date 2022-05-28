@@ -24,6 +24,7 @@ import { getEvents, reset } from "../features/event/eventSlice";
 import { useEffect } from "react";
 import routeMap from "../images/routeMap.jpeg";
 import { FiCalendar, FiMapPin, FiCheckCircle, FiXCircle } from "react-icons/fi";
+import ReadMoreToggle from "../components/ReadMoreToggle";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -111,14 +112,28 @@ function Dashboard() {
         </GridItem>
       </Grid>
 
-      <VStack spacing={4} align={"flex-start"}>
+      {/* <VStack spacing={4} align={"flex-start"}>
         <Text fontWeight={700} fontSize={"md"}>
-          Description
+          About the Event
         </Text>
-        <Text fontWeight={400} fontSize={"sm"}>
-          {event.eventDetails.eventDescription}
-        </Text>
-      </VStack>
+        <VStack spacing={2} align={'flex-start'}>
+          {event
+            .eventDetails
+            .eventDescription
+            .split('<br/>')
+            // .flatMap((value, index, array) => array.length -1 !== index
+            //   ? [value, <br/>]
+            //   : value
+            // )
+            .map((para) => (
+              <Text fontWeight={400} fontSize={"sm"}>
+                {para}
+              </Text>
+            ))
+          }
+        </VStack>
+      </VStack> */}
+      <ReadMoreToggle contentArr={event.eventDetails.eventDescription.split('<br/>')} title={'About the Event'} />
 
       <Grid w={"100%"} templateColumns="repeat(2, 1fr)" gap={4}>
         <GridItem colSpan={2}>
