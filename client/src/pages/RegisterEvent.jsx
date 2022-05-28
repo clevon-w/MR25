@@ -213,10 +213,8 @@ function RegisterEvent() {
                 borderWidth={"thin"}
               >
                 <AlertIcon color={"accents.blue"} />
-                Upon registration and receipt of the registration fee, you will
-                receive a confirmation email with the race instructions by the
-                following day. You may then proceed to time your 5km run using
-                the Strava app and upload it to result upload page.
+                Upon registration and receipt of the registration fee,
+                you may proceed to time your 5km run using the Strava app and upload the result to "Upload Result +" on this website.
               </Alert>
             </VStack>
 
