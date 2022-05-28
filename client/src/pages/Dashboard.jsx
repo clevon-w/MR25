@@ -112,33 +112,23 @@ function Dashboard() {
         </GridItem>
       </Grid>
 
-      {/* <VStack spacing={4} align={"flex-start"}>
-        <Text fontWeight={700} fontSize={"md"}>
-          About the Event
-        </Text>
-        <VStack spacing={2} align={'flex-start'}>
-          {event
-            .eventDetails
-            .eventDescription
-            .split('<br/>')
-            // .flatMap((value, index, array) => array.length -1 !== index
-            //   ? [value, <br/>]
-            //   : value
-            // )
-            .map((para) => (
-              <Text fontWeight={400} fontSize={"sm"}>
-                {para}
-              </Text>
-            ))
-          }
-        </VStack>
-      </VStack> */}
-      <ReadMoreToggle contentArr={event.eventDetails.eventDescription.split('<br/>')} title={'About the Event'} />
+      <ReadMoreToggle
+        contentArr={event
+          .eventDetails
+          .eventDescription
+          .split('<br/>')
+        }
+        title={'About the Event'}
+      />
+
+      <Text fontWeight={700} fontSize={"lg"}>
+        Event details
+      </Text>
 
       <Grid w={"100%"} templateColumns="repeat(2, 1fr)" gap={4}>
         <GridItem colSpan={2}>
           <Text fontWeight={700} fontSize={"md"}>
-            Event details
+            Event (Virtual Race) Period
           </Text>
         </GridItem>
         <GridItem colSpan={[2, 1]}>

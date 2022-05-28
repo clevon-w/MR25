@@ -14,7 +14,7 @@ const ReadMoreToggle = (props) => {
 
   return (
     <VStack spacing={4} align={"flex-start"}>
-      <Text fontWeight={700} fontSize={"md"}>
+      <Text fontWeight={700} fontSize={"lg"}>
         {props.title}
       </Text>
       <VStack spacing={2} align={'flex-start'}>
