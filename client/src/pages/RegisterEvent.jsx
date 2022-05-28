@@ -16,7 +16,8 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Link
+  Link,
+  FormHelperText
 } from "@chakra-ui/react";
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
@@ -333,7 +334,12 @@ function RegisterEvent() {
                     value={institution}
                     placeholder="Institution"
                     onChange={onChange}
-                  />
+                    />
+                  <FormHelperText>
+                    Please enter the full name of your secondary school/junior college
+                    /centralised institution/tertiary institution for the team competition.
+                    Enter "Nil" if inapplicable.
+                  </FormHelperText>
                 </FormControl>
 
                 <Divider
