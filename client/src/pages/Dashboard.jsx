@@ -225,11 +225,11 @@ function Dashboard() {
             <TagLabel>{event.eventDetails.finalLocation}</TagLabel>
           </Tag>
         </GridItem>
-        <GridItem colSpan={2}>
+        {/* <GridItem colSpan={2}>
           <Text fontWeight={400} fontSize={"sm"}>
             {event.eventDetails.finalDescription}
           </Text>
-        </GridItem>
+        </GridItem> */}
       </Grid>
     </VStack>
   ));
