@@ -14,8 +14,7 @@ import {
   GridItem,
   VStack,
   Image,
-  UnorderedList,
-  ListItem
+  HStack
 } from "@chakra-ui/react";
 import { formatDateDDMonYYYY } from "../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
@@ -25,6 +24,7 @@ import { useEffect } from "react";
 import routeMap from "../images/routeMap.jpeg";
 import { FiCalendar, FiMapPin, FiCheckCircle, FiXCircle } from "react-icons/fi";
 import ReadMoreToggle from "../components/ReadMoreToggle";
+import { BsDot } from 'react-icons/bs'
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -175,13 +175,16 @@ function Dashboard() {
         <Text fontWeight={400} fontSize={"sm"}>
           The event will be split into the following age-gender categories
         </Text>
-        <UnorderedList>
+        <VStack spacing={2} align={"flex-start"}>
           {event.eventDetails.ageCategories.map((ageCat) => (
-            <ListItem key={ageCat} fontWeight={400} fontSize={"sm"}>
-              {ageCat}
-            </ListItem>
+            <HStack key={ageCat} >
+              <BsDot />
+              <Text fontWeight={400} fontSize={"sm"} >
+                {ageCat}
+              </Text>
+            </HStack>
           ))}
-        </UnorderedList>
+        </VStack>
         <Text fontWeight={400} fontSize={"sm"} fontStyle={"italic"}>
           Age is calculated based on age as at 31 Dec 2022
         </Text>
