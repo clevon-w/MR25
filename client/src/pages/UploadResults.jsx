@@ -15,7 +15,12 @@ import {
   GridItem,
   NumberInput,
   NumberInputField,
-  useToast
+  useToast,
+  VStack,
+  UnorderedList,
+  OrderedList,
+  ListItem,
+  Link
 } from "@chakra-ui/react";
 // import { FiImage } from 'react-icons/fi'
 import { createResult, reset } from "../features/results/resultSlice";
@@ -168,18 +173,86 @@ function UploadResults() {
       <form onSubmit={onSubmit}>
         <Stack spacing={8}>
           <Text fontWeight={700} fontSize={"2xl"} color={"primary.800"}>
-            Upload Results
+            Upload Result
           </Text>
 
           <Text fontWeight={400} fontSize={"sm"} color={"primary.800"}>
-            You may run as often as you like and each time you upload your
-            results within the day, the leaderboard will be updated. Your
-            results will be added to the overall leaderboard the following day.
-            Note that failure to submit your results before 2359 hrs on the day
-            would render the results invalid. In case of technical hitches
-            preventing submission, drop a note to
-            running.route.tracking@gmail.com on the day itself.
+            You may run as often as you like and each time you upload your results within the day,
+            the leaderboard will be updated. Note that failure to submit your results before 2359 hrs
+            on the day would render the results invalid. In case of technical hitches preventing
+            submission, drop a note to{' '}
+            <Link
+                color="teal.500"
+                href="mailto:running.route.tracking@gmail.com"
+            >
+              running.route.tracking@gmail.com 
+            </Link>
+            {' '}on the day itself.
           </Text>
+
+          <VStack spacing={4} align={'flex-start'}>
+            <Text fontWeight={700} fontSize={"md"}>
+              Race Instruction (Virtual Segment)
+            </Text>
+            <Text fontWeight={600} fontSize={"sm"}>
+              Before your 1st run - Join this event’s Strava “club” for result verifications
+            </Text>
+            <Text fontWeight={400} fontSize={"sm"} >
+              Visit{" "}
+              <Link
+                color="teal.500"
+                href="https://www.strava.com/clubs/VAMR5km"
+              >
+                www.strava.com/clubs/VAMR5km
+              </Link>{" "}
+              and click the “Request to Join” button.
+            </Text>
+            <VStack spacing={2} align={"flex-start"}>
+              <Text fontWeight={400} fontSize={"sm"} >
+                Important notes:
+              </Text>
+              <UnorderedList px={4} >
+                <ListItem fontWeight={400} fontSize={"sm"} >
+                  Please set the name in your Strave app to the name you registered with for this race.
+                </ListItem>
+                <ListItem fontWeight={400} fontSize={"sm"} >
+                  Please note that by joining this event’s “club” VA MacRitchie Trail 5km Blended Challenge 2022 on Strava,
+                  all your run records will be visible to the organiser for the purpose of result verifications.
+                  This Strava “club” will be deleted once the event is over.
+                </ListItem>
+              </UnorderedList>
+            </VStack>
+            <Text fontWeight={600} fontSize={"sm"}>
+              Before every run - Set the Type of Activity in Strava app
+            </Text>
+            <Text fontWeight={400} fontSize={"sm"}>
+              Select “Race” in the Type of Activity in your Strava app before recording every run as only Elapsed Time is accepted.
+              The Strava app’s default Moving Time will not be accepted.
+            </Text>
+
+            <Text fontWeight={600} fontSize={"sm"}>
+              After every run - Save a screenshot and upload result
+            </Text>
+            <OrderedList px={4} >
+              <ListItem fontWeight={400} fontSize={"sm"} >
+                Save a screenshot of the run on Strava app as a proof of your completed run (no submission required at the moment).
+                The screenshot should consist a map displaying the route taken and the 2 information above, your Name and the Elapsed Time.
+              </ListItem>
+              <ListItem fontWeight={400} fontSize={"sm"} >
+                Click on “Upload Result +” to upload your run result based on the data captured by your Strava app.
+              </ListItem>
+            </OrderedList>
+            <VStack spacing={2} align={"flex-start"}>
+              <Text fontWeight={400} fontSize={"sm"} >
+                Important note:
+              </Text>
+              <UnorderedList px={4} >
+                <ListItem fontWeight={400} fontSize={"sm"} >
+                  Result must be submitted before 2359hr on the day of run. Failure to do so would render the result invalid.
+                </ListItem>
+              </UnorderedList>
+            </VStack>
+          </VStack>
 
           <Stack spacing={4}>
             <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
@@ -247,7 +320,7 @@ function UploadResults() {
 
           <Stack spacing={4}>
             <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
-              Time clocked (as reflected on Strava)
+              Elapsed Time (as reflected on Strava)
             </Text>
             <SimpleGrid columns={3} spacing={4}>
               <GridItem>
