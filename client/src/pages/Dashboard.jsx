@@ -14,8 +14,10 @@ import {
   GridItem,
   VStack,
   Image,
+  Link,
   UnorderedList,
-  ListItem
+  ListItem,
+  OrderedList
 } from "@chakra-ui/react";
 import { formatDateDDMonYYYY } from "../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +26,7 @@ import { getEvents, reset } from "../features/event/eventSlice";
 import { useEffect } from "react";
 import routeMap from "../images/routeMap.jpeg";
 import { FiCalendar, FiMapPin, FiCheckCircle, FiXCircle } from "react-icons/fi";
+import ReadMoreToggle from "../components/ReadMoreToggle";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -53,8 +56,8 @@ function Dashboard() {
     return eventIdArr.includes(event._id);
   };
 
-  const toLogin = () => {
-    navigate("/login");
+  const toCreateAccount = () => {
+    navigate("/register");
   };
 
   const toRegisterEvent = () => {
@@ -65,7 +68,7 @@ function Dashboard() {
     <VStack spacing={8} align={"flex-start"} key={event}>
       <Grid w={"100%"} templateColumns="repeat(6, 1fr)" gap={4}>
         <GridItem colSpan={4}>
-          <Text textStyle="heading_s">About: {event.name}</Text>
+          <Text textStyle="heading_s">{event.name}</Text>
         </GridItem>
         <GridItem colSpan={2}>
           {user ? (
@@ -103,27 +106,31 @@ function Dashboard() {
               w={"100%"}
               color={"primary.white"}
               bg={"primary.800"}
-              onClick={toLogin}
+              onClick={toCreateAccount}
             >
-              Login to Register
+              Create an Account to Register
             </Button>
           )}
         </GridItem>
       </Grid>
 
-      <VStack spacing={4} align={"flex-start"}>
-        <Text fontWeight={700} fontSize={"md"}>
-          Description
-        </Text>
-        <Text fontWeight={400} fontSize={"sm"}>
-          {event.eventDetails.eventDescription}
-        </Text>
-      </VStack>
+      <ReadMoreToggle
+        contentArr={event
+          .eventDetails
+          .eventDescription
+          .split('<br/>')
+        }
+        title={'About the Event'}
+      />
+
+      <Text fontWeight={700} fontSize={"lg"}>
+        Event details
+      </Text>
 
       <Grid w={"100%"} templateColumns="repeat(2, 1fr)" gap={4}>
         <GridItem colSpan={2}>
           <Text fontWeight={700} fontSize={"md"}>
-            Event details
+            Event (Virtual Race) Period
           </Text>
         </GridItem>
         <GridItem colSpan={[2, 1]}>
@@ -143,6 +150,70 @@ function Dashboard() {
           </Tag>
         </GridItem>
       </Grid>
+
+      <VStack spacing={4} align={'flex-start'}>
+        <Text fontWeight={700} fontSize={"md"}>
+          Race Instruction (Virtual Segment)
+        </Text>
+        <Text fontWeight={600} fontSize={"sm"}>
+          Before your 1st run - Join this event’s Strava “club” for result verifications
+        </Text>
+        <Text fontWeight={400} fontSize={"sm"} >
+          Visit{" "}
+          <Link
+            color="teal.500"
+            href="https://www.strava.com/clubs/VAMR5km"
+          >
+            www.strava.com/clubs/VAMR5km
+          </Link>{" "}
+          and click the “Request to Join” button.
+        </Text>
+        <VStack spacing={2} align={"flex-start"}>
+          <Text fontWeight={400} fontSize={"sm"} >
+            Important notes:
+          </Text>
+          <UnorderedList px={4} >
+            <ListItem fontWeight={400} fontSize={"sm"} >
+              Please set the name in your Strave app to the name you registered with for this race.
+            </ListItem>
+            <ListItem fontWeight={400} fontSize={"sm"} >
+              Please note that by joining this event’s “club” VA MacRitchie Trail 5km Blended Challenge 2022 on Strava,
+              all your run records will be visible to the organiser for the purpose of result verifications.
+              This Strava “club” will be deleted once the event is over.
+            </ListItem>
+          </UnorderedList>
+        </VStack>
+        <Text fontWeight={600} fontSize={"sm"}>
+          Before every run - Set the Type of Activity in Strava app
+        </Text>
+        <Text fontWeight={400} fontSize={"sm"}>
+          Select “Race” in the Type of Activity in your Strava app before recording every run as only Elapsed Time is accepted.
+          The Strava app’s default Moving Time will not be accepted.
+        </Text>
+
+        <Text fontWeight={600} fontSize={"sm"}>
+          After every run - Save a screenshot and upload result
+        </Text>
+        <OrderedList px={4} >
+          <ListItem fontWeight={400} fontSize={"sm"} >
+            Save a screenshot of the run on Strava app as a proof of your completed run (no submission required at the moment).
+            The screenshot should consist a map displaying the route taken and the 2 information above, your Name and the Elapsed Time.
+          </ListItem>
+          <ListItem fontWeight={400} fontSize={"sm"} >
+            Click on “Upload Result +” to upload your run result based on the data captured by your Strava app.
+          </ListItem>
+        </OrderedList>
+        <VStack spacing={2} align={"flex-start"}>
+          <Text fontWeight={400} fontSize={"sm"} >
+            Important note:
+          </Text>
+          <UnorderedList px={4} >
+            <ListItem fontWeight={400} fontSize={"sm"} >
+              Result must be submitted before 2359hr on the day of run. Failure to do so would render the result invalid.
+            </ListItem>
+          </UnorderedList>
+        </VStack>
+      </VStack>
 
       <VStack spacing={4} align={"flex-start"}>
         <Text fontWeight={700} fontSize={"md"}>
@@ -170,7 +241,7 @@ function Dashboard() {
         <Text fontWeight={400} fontSize={"sm"}>
           The event will be split into the following age-gender categories
         </Text>
-        <UnorderedList>
+        <UnorderedList px={4} >
           {event.eventDetails.ageCategories.map((ageCat) => (
             <ListItem key={ageCat} fontWeight={400} fontSize={"sm"}>
               {ageCat}
@@ -220,11 +291,11 @@ function Dashboard() {
             <TagLabel>{event.eventDetails.finalLocation}</TagLabel>
           </Tag>
         </GridItem>
-        <GridItem colSpan={2}>
+        {/* <GridItem colSpan={2}>
           <Text fontWeight={400} fontSize={"sm"}>
             {event.eventDetails.finalDescription}
           </Text>
-        </GridItem>
+        </GridItem> */}
       </Grid>
     </VStack>
   ));

@@ -16,7 +16,13 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Link
+  Link,
+  FormHelperText,
+  Center,
+  Image,
+  UnorderedList,
+  ListItem,
+  Icon
 } from "@chakra-ui/react";
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
@@ -26,8 +32,14 @@ import FormRadio from "../components/FormRadio";
 import FormCheckbox from "../components/FormCheckbox";
 import { update } from "../features/auth/authSlice";
 import { formatDateDDMonYYYY } from "../utils/helperFunctions";
+import { useNavigate } from "react-router-dom";
+import { FiExternalLink } from "react-icons/fi";
+import MR25_paynowQR from "../images/MR25_paynowQR.jpeg";
+import joinStravaClub from "../images/join-strava-club.jpeg";
+import tShirtSizeImg from "../images/tshirtsize.jpeg";
 
 function RegisterEvent() {
+  const navigate = useNavigate()
   const dispatch = useDispatch();
 
   const { events, isError, message } = useSelector((state) => state.events);
@@ -44,13 +56,14 @@ function RegisterEvent() {
     boneProblem: "",
     prescribedDrugs: "",
     otherReason: "",
-    covid19: false,
+    // covid19: false,
     termsAndCond: false,
     above18: "",
     parentName: "",
     parentNRIC: "",
     parentMobile: "",
-    dataConsent: false,
+    tShirtSize: "",
+    // dataConsent: false,
     pending: "pending",
     registeredDate: ""
   });
@@ -65,13 +78,14 @@ function RegisterEvent() {
     boneProblem,
     prescribedDrugs,
     otherReason,
-    covid19,
+    // covid19,
     termsAndCond,
     above18,
     parentName,
     parentNRIC,
     parentMobile,
-    dataConsent,
+    tShirtSize,
+    // dataConsent,
     pending,
     registeredDate
   } = formData;
@@ -135,13 +149,14 @@ function RegisterEvent() {
           boneProblem,
           prescribedDrugs,
           otherReason,
-          covid19,
+          // covid19,
           termsAndCond,
           above18,
           parentName,
           parentNRIC,
           parentMobile,
-          dataConsent,
+          tShirtSize,
+          // dataConsent,
           pending,
           registeredDate
         }
@@ -163,6 +178,10 @@ function RegisterEvent() {
       ...prevState,
       [e.target.name]: e.target.value
     }));
+  };
+
+  const toLogin = () => {
+    navigate("/login");
   };
 
   return events.map((event) => (
@@ -206,10 +225,8 @@ function RegisterEvent() {
                 borderWidth={"thin"}
               >
                 <AlertIcon color={"accents.blue"} />
-                Upon registration and receipt of the registration fee, you will
-                receive a confirmation email with the race instructions by the
-                following day. You may then proceed to time your 5km run using
-                the Strava app and upload it to result upload page.
+                Upon registration and receipt of the registration fee,
+                you may proceed to time your 5km run using the Strava app and upload the result to "Upload Result +" on this website.
               </Alert>
             </VStack>
 
@@ -327,7 +344,12 @@ function RegisterEvent() {
                     value={institution}
                     placeholder="Institution"
                     onChange={onChange}
-                  />
+                    />
+                  <FormHelperText>
+                    Please enter the full name of your secondary school/junior college
+                    /centralised institution/tertiary institution for the team competition.
+                    Enter "N/A" if inapplicable.
+                  </FormHelperText>
                 </FormControl>
 
                 <Divider
@@ -420,7 +442,7 @@ function RegisterEvent() {
                   />
                 </VStack>
 
-                <Divider
+                {/* <Divider
                   borderColor={"primary.800"}
                   opacity={1}
                   borderBottomWidth={1.5}
@@ -451,7 +473,7 @@ function RegisterEvent() {
                     setFormData={setFormData}
                     text={"I agree to do my part in the fight against COVID-19"}
                   />
-                </VStack>
+                </VStack> */}
 
                 <Divider
                   borderColor={"primary.800"}
@@ -464,14 +486,26 @@ function RegisterEvent() {
                     Indemnity Agreement
                   </Text>
                   <Text fontSize={"md"} fontWeight={700}>
-                    Conditions of entry
+                    Terms and Conditions of entry
                   </Text>
                   <Text fontSize={"sm"} fontWeight={400}>
-                    I assume and accept full responsibility for the risks of my
-                    participation in the event, and for any injury, damage,
-                    death, or other loss that I may suffer, resulting from those
-                    risks, include but not limited to the risk of a third
-                    party's passive or active negligence or other misconduct.
+                      I know that running in an event that is organized as a virtual activity where I run on my own,
+                      at a date and time of my choice, which will not have any support or security measures in place 
+                      by Vision Athletics is a potentially hazardous activity, which could result in injury or death. 
+                      I acknowledge that I am participating in the activity outlined by this virtual event by my own 
+                      free will and at my own personal risk.I will not participate in a virtual event unless I am 
+                      medically abled and properly trained, and by the submission of my registration, I certify that 
+                      I am medically able to perform this event, and am in good health, and I am properly trained. 
+                      I further agree to abide by the Multi-Ministry Taskforce’s latest advisories pertaining to 
+                      COVID-19. I assume all risks to me associated with running on my own as part of this virtual 
+                      activity, including but not limited to: falls, contact with other park goers, the effects of 
+                      the weather, including high heat and/or humidity, and the conditions of the trail, all such risks 
+                      being known or unknown and appreciated by me when out running on my own without any type of 
+                      support from event organizers. Having read this waiver and knowing these facts and in consideration
+                      of your accepting my entry, I, for myself and anyone entitled to act on my behalf, waive and
+                      release the organizer, Vision Athletics from all claims or liabilities of any kind arising out
+                      of my participation in this virtual event, and waive my ability to bring any legal action against
+                      the entities outlined in this waiver as I am voluntarily electing to run on my own as part of this virtual event.  I grant permission to all of the personal data provided during registration for any legitimate purpose.  I understand that this event does not provide for refunds in the event of a cancellation, and by signing this waiver, I consent that I am not entitled to a refund if the event is cancelled before or during the event.
                   </Text>
                   <FormCheckbox
                     name="termsAndCond"
@@ -526,13 +560,99 @@ function RegisterEvent() {
                   borderBottomWidth={1.5}
                 />
 
-                <FormCheckbox
+                {/* <FormCheckbox
                   name="dataConsent"
                   data={dataConsent}
                   setFormData={setFormData}
                   text="I acknowledge and consent to the collection, use and disclosure of my personal data by Vision Athletics for the purposes set out for this event."
-                />
+                  /> */}
 
+                <FormControl isRequired>
+                  <FormLabel>T-shirt Size (chest)</FormLabel>
+                  <Select
+                    name="tShirtSize"
+                    onChange={onChange}
+                    placeholder="Select size"
+                  >
+                      <option value='XS-18"' >XS-18"</option>
+                      <option value='S-19"' >S-19"</option>
+                      <option value='M-20"' >M-20"</option>
+                      <option value='L-21"' >L-21"</option>
+                      <option value='XL-22"' >XL-22"</option>
+                      <option value='XXL-23"' >XXL-23"</option>
+                  </Select>
+                  </FormControl>
+                  
+                <Text fontWeight={600} fontSize={'sm'} >Measurement of Front Chest for T-shirt Size</Text>
+                <Center w="100%">
+                  <Image src={tShirtSizeImg} alt="T-shirt size." />
+                </Center>
+                
+                <Divider
+                  borderColor={"primary.800"}
+                  opacity={1}
+                  borderBottomWidth={1.5}
+                />
+                  
+                <Text textStyle="heading_xs">Before submitting, complete the following</Text>
+                <VStack spacing={4} align={'flex-start'} w='100%' >
+                  <Text fontWeight={600} fontSize={'md'} >Registration fee</Text>
+                  <Text fontSize={'sm'} >
+                    Kindly pay via PayNow (Scan QR code below or enter UEN: 52911537M).
+                  </Text>
+                  <Center w="100%">
+                    <Image src={MR25_paynowQR} alt="MR25 Paynow QR code." maxH="360px" />
+                  </Center>
+                  <UnorderedList>
+                    <ListItem fontSize={'sm'} >
+                      <b>Amount: </b>$20.00 (non-refundable)
+                    </ListItem>
+                    <ListItem fontSize={'sm'} >
+                      <b>Reference no.: </b>Last 3 digits and ending alphabet of your NRIC
+                      or FIN.
+                    </ListItem>
+                  </UnorderedList>
+                  <Text fontSize={'sm'}>
+                    Please email a screenshot of your payment to{" "}
+                    <b>vision_athletics@yahoo.com</b>
+                  </Text>
+                </VStack>
+                  
+                <VStack spacing={4} align={'flex-start'}>
+                  <Text fontWeight={600} fontSize={'md'} >Join our Strava club</Text>
+                  <Text fontSize={'sm'}>
+                    Submit a request to join our Strava club. Your request to join will be
+                    approved once you have completed steps 1 and 2.
+                  </Text>
+                  <UnorderedList>
+                    <ListItem fontSize={'sm'} >
+                      <b>Club name: </b>
+                      <Link
+                        color="teal.500"
+                        href=" https://www.strava.com/clubs/VAMR5km"
+                        isExternal
+                        fontSize={'sm'} 
+                      >
+                        VA MacRitchie Trail 5km Blended Challenge 2022
+                        <Icon as={FiExternalLink} mx="2px" />
+                      </Link>
+                    </ListItem>
+                  </UnorderedList>
+                  <Center w="100%">
+                    <Image
+                      src={joinStravaClub}
+                      alt="Join Strava Club screenshot."
+                      maxH="560px"
+                    />
+                  </Center>
+                  <Text fontSize={'sm'} as="i" color="primary.600">
+                    Please note that by joining the “club” VA MacRitchie Trail 5km Blended
+                    Challenge 2022 on Strava, all your run records will be visible to the
+                    organiser for the purpose of result verification. This Strava club will
+                    be deleted once the event is over.
+                  </Text>
+                </VStack>
+     
                 <Button
                   type="submit"
                   size={"lg"}
@@ -552,6 +672,8 @@ function RegisterEvent() {
               borderRadius={"lg"}
               borderColor={"accents.blue"}
               borderWidth={"thin"}
+              onClick={toLogin}
+              cursor={'pointer'}  
             >
               <AlertIcon color={"accents.blue"} />
               Login to register for the event.
