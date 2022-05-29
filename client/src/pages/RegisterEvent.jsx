@@ -36,6 +36,7 @@ import { useNavigate } from "react-router-dom";
 import { FiExternalLink } from "react-icons/fi";
 import MR25_paynowQR from "../images/MR25_paynowQR.jpeg";
 import joinStravaClub from "../images/join-strava-club.jpeg";
+import tShirtSizeImg from "../images/tshirtsize.jpeg";
 
 function RegisterEvent() {
   const navigate = useNavigate()
@@ -61,6 +62,7 @@ function RegisterEvent() {
     parentName: "",
     parentNRIC: "",
     parentMobile: "",
+    tShirtSize: "",
     // dataConsent: false,
     pending: "pending",
     registeredDate: ""
@@ -82,6 +84,7 @@ function RegisterEvent() {
     parentName,
     parentNRIC,
     parentMobile,
+    tShirtSize,
     // dataConsent,
     pending,
     registeredDate
@@ -152,6 +155,7 @@ function RegisterEvent() {
           parentName,
           parentNRIC,
           parentMobile,
+          tShirtSize,
           // dataConsent,
           pending,
           registeredDate
@@ -562,6 +566,33 @@ function RegisterEvent() {
                   setFormData={setFormData}
                   text="I acknowledge and consent to the collection, use and disclosure of my personal data by Vision Athletics for the purposes set out for this event."
                   /> */}
+
+                <FormControl isRequired>
+                  <FormLabel>T-shirt Size (chest)</FormLabel>
+                  <Select
+                    name="tShirtSize"
+                    onChange={onChange}
+                    placeholder="Select size"
+                  >
+                      <option value='XS-18"' >XS-18"</option>
+                      <option value='S-19"' >S-19"</option>
+                      <option value='M-20"' >M-20"</option>
+                      <option value='L-21"' >L-21"</option>
+                      <option value='XL-22"' >XL-22"</option>
+                      <option value='XXL-23"' >XXL-23"</option>
+                  </Select>
+                  </FormControl>
+                  
+                <Text fontWeight={600} fontSize={'sm'} >Measurement of Front Chest for T-shirt Size</Text>
+                <Center w="100%">
+                  <Image src={tShirtSizeImg} alt="T-shirt size." />
+                </Center>
+                
+                <Divider
+                  borderColor={"primary.800"}
+                  opacity={1}
+                  borderBottomWidth={1.5}
+                />
                   
                 <Text textStyle="heading_xs">Before submitting, complete the following</Text>
                 <VStack spacing={4} align={'flex-start'} w='100%' >
