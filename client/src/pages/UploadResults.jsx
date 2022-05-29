@@ -293,7 +293,7 @@ function UploadResults() {
 
           <Stack>
             <FormControl isRequired>
-              <FormLabel>Date of run</FormLabel>
+              <FormLabel fontWeight={700} fontSize={"md"} color={"primary.800"} >Date of run</FormLabel>
               <Input
                 name="runDate"
                 value={formData.runDate}
@@ -303,7 +303,7 @@ function UploadResults() {
               />
             </FormControl>
             <FormControl isRequired>
-              <FormLabel>Run Distance (as reflected on Strava)</FormLabel>
+              <FormLabel fontWeight={700} fontSize={"md"} color={"primary.800"} >Run Distance (as reflected on Strava)</FormLabel>
               <NumberInput precision={2}>
                 <NumberInputField
                   placeholder="Distance (in KM)"
@@ -319,7 +319,7 @@ function UploadResults() {
           </Stack>
 
           <Stack spacing={4}>
-            <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
+            <Text fontWeight={700} fontSize={"md"} color={"primary.800"} >
               Elapsed Time (as reflected on Strava)
             </Text>
             <SimpleGrid columns={3} spacing={4}>
