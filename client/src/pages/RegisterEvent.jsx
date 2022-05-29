@@ -563,8 +563,8 @@ function RegisterEvent() {
                   text="I acknowledge and consent to the collection, use and disclosure of my personal data by Vision Athletics for the purposes set out for this event."
                   /> */}
                   
-                <Text textStyle="heading_xs">Before submitting, complete the following below</Text>
-                <VStack spacing={4} align={'flex-start'} >
+                <Text textStyle="heading_xs">Before submitting, complete the following</Text>
+                <VStack spacing={4} align={'flex-start'} w='100%' >
                   <Text fontWeight={600} fontSize={'md'} >Registration fee</Text>
                   <Text fontSize={'sm'} >
                     Kindly pay via PayNow (Scan QR code below or enter UEN: 52911537M).

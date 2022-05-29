@@ -162,13 +162,14 @@ const NavBarLinks = ({ isOpen }) => {
           Leaderboard
         </NavBarItem>
         {user ? (
-          <Flex>
-            <Stack
-              flex={{ base: 1, md: 0 }}
-              justify={"flex-end"}
-              direction={"row"}
-              spacing={6}
-            >
+          // <Flex>
+          //   <Stack
+          //     flex={{ base: 1, md: 0 }}
+          //     justify={"flex-end"}
+          //     direction={["column", "row"]}
+          //     spacing={6}
+          //   >
+            <>
               <Button
                 variant="outline"
                 borderColor={"primary.800"}
@@ -209,8 +210,9 @@ const NavBarLinks = ({ isOpen }) => {
                   </MenuItem>
                 </MenuList>
               </Menu>
-            </Stack>
-          </Flex>
+            </>
+          //   </Stack>
+          // </Flex>
         ) : (
           <Button
             fontSize={"md"}
