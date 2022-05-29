@@ -56,8 +56,8 @@ function Dashboard() {
     return eventIdArr.includes(event._id);
   };
 
-  const toLogin = () => {
-    navigate("/login");
+  const toCreateAccount = () => {
+    navigate("/register");
   };
 
   const toRegisterEvent = () => {
@@ -106,9 +106,9 @@ function Dashboard() {
               w={"100%"}
               color={"primary.white"}
               bg={"primary.800"}
-              onClick={toLogin}
+              onClick={toCreateAccount}
             >
-              Login to Register
+              Create an Account to Register
             </Button>
           )}
         </GridItem>
