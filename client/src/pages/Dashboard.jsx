@@ -113,14 +113,20 @@ function Dashboard() {
         </GridItem>
       </Grid>
 
-      <ReadMoreToggle
+      {/* <ReadMoreToggle
         contentArr={event
           .eventDetails
           .eventDescription
           .split('<br/>')
         }
         title={'About the Event'}
-      />
+      /> */}
+      <VStack spacing={4} align={'flex-start'}>
+        <Text fontWeight={700}fontSize={'lg'} >About the Event</Text>
+        {event.eventDetails.eventDescription.split('<br/>').map((para) => (
+          <Text fontWeight={400} fontSize={'sm'} >{para}</Text>
+        ))}
+      </VStack>
 
       <Text fontWeight={700} fontSize={"lg"}>
         Event details
