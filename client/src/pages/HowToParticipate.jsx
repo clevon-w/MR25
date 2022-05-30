@@ -17,6 +17,7 @@ import {
 import { FiExternalLink } from "react-icons/fi";
 import MR25_paynowQR from "../images/MR25_paynowQR.jpeg";
 import joinStravaClub from "../images/join-strava-club.jpeg";
+import RaceInstructions from "../components/RaceInstructions";
 
 function HowToParticipate() {
   return (
@@ -25,7 +26,7 @@ function HowToParticipate() {
         How can I participate?
       </Text>
       <Text textStyle="heading_xs">Step 1: Register</Text>
-      <Text pb={4}>
+      <Text fontWeight={400} fontSize={'sm'} pb={4}>
         Create an account and submit the registration form{" "}
         <Link color="teal.500" href="./registerEvent">
           here
@@ -33,13 +34,13 @@ function HowToParticipate() {
         .
       </Text>
       <Text textStyle="heading_xs">Step 2: Registration fee</Text>
-      <Text>
+      <Text fontWeight={400} fontSize={'sm'} >
         Kindly pay via PayNow (Scan QR code below or enter UEN: 52911537M).
       </Text>
       <Center w="100%">
-        <Image src={MR25_paynowQR} alt="MR25 Paynow QR code." maxH="360px" />
+        <Image src={MR25_paynowQR} alt="VAMR Paynow QR code." maxH="360px" />
       </Center>
-      <UnorderedList pb={4}>
+      <UnorderedList pb={4} fontSize={'sm'}>
         <ListItem>
           <b>Amount: </b>$20.00 (non-refundable)
         </ListItem>
@@ -48,16 +49,16 @@ function HowToParticipate() {
           or FIN.
         </ListItem>
       </UnorderedList>
-      <Text pb={4}>
+      <Text fontWeight={400} fontSize={'sm'} pb={4}>
         Please email a screenshot of your payment to{" "}
         <b>vision_athletics@yahoo.com</b>
       </Text>
       <Text textStyle="heading_xs">Step 3: Join our Strava club</Text>
-      <Text pb={4}>
+      <Text fontWeight={400} fontSize={'sm'} pb={4}>
         Submit a request to join our Strava club. Your request to join will be
         approved once you have completed steps 1 and 2.
       </Text>
-      <UnorderedList pb={4}>
+      <UnorderedList pb={4} fontSize={'sm'}>
         <ListItem>
           <b>Club name: </b>
           <Link
@@ -77,7 +78,7 @@ function HowToParticipate() {
           maxH="560px"
         />
       </Center>
-      <Text as="i" color="primary.600">
+      <Text as="i" color="primary.600" fontSize={'sm'}>
         Please note that by joining the “club” VA MacRitchie Trail 5km Blended
         Challenge 2022 on Strava, all your run records will be visible to the
         organiser for the purpose of result verification. This Strava club will
@@ -86,10 +87,10 @@ function HowToParticipate() {
       <Text textStyle="heading_xs" pt={4}>
         Done 🎉
       </Text>
-      <Text>
-        You will receive a confirmation email from vision_athletics@yahoo.com
-        upon completion of the above steps. Welcome to the event!
+      <Text fontWeight={400} fontSize={'sm'} pb={8} >
+        Upon registration and payment, read the race instruction below and START RUNNING!
       </Text>
+      <RaceInstructions />
     </Container>
   );
 }

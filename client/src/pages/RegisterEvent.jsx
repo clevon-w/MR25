@@ -22,7 +22,8 @@ import {
   Image,
   UnorderedList,
   ListItem,
-  Icon
+  Icon,
+  Collapse
 } from "@chakra-ui/react";
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
@@ -45,6 +46,14 @@ function RegisterEvent() {
   const { events, isError, message } = useSelector((state) => state.events);
 
   const { user } = useSelector((state) => state.auth);
+
+  const [show, setShow] = useState(false)
+  const [readOnce, setReadOnce] = useState(false)
+
+  const handleToggle = () => {
+    setShow(!show)
+    setReadOnce(true)
+  }
 
   const [formData, setFormData] = useState({
     category: "",
@@ -239,8 +248,15 @@ function RegisterEvent() {
                 <HStack spacing={4} fontSize={"sm"}>
                   <Text fontWeight={700}>Status:</Text>
                   <Text fontWeight={400}>
-                    {"Registration " +
-                      registrationDetails(event._id, "pending")}
+                    {
+                      "Registration " +
+                      registrationDetails(event._id, "pending")
+                    }
+                    {
+                      registrationDetails(event._id, "pending") === 'pending'
+                        ? ' (You may start uploading results immediately!)'
+                        : ''
+                    }
                   </Text>
                 </HStack>
 
@@ -488,29 +504,33 @@ function RegisterEvent() {
                   <Text fontSize={"md"} fontWeight={700}>
                     Terms and Conditions of entry
                   </Text>
-                  <Text fontSize={"sm"} fontWeight={400}>
-                      I know that running in an event that is organized as a virtual activity where I run on my own,
-                      at a date and time of my choice, which will not have any support or security measures in place 
-                      by Vision Athletics is a potentially hazardous activity, which could result in injury or death. 
-                      I acknowledge that I am participating in the activity outlined by this virtual event by my own 
-                      free will and at my own personal risk.I will not participate in a virtual event unless I am 
-                      medically abled and properly trained, and by the submission of my registration, I certify that 
-                      I am medically able to perform this event, and am in good health, and I am properly trained. 
-                      I further agree to abide by the Multi-Ministry Taskforce’s latest advisories pertaining to 
-                      COVID-19. I assume all risks to me associated with running on my own as part of this virtual 
-                      activity, including but not limited to: falls, contact with other park goers, the effects of 
-                      the weather, including high heat and/or humidity, and the conditions of the trail, all such risks 
-                      being known or unknown and appreciated by me when out running on my own without any type of 
-                      support from event organizers. Having read this waiver and knowing these facts and in consideration
-                      of your accepting my entry, I, for myself and anyone entitled to act on my behalf, waive and
-                      release the organizer, Vision Athletics from all claims or liabilities of any kind arising out
-                      of my participation in this virtual event, and waive my ability to bring any legal action against
-                      the entities outlined in this waiver as I am voluntarily electing to run on my own as part of this virtual event.  I grant permission to all of the personal data provided during registration for any legitimate purpose.  I understand that this event does not provide for refunds in the event of a cancellation, and by signing this waiver, I consent that I am not entitled to a refund if the event is cancelled before or during the event.
-                  </Text>
+                  <Collapse startingHeight={70} in={show}>
+                    I know that running in an event that is organized as a virtual activity where I run on my own,
+                    at a date and time of my choice, which will not have any support or security measures in place 
+                    by Vision Athletics is a potentially hazardous activity, which could result in injury or death. 
+                    I acknowledge that I am participating in the activity outlined by this virtual event by my own 
+                    free will and at my own personal risk.I will not participate in a virtual event unless I am 
+                    medically abled and properly trained, and by the submission of my registration, I certify that 
+                    I am medically able to perform this event, and am in good health, and I am properly trained. 
+                    I further agree to abide by the Multi-Ministry Taskforce’s latest advisories pertaining to 
+                    COVID-19. I assume all risks to me associated with running on my own as part of this virtual 
+                    activity, including but not limited to: falls, contact with other park goers, the effects of 
+                    the weather, including high heat and/or humidity, and the conditions of the trail, all such risks 
+                    being known or unknown and appreciated by me when out running on my own without any type of 
+                    support from event organizers. Having read this waiver and knowing these facts and in consideration
+                    of your accepting my entry, I, for myself and anyone entitled to act on my behalf, waive and
+                    release the organizer, Vision Athletics from all claims or liabilities of any kind arising out
+                    of my participation in this virtual event, and waive my ability to bring any legal action against
+                    the entities outlined in this waiver as I am voluntarily electing to run on my own as part of this virtual event.  I grant permission to all of the personal data provided during registration for any legitimate purpose.  I understand that this event does not provide for refunds in the event of a cancellation, and by signing this waiver, I consent that I am not entitled to a refund if the event is cancelled before or during the event.
+                  </Collapse>
+                  <Button size='sm' variant={'link'} onClick={handleToggle} mt='1rem'>
+                    Read {show ? 'Less' : 'More'}
+                  </Button>
                   <FormCheckbox
                     name="termsAndCond"
                     data={termsAndCond}
                     setFormData={setFormData}
+                    isDisabled={!readOnce}
                     text="I acknowledge that I have read and agree with the terms and conditions of entry"
                   />
 
@@ -601,7 +621,7 @@ function RegisterEvent() {
                     Kindly pay via PayNow (Scan QR code below or enter UEN: 52911537M).
                   </Text>
                   <Center w="100%">
-                    <Image src={MR25_paynowQR} alt="MR25 Paynow QR code." maxH="360px" />
+                    <Image src={MR25_paynowQR} alt="VAMR Paynow QR code." maxH="360px" />
                   </Center>
                   <UnorderedList>
                     <ListItem fontSize={'sm'} >

@@ -11,7 +11,7 @@ function FormCheckbox(props) {
 
   return (
     <FormControl isRequired>
-      <Checkbox name={props.name} checked={props.data} onChange={handleChange} size={'sm'} >{props.text}</Checkbox>
+      <Checkbox name={props.name} checked={props.data} disabled={props.isDisabled} onChange={handleChange} size={'sm'} >{props.text}</Checkbox>
     </FormControl>
   )
 }
