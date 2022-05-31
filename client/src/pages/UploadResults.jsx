@@ -19,7 +19,7 @@ import {
   Link
 } from "@chakra-ui/react";
 // import { FiImage } from 'react-icons/fi'
-import { createResult, reset } from "../features/results/resultSlice";
+import { createResult, resetResult } from "../features/results/resultSlice";
 import { formatDateDDMonYYYY } from "../utils/helperFunctions";
 import RaceInstructions from "../components/RaceInstructions";
 // import FileUpload from '../components/FileUpload';
@@ -96,10 +96,10 @@ function UploadResults() {
       });
       navigate("/");
       return () => {
-        dispatch(reset());
+        dispatch(resetResult());
       };
     }
-  }, [dispatch, navigate, isSuccess, isError, message, toast]);
+  }, [dispatch, navigate, isSuccess, isError, message, toast, data.registeredEvents.length]);
 
   const onChange = (e) => {
     setFormData((prevState) => ({

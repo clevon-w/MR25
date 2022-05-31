@@ -22,7 +22,7 @@ import {
   Container
 } from "@chakra-ui/react";
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
-import { login, reset } from "../features/auth/authSlice";
+import { login, resetAuth } from "../features/auth/authSlice";
 import { emailRegex } from "../utils/regex";
 
 function Login() {
@@ -61,7 +61,7 @@ function Login() {
       navigate("/");
     }
 
-    dispatch(reset());
+    dispatch(resetAuth());
   }, [user, isError, isSuccess, message, navigate, dispatch, toast]);
 
   const onChange = (e) => {

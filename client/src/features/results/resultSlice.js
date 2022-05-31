@@ -36,7 +36,7 @@ export const resultSlice = createSlice({
     name: 'result',
     initialState,
     reducers: {
-        reset: (state) => initialState
+      resetResult: (state) => initialState
     },
 
     extraReducers: (builder) => {
@@ -71,5 +71,5 @@ export const resultSlice = createSlice({
     }
 })
 
-export const { reset } = resultSlice.actions
+export const { resetResult } = resultSlice.actions
 export default resultSlice.reducer

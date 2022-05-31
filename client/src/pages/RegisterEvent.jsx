@@ -27,7 +27,7 @@ import {
 } from "@chakra-ui/react";
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
-import { getEvents, reset } from "../features/event/eventSlice";
+import { getEvents, resetEvent } from "../features/event/eventSlice";
 import { useEffect, useState } from "react";
 import FormRadio from "../components/FormRadio";
 import FormCheckbox from "../components/FormCheckbox";
@@ -107,7 +107,7 @@ function RegisterEvent() {
     dispatch(getEvents());
 
     return () => {
-      dispatch(reset());
+      dispatch(resetEvent());
     };
   }, [dispatch, isError, message]);
 
