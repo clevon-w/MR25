@@ -50,11 +50,6 @@ function RegisterEvent() {
   const [show, setShow] = useState(false)
   const [readOnce, setReadOnce] = useState(false)
 
-  const handleToggle = () => {
-    setShow(!show)
-    setReadOnce(true)
-  }
-
   const [formData, setFormData] = useState({
     category: "",
     institution: "",
@@ -504,7 +499,7 @@ function RegisterEvent() {
                   <Text fontSize={"md"} fontWeight={700}>
                     Terms and Conditions of entry
                   </Text>
-                  <Collapse startingHeight={70} in={show}>
+                  <Text fontWeight={400} fontSize={'sm'} >
                     I know that running in an event that is organized as a virtual activity where I run on my own,
                     at a date and time of my choice, which will not have any support or security measures in place 
                     by Vision Athletics is a potentially hazardous activity, which could result in injury or death. 
@@ -522,15 +517,12 @@ function RegisterEvent() {
                     release the organizer, Vision Athletics from all claims or liabilities of any kind arising out
                     of my participation in this virtual event, and waive my ability to bring any legal action against
                     the entities outlined in this waiver as I am voluntarily electing to run on my own as part of this virtual event.  I grant permission to all of the personal data provided during registration for any legitimate purpose.  I understand that this event does not provide for refunds in the event of a cancellation, and by signing this waiver, I consent that I am not entitled to a refund if the event is cancelled before or during the event.
-                  </Collapse>
-                  <Button size='sm' variant={'link'} onClick={handleToggle} mt='1rem'>
-                    Read {show ? 'Less' : 'More'}
-                  </Button>
+                  </Text>
                   <FormCheckbox
                     name="termsAndCond"
                     data={termsAndCond}
                     setFormData={setFormData}
-                    isDisabled={!readOnce}
+                    isDisabled={false}
                     text="I acknowledge that I have read and agree with the terms and conditions of entry"
                   />
 
