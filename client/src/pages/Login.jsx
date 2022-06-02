@@ -19,16 +19,17 @@ import {
   FormControl,
   FormErrorMessage,
   Text,
-  Container
+  Container,
 } from "@chakra-ui/react";
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import { login, resetAuth } from "../features/auth/authSlice";
 import { emailRegex } from "../utils/regex";
+import Runningman from "../components/Runningman";
 
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const { email, password } = formData;
@@ -53,7 +54,7 @@ function Login() {
       toast({
         title: message,
         status: "error",
-        isClosable: true
+        isClosable: true,
       });
     }
 
@@ -67,7 +68,7 @@ function Login() {
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -76,7 +77,7 @@ function Login() {
 
     const userData = {
       email,
-      password
+      password,
     };
 
     dispatch(login(userData));
@@ -91,7 +92,7 @@ function Login() {
   };
 
   if (isLoading) {
-    return <Spinner />;
+    return <Runningman />;
   }
 
   return (
@@ -140,7 +141,7 @@ function Login() {
                 <InputRightElement
                   onClick={handleClick}
                   _hover={{
-                    cursor: "pointer"
+                    cursor: "pointer",
                   }}
                 >
                   {show ? (
