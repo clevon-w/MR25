@@ -15,9 +15,10 @@ import {
   AlertIcon,
   InputGroup,
   Input,
-  InputRightElement
+  InputRightElement,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
+import Runningman from "../components/Runningman";
 
 function Leaderboard() {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ function Leaderboard() {
   const [query, setQuery] = useState("");
   const [filterParam, setFilterParam] = useState({
     category: "All results",
-    eventType: "Individual"
+    eventType: "Individual",
   });
 
   function sumTime(results) {
@@ -54,7 +55,10 @@ function Leaderboard() {
     if (filterParam.eventType === "Individual") {
       // Filtered based on category and search
       let filteredResults = results.filter((result) => {
-        if (result.ageCategory === filterParam.category || filterParam.category === 'All results') {
+        if (
+          result.ageCategory === filterParam.category ||
+          filterParam.category === "All results"
+        ) {
           return searchParam.some((attr) => {
             return (
               result[attr]
@@ -98,7 +102,10 @@ function Leaderboard() {
       for (let [inst, resultsArr] of Object.entries(groupedResults)) {
         // Filter verified and category
         let verifiedResArr = resultsArr.filter((res) => {
-          if (res.ageCategory === filterParam.category || filterParam.category === 'All results') {
+          if (
+            res.ageCategory === filterParam.category ||
+            filterParam.category === "All results"
+          ) {
             return res.verified;
           }
           return false;
@@ -147,7 +154,7 @@ function Leaderboard() {
   const handleChange = (e) => {
     setFilterParam((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -165,7 +172,7 @@ function Leaderboard() {
   }, [isError, message, dispatch]);
 
   if (isLoading || !(events.length > 0)) {
-    return <Text>is loading</Text>;
+    return <Runningman />;
   } else {
     return (
       <Stack spacing={8}>
@@ -177,7 +184,7 @@ function Leaderboard() {
               Category
             </Text>
             <Select onChange={handleChange} name="category">
-              <option value={'All results'} >All results</option>
+              <option value={"All results"}>All results</option>
               {events[0].eventDetails.ageCategories.map((ageCat) =>
                 filterParam.eventType === "Team" &&
                 (ageCat === "Men's Open (individual event only)" ||
