@@ -22,8 +22,8 @@ export const getResults = createAsyncThunk('results/getResults', async ( _ , thu
 
 export const createResult = createAsyncThunk('results/createResult', async ( result , thunkAPI) => {
   try {
-    // const token = thunkAPI.getState().auth.user.token
-    return await resultService.createResult(result)
+    const token = thunkAPI.getState().auth.user.token
+    return await resultService.createResult(result, token)
   } catch (error) {
     const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
     return thunkAPI.rejectWithValue(message)

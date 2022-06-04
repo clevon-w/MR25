@@ -41,12 +41,12 @@ function UploadResults() {
   // category and institution is hard coded at the moment
   // as we only have one event
   const [formData, setFormData] = useState({
-    userId: data._id,
+    // userId: data._id,
     eventId: "62864db1e76d2b7a270da2df",
-    firstName: data.firstName,
-    lastName: data.lastName,
-    ageCategory: '',
-    institution: '',
+    // firstName: data.firstName,
+    // lastName: data.lastName,
+    // ageCategory: '',
+    // institution: '',
     runTiming: '',
     runDate: '',
     runDistance: '',
@@ -61,12 +61,12 @@ function UploadResults() {
   });
 
   let {
-    userId,
+    // userId,
     eventId,
-    firstName,
-    lastName,
-    ageCategory,
-    institution,
+    // firstName,
+    // lastName,
+    // ageCategory,
+    // institution,
     runTiming,
     // screenshot,
     verified,
@@ -122,8 +122,8 @@ function UploadResults() {
   const onSubmit = (e) => {
     e.preventDefault();
     
-    ageCategory = data.registeredEvents[0]['62864db1e76d2b7a270da2df'].category
-    institution = data.registeredEvents[0]['62864db1e76d2b7a270da2df'].institution
+    // ageCategory = data.registeredEvents[0]['62864db1e76d2b7a270da2df'].category
+    // institution = data.registeredEvents[0]['62864db1e76d2b7a270da2df'].institution
     
     const h =
       runTime.hours === ""
@@ -147,12 +147,12 @@ function UploadResults() {
     runTiming = h + ":" + m + ":" + s;
 
     const resultData = {
-      userId,
+      // userId,
       eventId,
-      firstName,
-      lastName,
-      ageCategory,
-      institution,
+      // firstName,
+      // lastName,
+      // ageCategory,
+      // institution,
       runTiming,
       // screenshot,
       verified,
