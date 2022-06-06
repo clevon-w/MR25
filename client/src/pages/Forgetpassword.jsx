@@ -1,10 +1,8 @@
-/**
- * Login Page
- */
-
+// Forget password page
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { forgetpassword, resetAuth } from "../features/auth/authSlice";
 import {
   useToast,
   Spinner,
@@ -20,33 +18,23 @@ import {
   FormErrorMessage,
   Text,
   Container,
-  HStack,
-  Checkbox,
 } from "@chakra-ui/react";
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
-import { login, resetAuth } from "../features/auth/authSlice";
 import { emailRegex } from "../utils/regex";
-import Runningman from "../components/Runningman";
 
-function Login() {
+function Forgetpassword() {
   const [formData, setFormData] = useState({
     email: "",
-    password: "",
   });
-
-  const { email, password } = formData;
+  const { email } = formData;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const toast = useToast();
-
+  const toastId = "recovery-email-sent";
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
-
-  // For showing/hiding password:
-  const [show, setShow] = useState(false);
-
   // For validating email input. True if email is INVALID.
   const invalidEmail =
     !emailRegex.test(formData.email) && formData.email !== "";
@@ -60,7 +48,15 @@ function Login() {
       });
     }
 
-    if (isSuccess || user) {
+    if ((isSuccess || user) && !toast.isActive(toastId)) {
+      // if (!toast.isActive(toastId)) {
+      toast({
+        toastId,
+        title: "Recovery email sent",
+        status: "success",
+        isClosable: true,
+      });
+      // }
       navigate("/");
     }
 
@@ -79,34 +75,19 @@ function Login() {
 
     const userData = {
       email,
-      password,
     };
 
-    dispatch(login(userData));
+    dispatch(forgetpassword(userData));
   };
-
-  const handleClick = () => {
-    setShow(!show);
-  };
-
-  const toRegister = (e) => {
-    navigate("/register");
-  };
-
-  // navigate to forget password
-  const toForgetpassword = (e) => {
-    navigate("/forgetpassword");
-  };
-
-  if (isLoading) {
-    return <Runningman />;
-  }
-
   return (
     <Center h="100%">
       <Container maxW="md">
         <Text textStyle="heading_s" pb={4}>
-          Welcome
+          Forget password
+        </Text>
+        <Text>
+          Enter the email address associated with your account and we'll send
+          you a link to reset your password
         </Text>
         <form onSubmit={onSubmit}>
           <Stack spacing={1}>
@@ -129,58 +110,13 @@ function Login() {
                 <FormErrorMessage>Invalid e-mail address.</FormErrorMessage>
               ) : null}
             </FormControl>
-
-            {/* Password input */}
-            <FormControl pb={4} isRequired>
-              <InputGroup>
-                <InputLeftElement
-                  pointerEvents="none"
-                  children={<Icon as={FiLock} color="primary.600" />}
-                />
-                <Input
-                  placeholder="Password"
-                  name="password"
-                  value={password}
-                  pr="4.5rem"
-                  type={show ? "text" : "password"}
-                  onChange={onChange}
-                />
-                <InputRightElement
-                  onClick={handleClick}
-                  _hover={{
-                    cursor: "pointer",
-                  }}
-                >
-                  {show ? (
-                    <Icon as={FiEyeOff} color="primary.800" />
-                  ) : (
-                    <Icon as={FiEye} color="primary.800" />
-                  )}
-                </InputRightElement>
-              </InputGroup>
-            </FormControl>
-            <HStack justify="space-between">
-              <Checkbox defaultChecked>Remember me</Checkbox>
-              <Button
-                variant="link"
-                colorScheme="primary.800"
-                size="sm"
-                onClick={toForgetpassword}
-              >
-                Forgot password?
-              </Button>
-            </HStack>
-
             <Button
               type="submit"
               color="primary.white"
               bg="primary.800"
               size="lg"
             >
-              Login
-            </Button>
-            <Button variant="ghost" size="lg" onClick={toRegister}>
-              No account? Create account here.
+              Continue
             </Button>
           </Stack>
         </form>
@@ -188,4 +124,4 @@ function Login() {
     </Center>
   );
 }
-export default Login;
+export default Forgetpassword;
