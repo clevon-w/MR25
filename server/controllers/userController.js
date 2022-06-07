@@ -202,7 +202,7 @@ exports.forgetPassword = asyncHandler(async (req, res) => {
       text:
         "You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n" +
         "Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n" +
-        `http://localhost:3000/reset/${token}\n\n` +
+        `http://localhost:3000/api/users/reset/${token}\n\n` +
         "If you did not request this, please ignore this email and your password will remain unchanged.\n",
     };
 
@@ -216,6 +216,54 @@ exports.forgetPassword = asyncHandler(async (req, res) => {
         res.status(200).json("recovery email sent");
       }
     });
+  }
+});
+
+exports.authenticateResetPassword = asyncHandler(async (req, res) => {
+  const user = await User.findOne({
+    $where: {
+      resetPasswordToken: req.params.token,
+      resetPasswordExpires: {
+        $gt: Date.now(),
+      },
+    },
+  });
+
+  if (!user) {
+    console.log("password reset link is invalid or has expired");
+    res.status(400).json("password reset link is invalid or has expired");
+  } else {
+    res.send({
+      data: user,
+    });
+  }
+});
+
+exports.updatePassword = asyncHandler(async (req, res) => {
+  const { user, password, password2 } = req.body;
+
+  if (!user || !password || !password2) {
+    res.status(400);
+    throw new Error("Please fill in all fields");
+  } else if (password != password2) {
+    res.status(400);
+    throw new Error("Passwords do not match");
+  } else {
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Update user with new password
+    const updatedUser = await User.findByIdAndUpdate(user._id, {
+      password: hashedPassword,
+    });
+
+    if (!updatedUser) {
+      res.status(400);
+      throw new Error("User is not found in database");
+    } else {
+      res.status(200).send({ data: updatedUser });
+    }
   }
 });
 
