@@ -48,16 +48,15 @@ function Forgetpassword() {
       });
     }
 
-    if ((isSuccess || user) && !toast.isActive(toastId)) {
-      // if (!toast.isActive(toastId)) {
-      toast({
-        toastId,
-        title: "Recovery email sent",
-        status: "success",
-        isClosable: true,
-      });
-      // }
-      navigate("/");
+    if (isSuccess || user) {
+      if (!toast.isActive(toastId)) {
+        toast({
+          toastId,
+          title: "Recovery email sent",
+          status: "success",
+          isClosable: true,
+        });
+      }
     }
 
     dispatch(resetAuth());
@@ -79,6 +78,7 @@ function Forgetpassword() {
 
     dispatch(forgetpassword(userData));
   };
+
   return (
     <Center h="100%">
       <Container maxW="md">

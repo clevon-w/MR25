@@ -54,7 +54,7 @@ export const forgetpassword = createAsyncThunk(
   "auth/forgetpassword",
   async (user, thunkAPI) => {
     try {
-      return await authService.forgetpasword(user);
+      return await authService.forgetpassword(user);
     } catch (error) {
       const message =
         (error.response &&
@@ -144,6 +144,18 @@ export const authSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
         state.user = null;
+      })
+      .addCase(forgetpassword.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(forgetpassword.fulfilled, (state, action) => {
+        state.isSuccess = true;
+        state.isLoading = false;
+      })
+      .addCase(forgetpassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = null;

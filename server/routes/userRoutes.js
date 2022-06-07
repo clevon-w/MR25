@@ -16,5 +16,6 @@ router.route('/:id')
 
 router.post('/login', userController.loginUser)
 router.get('/me', protect, userController.getMe)
+router.post('/forgetpassword', userController.forgetPassword)
 
 module.exports = router

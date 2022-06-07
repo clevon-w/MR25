@@ -7,6 +7,9 @@ const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
+const dotenv = require("dotenv").config();
 
 /**
  * findUsers gets the entire collection of users.
@@ -73,7 +76,7 @@ exports.createUser = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Invalid E-mail");
   }
-  
+
   // Hash password
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
@@ -154,6 +157,65 @@ exports.loginUser = asyncHandler(async (req, res) => {
   } else {
     res.status(400);
     throw new Error("Invalid credentials");
+  }
+});
+
+/**
+ * forgetPassword sends an email to the user containing a link to reset password
+ */
+exports.forgetPassword = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    res.status(400);
+    throw new Error("Email required");
+  }
+
+  const token = crypto.randomBytes(20).toString("hex");
+  const user = await User.findOneAndUpdate(
+    { email: email },
+    {
+      $set: {
+        resetPasswordToken: token,
+        resetPasswordExpires: Date.now() + 3600000,
+      },
+    }
+  );
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User with this email does not exist");
+  } else {
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      auth: {
+        user: `${process.env.EMAIL_ADDRESS}`,
+        pass: `${process.env.EMAIL_PASSWORD}`,
+      },
+    });
+
+    const mailOptions = {
+      from: `${process.env.EMAIL_ADDRESS}`,
+      to: `${user.email}`,
+      subject: "Link To Reset Password",
+      text:
+        "You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n" +
+        "Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n" +
+        `http://localhost:3000/reset/${token}\n\n` +
+        "If you did not request this, please ignore this email and your password will remain unchanged.\n",
+    };
+
+    console.log("sending mail");
+
+    transporter.sendMail(mailOptions, (err, response) => {
+      if (err) {
+        console.error("there was an error: ", err);
+      } else {
+        console.log("here is the res: ", response);
+        res.status(200).json("recovery email sent");
+      }
+    });
   }
 });
 
