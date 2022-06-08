@@ -23,14 +23,13 @@ const login = async (userData) => {
   }
   return response.data;
 };
+
 // Forget password
 const forgetpassword = async (userData) => {
   const response = await axios.post(API_URL + "forgetpassword", userData);
-  if (response.data) {
-    localStorage.setItem("user", JSON.stringify(response.data));
-  }
   return response.data;
 };
+
 // Update user
 const update = async (userData) => {
   const response = await axios.patch(API_URL + userData.id, userData.data);
