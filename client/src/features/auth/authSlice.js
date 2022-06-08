@@ -67,6 +67,19 @@ export const forgetpassword = createAsyncThunk(
   }
 );
 
+// Reset password
+export const reset = createAsyncThunk("auth/reset", async (user, thunkAPI) => {
+  try {
+    return await authService.reset(user);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 // Update user
 export const update = createAsyncThunk(
   "auth/update",
