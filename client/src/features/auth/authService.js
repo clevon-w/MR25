@@ -30,6 +30,12 @@ const forgetpassword = async (userData) => {
   return response.data;
 };
 
+// Reset pasword
+const reset = async (window.location.pathname) => {
+  const response = await axios.get(API_URL + "rest/" + window.location.pathname);
+  return response.data;
+};
+
 // Update user
 const update = async (userData) => {
   const response = await axios.patch(API_URL + userData.id, userData.data);
@@ -50,6 +56,7 @@ const authService = {
   update,
   login,
   forgetpassword,
+  reset,
 };
 
 export default authService;

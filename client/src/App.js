@@ -31,7 +31,10 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgetpassword" element={<Forgetpassword />} />
-            <Route path="/resetpassword" element={<ResetPassword />} />
+            <Route
+              path="/api/users/resetPassword/:token"
+              element={<ResetPassword />}
+            />
             <Route path="/registerEvent" element={<RegisterEvent />} />
             <Route path="/UploadResults" element={<UploadResults />} />
             <Route path="/Leaderboard" element={<Leaderboard />} />
