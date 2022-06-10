@@ -116,6 +116,7 @@ exports.updateUser = asyncHandler(async (req, res) => {
     });
     res.send({ data: user });
   } catch {
+    console.log("im in update user");
     res.status(404);
     throw new Error("User is not found");
   }
@@ -221,40 +222,34 @@ exports.forgetPassword = asyncHandler(async (req, res) => {
 
 exports.authenticateResetPassword = asyncHandler(async (req, res) => {
   const user = await User.findOne({
-    $where: {
-      resetPasswordToken: req.params.token,
-      resetPasswordExpires: {
-        $gt: Date.now(),
-      },
+    resetPasswordToken: req.params.token,
+    resetPasswordExpires: {
+      $gt: Date.now(),
     },
   });
 
   if (!user) {
     console.log("password reset link is invalid or has expired");
-    res.status(400).json("password reset link is invalid or has expired");
+    res.status(400).send("password reset link is invalid or has expired");
   } else {
-    res.send({
-      data: user,
-    });
+    console.log("password reset link authenticated");
+    res.status(200).send({ data: user });
   }
 });
 
 exports.updatePassword = asyncHandler(async (req, res) => {
-  const { user, password, password2 } = req.body;
+  const { userId, password, password2 } = req.body;
 
-  if (!user || !password || !password2) {
+  if (!password || !password2) {
     res.status(400);
     throw new Error("Please fill in all fields");
-  } else if (password != password2) {
-    res.status(400);
-    throw new Error("Passwords do not match");
   } else {
     // Hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // Update user with new password
-    const updatedUser = await User.findByIdAndUpdate(user._id, {
+    const updatedUser = await User.findByIdAndUpdate(userId, {
       password: hashedPassword,
     });
 

@@ -25,14 +25,14 @@ const login = async (userData) => {
 };
 
 // Forget password
-const forgetpassword = async (userData) => {
-  const response = await axios.post(API_URL + "forgetpassword", userData);
+const forgetPassword = async (userData) => {
+  const response = await axios.post(API_URL + "forgetPassword", userData);
   return response.data;
 };
 
 // Reset pasword
-const reset = async (window.location.pathname) => {
-  const response = await axios.get(API_URL + "rest/" + window.location.pathname);
+const authenticateResetPassword = async (token) => {
+  const response = await axios.get(API_URL + "reset/" + token);
   return response.data;
 };
 
@@ -42,6 +42,16 @@ const update = async (userData) => {
   if (response.data) {
     localStorage.setItem("user", JSON.stringify(response.data));
   }
+  return response.data;
+};
+
+// reset password for user
+const resetPw = async (userData) => {
+  const response = await axios.patch(
+    API_URL + "updatePasswordViaEmail",
+    userData
+  );
+
   return response.data;
 };
 
@@ -55,8 +65,9 @@ const authService = {
   logout,
   update,
   login,
-  forgetpassword,
-  reset,
+  forgetPassword,
+  authenticateResetPassword,
+  resetPw,
 };
 
 export default authService;

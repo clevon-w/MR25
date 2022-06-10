@@ -2,8 +2,11 @@
 import { React, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { reset, resetAuth } from "../features/auth/authSlice";
-import { emailRegex, nricRegex } from "../utils/regex";
+import { resetAuth, resetPw } from "../features/auth/authSlice";
+import {
+  authenticateResetPassword,
+  resetResetPwAuth,
+} from "../features/auth/resetPwAuthSlice";
 import { FiEyeOff, FiEye } from "react-icons/fi";
 import Runningman from "../components/Runningman";
 
@@ -26,59 +29,52 @@ import {
 
 function ResetPassword() {
   const [resetForm, setResetForm] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
     password: "",
     confirmPassword: "",
   });
-  // const [update, setUpdate] = useState(false);
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [error, setError] = useState(false);
+
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const toast = useToast();
-  const toastId = "reset-pw-success";
 
-  const { user, isLoading, isError, updated, message } = useSelector(
+  const toast = useToast();
+
+  const token = window.location.pathname.split("/").pop();
+
+  const { updatedUser, isLoading, isSuccess, isError, message } = useSelector(
     (state) => state.auth
   );
-  const invalidEmail =
-    !emailRegex.test(resetForm.email) && resetForm.email !== "";
+
+  const {
+    user,
+    isErrorResetAuth,
+    isSuccessResetAuth,
+    isLoadingResetAuth,
+    messageResetAuth,
+  } = useSelector((state) => state.resetPwAuth);
 
   const passwordNoMatch =
     resetForm.password !== resetForm.confirmPassword &&
     resetForm.confirmPassword !== "";
 
   const toLogin = (e) => {
+    dispatch(resetAuth());
     navigate("/login");
   };
 
+  const toForgetPassword = (e) => {
+    navigate("/forgetPassword");
+  };
+
   useEffect(() => {
-    if (isError) {
-      toast({
-        title: message,
-        status: "Problem resetting password. Please send another reset link.",
-        isClosable: true,
-      });
-    }
+    dispatch(authenticateResetPassword(token));
 
-    if ((updated || user) && !toast.isActive(toastId)) {
-      toast({
-        toastId,
-        title:
-          "Your password has been successfully reset, please try logging in again.",
-        status: "success",
-        isClosable: true,
-      });
-      // }
-      navigate("/");
-    }
-
-    dispatch(resetAuth());
-  }, [user, isError, updated, message, navigate, dispatch, toast]);
+    return () => {
+      dispatch(resetResetPwAuth());
+    };
+  }, []);
 
   const onChange = (e) => {
     setResetForm((prevState) => ({
@@ -86,6 +82,7 @@ function ResetPassword() {
       [e.target.name]: e.target.value,
     }));
   };
+
   const handleClick = () => {
     setShow(!show);
   };
@@ -104,14 +101,39 @@ function ResetPassword() {
         isClosable: true,
       });
     } else {
-      dispatch(reset(resetForm));
+      const formData = {
+        userId: user.data._id,
+        password: resetForm.password,
+        password2: resetForm.confirmPassword,
+      };
+
+      dispatch(resetPw(formData));
     }
   };
 
-  if (isLoading) {
+  if (isLoading || isLoadingResetAuth) {
     return <Runningman />;
-  } else if (isError) {
-    return <Text>error la bodoh</Text>;
+  } else if (isErrorResetAuth) {
+    return (
+      <Stack spacing={4} align="flex-start">
+        <Text textStyle={"heading_s"}>
+          Password reset link is invalid or has expired
+        </Text>
+        <Button variant="solid" onClick={toForgetPassword}>
+          Request for another reset link
+        </Button>
+      </Stack>
+    );
+    return <Text></Text>;
+  } else if (isSuccess) {
+    return (
+      <Stack spacing={4} align="flex-start">
+        <Text textStyle={"heading_s"}>Password Reset Successfully</Text>
+        <Button variant="ghost" onClick={toLogin}>
+          To Login
+        </Button>
+      </Stack>
+    );
   } else {
     // Reset password page
     return (
@@ -123,19 +145,6 @@ function ResetPassword() {
                 Reset Password
               </Text>
 
-              <FormControl isRequired isInvalid={invalidEmail}>
-                <Input
-                  name="email"
-                  type="email"
-                  value={resetForm.email}
-                  onChange={onChange}
-                  placeholder="E-mail"
-                />
-                {invalidEmail ? (
-                  <FormErrorMessage>Invalid e-mail address.</FormErrorMessage>
-                ) : null}
-              </FormControl>
-
               <FormControl isRequired>
                 <InputGroup size="md">
                   <Input
@@ -144,7 +153,7 @@ function ResetPassword() {
                     pr="4.5rem"
                     type={show ? "text" : "password"}
                     onChange={onChange}
-                    placeholder="Password"
+                    placeholder="New Password"
                   />
                   <InputRightElement
                     onClick={handleClick}
@@ -164,12 +173,12 @@ function ResetPassword() {
               <FormControl isRequired isInvalid={passwordNoMatch}>
                 <InputGroup size="md">
                   <Input
-                    name="password2"
+                    name="confirmPassword"
                     value={resetForm.confirmPassword}
                     pr="4.5rem"
                     type={show2 ? "text" : "password"}
                     onChange={onChange}
-                    placeholder="Confirm Password"
+                    placeholder="Confirm New Password"
                   />
                   <InputRightElement
                     onClick={handleClick2}
@@ -195,9 +204,6 @@ function ResetPassword() {
                 size="lg"
               >
                 Update password
-              </Button>
-              <Button variant="ghost" onClick={toLogin}>
-                To login
               </Button>
             </Stack>
           </form>

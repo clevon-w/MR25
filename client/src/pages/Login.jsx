@@ -93,9 +93,8 @@ function Login() {
     navigate("/register");
   };
 
-  // navigate to forget password
-  const toForgetpassword = (e) => {
-    navigate("/forgetpassword");
+  const toForgetPassword = (e) => {
+    navigate("/forgetPassword");
   };
 
   if (isLoading) {
@@ -165,7 +164,7 @@ function Login() {
                 variant="link"
                 colorScheme="primary.800"
                 size="sm"
-                onClick={toForgetpassword}
+                onClick={toForgetPassword}
               >
                 Forgot password?
               </Button>

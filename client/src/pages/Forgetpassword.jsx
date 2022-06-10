@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { forgetpassword, resetAuth } from "../features/auth/authSlice";
+import { forgetPassword, resetAuth } from "../features/auth/authSlice";
 import {
   useToast,
   Spinner,
@@ -22,7 +22,7 @@ import {
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import { emailRegex } from "../utils/regex";
 
-function Forgetpassword() {
+function ForgetPassword() {
   const [formData, setFormData] = useState({
     email: "",
   });
@@ -76,7 +76,7 @@ function Forgetpassword() {
       email,
     };
 
-    dispatch(forgetpassword(userData));
+    dispatch(forgetPassword(userData));
   };
 
   return (
@@ -124,4 +124,4 @@ function Forgetpassword() {
     </Center>
   );
 }
-export default Forgetpassword;
+export default ForgetPassword;
