@@ -49,7 +49,7 @@ function Register() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const toast = useToast();
-  const toastId = 'create-acc-success'
+  const toastId = "create-acc-success";
 
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
@@ -74,15 +74,16 @@ function Register() {
       });
     }
 
-    if ((isSuccess || user) && !toast.isActive(toastId)) {
-      // if (!toast.isActive(toastId)) {
+    if (isSuccess || user) {
+      if (!toast.isActive(toastId)) {
         toast({
           toastId,
-          title: 'Created an account successfully! Head on over to the "Register" page to register for the event!',
+          title:
+            'Created an account successfully! Head on over to the "Register" page to register for the event!',
           status: "success",
           isClosable: true,
-        })
-      // }
+        });
+      }
       navigate("/");
     }
 

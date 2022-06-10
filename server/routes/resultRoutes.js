@@ -10,7 +10,7 @@ const { upload } = require('../middleware/uploadMiddleware')
 //set up routes
 router.route('/')
       .get(resultController.findAllResults)
-      .post(resultController.createResult)
+      .post(protect, resultController.createResult)
 
 router.route('/:id')
       .get(protect, resultController.findUserResults)

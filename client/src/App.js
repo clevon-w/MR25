@@ -5,7 +5,8 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import HowToParticipate from "./pages/HowToParticipate";
 import Login from "./pages/Login";
-import Forgetpassword from "./pages/Forgetpassword";
+import ForgetPassword from "./pages/ForgetPassword";
+import ResetPassword from "./pages/ResetPassword";
 import RegisterEvent from "./pages/RegisterEvent";
 import UploadResults from "./pages/UploadResults";
 import Leaderboard from "./pages/Leaderboard";
@@ -29,7 +30,8 @@ function App() {
             <Route path="/howToParticipate" element={<HowToParticipate />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/forgetpassword" element={<Forgetpassword />} />
+            <Route path="/forgetPassword" element={<ForgetPassword />} />
+            <Route path="/api/users/reset/:token" element={<ResetPassword />} />
             <Route path="/registerEvent" element={<RegisterEvent />} />
             <Route path="/UploadResults" element={<UploadResults />} />
             <Route path="/Leaderboard" element={<Leaderboard />} />

@@ -9,16 +9,19 @@ const getResults = async () => {
 }
 
 //Creates new result
-const createResult = async (resultData) => {
-  // const config = {
-  //   header: {
-  //     Authorization: `Bearer ${token}`
-  //   }
-  // }
-  const response = await axios.post(API_URL, resultData)
+const createResult = async (resultData, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const response = await axios.post(API_URL, resultData, config)
+  
   if (response.data) {
     localStorage.setItem('result', JSON.stringify(response.data))
   }
+  
   return response.data
 }
 
