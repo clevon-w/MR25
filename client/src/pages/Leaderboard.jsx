@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getResults, reset } from "../features/results/resultSlice";
+import { getResults, resetResult } from "../features/results/resultSlice";
 import { getEvents } from "../features/event/eventSlice";
 import ResultItem from "../components/ResultItem";
 import ResultTeamItem from "../components/ResultTeamItem";
@@ -15,9 +15,10 @@ import {
   AlertIcon,
   InputGroup,
   Input,
-  InputRightElement
+  InputRightElement,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
+import Runningman from "../components/Runningman";
 
 function Leaderboard() {
   const dispatch = useDispatch();
@@ -33,8 +34,8 @@ function Leaderboard() {
   const [searchParam] = useState(["institution", "firstName", "lastName"]);
   const [query, setQuery] = useState("");
   const [filterParam, setFilterParam] = useState({
-    category: "Men's Under 15 (individual and team event)",
-    eventType: "Individual"
+    category: "All results",
+    eventType: "Individual",
   });
 
   function sumTime(results) {
@@ -54,7 +55,10 @@ function Leaderboard() {
     if (filterParam.eventType === "Individual") {
       // Filtered based on category and search
       let filteredResults = results.filter((result) => {
-        if (result.ageCategory === filterParam.category) {
+        if (
+          result.ageCategory === filterParam.category ||
+          filterParam.category === "All results"
+        ) {
           return searchParam.some((attr) => {
             return (
               result[attr]
@@ -98,7 +102,10 @@ function Leaderboard() {
       for (let [inst, resultsArr] of Object.entries(groupedResults)) {
         // Filter verified and category
         let verifiedResArr = resultsArr.filter((res) => {
-          if (res.ageCategory === filterParam.category) {
+          if (
+            res.ageCategory === filterParam.category ||
+            filterParam.category === "All results"
+          ) {
             return res.verified;
           }
           return false;
@@ -147,7 +154,7 @@ function Leaderboard() {
   const handleChange = (e) => {
     setFilterParam((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -160,12 +167,12 @@ function Leaderboard() {
     dispatch(getEvents());
 
     return () => {
-      dispatch(reset());
+      dispatch(resetResult());
     };
   }, [isError, message, dispatch]);
 
   if (isLoading || !(events.length > 0)) {
-    return <Text>is loading</Text>;
+    return <Runningman />;
   } else {
     return (
       <Stack spacing={8}>
@@ -177,6 +184,7 @@ function Leaderboard() {
               Category
             </Text>
             <Select onChange={handleChange} name="category">
+              <option value={"All results"}>All results</option>
               {events[0].eventDetails.ageCategories.map((ageCat) =>
                 filterParam.eventType === "Team" &&
                 (ageCat === "Men's Open (individual event only)" ||

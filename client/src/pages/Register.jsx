@@ -29,7 +29,7 @@ import { FiEyeOff, FiEye } from "react-icons/fi";
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
 
-import { register, reset } from "../features/auth/authSlice";
+import { register, resetAuth } from "../features/auth/authSlice";
 import { emailRegex, nricRegex } from "../utils/regex";
 
 function Register() {
@@ -49,6 +49,7 @@ function Register() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const toast = useToast();
+  const toastId = "create-acc-success";
 
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
@@ -74,10 +75,19 @@ function Register() {
     }
 
     if (isSuccess || user) {
+      if (!toast.isActive(toastId)) {
+        toast({
+          toastId,
+          title:
+            'Created an account successfully! Head on over to the "Register" page to register for the event!',
+          status: "success",
+          isClosable: true,
+        });
+      }
       navigate("/");
     }
 
-    dispatch(reset());
+    dispatch(resetAuth());
   }, [user, isError, isSuccess, message, navigate, dispatch, toast]);
 
   const onChange = (e) => {

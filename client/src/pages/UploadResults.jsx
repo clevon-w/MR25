@@ -19,7 +19,7 @@ import {
   Link
 } from "@chakra-ui/react";
 // import { FiImage } from 'react-icons/fi'
-import { createResult, reset } from "../features/results/resultSlice";
+import { createResult, resetResult } from "../features/results/resultSlice";
 import { formatDateDDMonYYYY } from "../utils/helperFunctions";
 import RaceInstructions from "../components/RaceInstructions";
 // import FileUpload from '../components/FileUpload';
@@ -38,15 +38,10 @@ function UploadResults() {
   // const { events } = useSelector((state) => state.events);
   const { isError, isSuccess, message } = useSelector((state) => state.results);
 
-  // category and institution is hard coded at the moment
+  // eventid is hard coded at the moment
   // as we only have one event
   const [formData, setFormData] = useState({
-    userId: data._id,
     eventId: "62864db1e76d2b7a270da2df",
-    firstName: data.firstName,
-    lastName: data.lastName,
-    ageCategory: '',
-    institution: '',
     runTiming: '',
     runDate: '',
     runDistance: '',
@@ -61,12 +56,7 @@ function UploadResults() {
   });
 
   let {
-    userId,
     eventId,
-    firstName,
-    lastName,
-    ageCategory,
-    institution,
     runTiming,
     // screenshot,
     verified,
@@ -96,10 +86,10 @@ function UploadResults() {
       });
       navigate("/");
       return () => {
-        dispatch(reset());
+        dispatch(resetResult());
       };
     }
-  }, [dispatch, navigate, isSuccess, isError, message, toast]);
+  }, [dispatch, navigate, isSuccess, isError, message, toast, data.registeredEvents.length]);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -121,9 +111,6 @@ function UploadResults() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    
-    ageCategory = data.registeredEvents[0]['62864db1e76d2b7a270da2df'].category
-    institution = data.registeredEvents[0]['62864db1e76d2b7a270da2df'].institution
     
     const h =
       runTime.hours === ""
@@ -147,12 +134,7 @@ function UploadResults() {
     runTiming = h + ":" + m + ":" + s;
 
     const resultData = {
-      userId,
       eventId,
-      firstName,
-      lastName,
-      ageCategory,
-      institution,
       runTiming,
       // screenshot,
       verified,

@@ -23,7 +23,7 @@ export const eventSlice = createSlice({
   name: 'event',
   initialState,
   reducers : {
-    reset: (state) => initialState
+    resetEvent: (state) => initialState
   },
   extraReducers: (builder) => {
     builder
@@ -43,5 +43,5 @@ export const eventSlice = createSlice({
   }
 })
 
-export const {reset} = eventSlice.actions
+export const {resetEvent} = eventSlice.actions
 export default eventSlice.reducer

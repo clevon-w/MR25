@@ -22,8 +22,8 @@ export const getResults = createAsyncThunk('results/getResults', async ( _ , thu
 
 export const createResult = createAsyncThunk('results/createResult', async ( result , thunkAPI) => {
   try {
-    // const token = thunkAPI.getState().auth.user.token
-    return await resultService.createResult(result)
+    const token = thunkAPI.getState().auth.user.token
+    return await resultService.createResult(result, token)
   } catch (error) {
     const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
     return thunkAPI.rejectWithValue(message)
@@ -36,7 +36,7 @@ export const resultSlice = createSlice({
     name: 'result',
     initialState,
     reducers: {
-        reset: (state) => initialState
+      resetResult: (state) => initialState
     },
 
     extraReducers: (builder) => {
@@ -71,5 +71,5 @@ export const resultSlice = createSlice({
     }
 })
 
-export const { reset } = resultSlice.actions
+export const { resetResult } = resultSlice.actions
 export default resultSlice.reducer

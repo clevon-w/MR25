@@ -20,7 +20,7 @@ import {
 import { formatDateDDMonYYYY } from "../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getEvents, reset } from "../features/event/eventSlice";
+import { getEvents, resetEvent } from "../features/event/eventSlice";
 import { useEffect } from "react";
 import routeMap from "../images/routeMap.jpeg";
 import { FiCalendar, FiMapPin, FiCheckCircle, FiXCircle } from "react-icons/fi";
@@ -43,7 +43,7 @@ function Dashboard() {
     dispatch(getEvents());
 
     return () => {
-      dispatch(reset());
+      dispatch(resetEvent());
     };
   }, [dispatch, isError, message]);
 

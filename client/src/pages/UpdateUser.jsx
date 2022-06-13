@@ -19,7 +19,7 @@ import {
   Spacer,
   Input
 } from "@chakra-ui/react";
-import { update, reset } from "../features/auth/authSlice";
+import { update, resetAuth } from "../features/auth/authSlice";
 import { formatDateYYYYMMDD } from "../utils/helperFunctions";
 
 //checkicon for Update button
@@ -76,7 +76,7 @@ function UpdateUser() {
       });
       navigate("/MyAccount");
       return () => {
-        dispatch(reset());
+        dispatch(resetAuth());
       };
     }
   }, [user, isError, isSuccess, message, navigate, dispatch, toast]);
