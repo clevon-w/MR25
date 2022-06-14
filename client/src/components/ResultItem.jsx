@@ -8,14 +8,15 @@ import { MdVerified } from "react-icons/md";
 import { formatDateDDMonYYYY } from "../utils/helperFunctions";
 
 function ResultItem(props) {
-  const finalist = props.index <= 8 && props.result.verified;
+  // const finalist = props.index <= 8 && props.result.verified;
 
   return (
     <Flex direction={"column"}>
       <Flex
         bg={"primary.100"}
-        borderTopRadius={"lg"}
-        borderBottomRadius={finalist ? "none" : "lg"}
+        // borderTopRadius={"lg"}
+        // borderBottomRadius={finalist ? "none" : "lg"}
+        borderRadius={"lg"}
         justifyContent={"space-between"}
         p={4}
       >
@@ -45,7 +46,7 @@ function ResultItem(props) {
           </Text>
         </Flex>
       </Flex>
-      {finalist ? (
+      {/* {finalist ? (
         <Flex
           bg={"primary.200"}
           borderBottomRadius={"lg"}
@@ -56,7 +57,7 @@ function ResultItem(props) {
             Qualified for Grand Finale
           </Text>
         </Flex>
-      ) : null}
+      ) : null} */}
     </Flex>
   );
 }
