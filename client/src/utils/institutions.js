@@ -457,4 +457,6 @@ export const institutionsArr = [
   "Singapore Institute of Management",
   "Singapore Raffles Music College",
   "TMC Academy",
+  "Nil",
+  // "MR25",
 ];

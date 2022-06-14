@@ -360,9 +360,9 @@ function RegisterEvent() {
                     ))}
                   </Select>
                   <FormHelperText>
-                    Please enter the full name of your secondary school/junior
+                    Please select the full name of your secondary school/junior
                     college /centralised institution/tertiary institution for
-                    the team competition. Enter "N/A" if inapplicable.
+                    the team competition. Select "Nil" if inapplicable.
                   </FormHelperText>
                 </FormControl>
 
