@@ -557,7 +557,10 @@ function RegisterEvent() {
                     direction="column"
                     setFormData={setFormData}
                   />
-                  <FormControl>
+                  <FormControl
+                    isDisabled={above18 === "yes"}
+                    isRequired={above18 === "no"}
+                  >
                     <FormLabel>Name of parent or guardian</FormLabel>
                     <Input
                       name="parentName"
@@ -565,7 +568,10 @@ function RegisterEvent() {
                       onChange={onChange}
                     />
                   </FormControl>
-                  <FormControl>
+                  <FormControl
+                    isDisabled={above18 === "yes"}
+                    isRequired={above18 === "no"}
+                  >
                     <FormLabel>
                       NRIC / FIN of parent or guardian (last 3 digits and ending
                       alphabet)
@@ -576,7 +582,10 @@ function RegisterEvent() {
                       onChange={onChange}
                     />
                   </FormControl>
-                  <FormControl>
+                  <FormControl
+                    isDisabled={above18 === "yes"}
+                    isRequired={above18 === "no"}
+                  >
                     <FormLabel>Mobile number of parent or guardian</FormLabel>
                     <Input
                       name="parentMobile"
