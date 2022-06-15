@@ -251,18 +251,16 @@ function Register() {
             </FormControl>
 
             <FormControl isRequired>
-              <FormLabel>Birth date</FormLabel>
               <Input
                 name="birthDate"
                 value={formData.birthDate}
                 pr="9px"
                 type="date"
-                placeholder="Birth Date"
                 onChange={onChange}
               />
               <FormHelperText>
-                For mobile users, tap on top-left corner of calendar for year
-                and month options.
+                Enter your birth date. For mobile users, tap on top-left corner
+                of calendar for year and month options.
               </FormHelperText>
               {/* <DatePicker
                 placeholderText="Birth Date (MM/DD/YYY)"
