@@ -24,6 +24,7 @@ import {
   ListItem,
   Icon,
   Collapse,
+  Switch,
 } from "@chakra-ui/react";
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
@@ -48,8 +49,9 @@ function RegisterEvent() {
 
   const { user } = useSelector((state) => state.auth);
 
-  const [show, setShow] = useState(false);
-  const [readOnce, setReadOnce] = useState(false);
+  // const [show, setShow] = useState(false);
+  // const [readOnce, setReadOnce] = useState(false);
+  const [wantToBuy, setWantToBuy] = useState(false);
 
   const [formData, setFormData] = useState({
     category: "",
@@ -608,28 +610,48 @@ function RegisterEvent() {
                   text="I acknowledge and consent to the collection, use and disclosure of my personal data by Vision Athletics for the purposes set out for this event."
                   /> */}
 
-                <FormControl isRequired>
-                  <FormLabel>T-shirt Size (chest)</FormLabel>
-                  <Select
-                    name="tShirtSize"
-                    onChange={onChange}
-                    placeholder="Select size"
-                  >
-                    <option value='XS-18"'>XS-18"</option>
-                    <option value='S-19"'>S-19"</option>
-                    <option value='M-20"'>M-20"</option>
-                    <option value='L-21"'>L-21"</option>
-                    <option value='XL-22"'>XL-22"</option>
-                    <option value='XXL-23"'>XXL-23"</option>
-                  </Select>
-                </FormControl>
+                {institution === "MR25" ? (
+                  <FormControl display="flex" alignItems="center">
+                    <FormLabel>Purchase event shirt?</FormLabel>
+                    <Switch
+                      onChange={() => {
+                        setWantToBuy(!wantToBuy);
+                        if (wantToBuy) {
+                          setFormData((prevState) => ({
+                            ...prevState,
+                            tShirtSize: "",
+                          }));
+                        }
+                      }}
+                    />
+                  </FormControl>
+                ) : null}
 
-                <Text fontWeight={600} fontSize={"sm"}>
-                  Measurement of Front Chest for T-shirt Size
-                </Text>
-                <Center w="100%">
-                  <Image src={tShirtSizeImg} alt="T-shirt size." />
-                </Center>
+                {institution != "MR25" || wantToBuy ? (
+                  <>
+                    <FormControl isRequired>
+                      <FormLabel>T-shirt Size (chest)</FormLabel>
+                      <Select
+                        name="tShirtSize"
+                        onChange={onChange}
+                        placeholder="Select size"
+                      >
+                        <option value='XS-18"'>XS-18"</option>
+                        <option value='S-19"'>S-19"</option>
+                        <option value='M-20"'>M-20"</option>
+                        <option value='L-21"'>L-21"</option>
+                        <option value='XL-22"'>XL-22"</option>
+                        <option value='XXL-23"'>XXL-23"</option>
+                      </Select>
+                    </FormControl>
+                    <Text fontWeight={600} fontSize={"sm"}>
+                      Measurement of Front Chest for T-shirt Size
+                    </Text>
+                    <Center w="100%">
+                      <Image src={tShirtSizeImg} alt="T-shirt size." />
+                    </Center>
+                  </>
+                ) : null}
 
                 <Divider
                   borderColor={"primary.800"}
