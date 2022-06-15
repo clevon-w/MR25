@@ -257,6 +257,7 @@ function Register() {
                 value={formData.birthDate}
                 pr="9px"
                 type="date"
+                placeholder="Birth Date"
                 onChange={onChange}
               />
               <FormHelperText>
