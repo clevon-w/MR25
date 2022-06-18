@@ -33,7 +33,10 @@ import { useEffect, useState } from "react";
 import FormRadio from "../components/FormRadio";
 import FormCheckbox from "../components/FormCheckbox";
 import { update } from "../features/auth/authSlice";
-import { formatDateDDMonYYYY } from "../utils/helperFunctions";
+import {
+  formatDateDDMonYYYY,
+  filterCatOptions,
+} from "../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
 import { FiExternalLink } from "react-icons/fi";
 import MR25_paynowQR from "../images/MR25_paynowQR.jpeg";
@@ -340,12 +343,22 @@ function RegisterEvent() {
                     onChange={onChange}
                     placeholder="Select category"
                   >
-                    {event.eventDetails.ageCategories.map((ageCat) => (
+                    {filterCatOptions(
+                      event.eventDetails.ageCategories,
+                      user.data.birthDate,
+                      user.data.gender
+                    ).map((ageCat) => (
                       <option value={ageCat} key={ageCat}>
                         {ageCat}
                       </option>
                     ))}
                   </Select>
+                  <FormHelperText>
+                    We have filtered the age categories according to your age
+                    and gender that you have entered when you created an
+                    account. If your birth date or gender is incorrect, please
+                    update your particulars in the "My Account" page.
+                  </FormHelperText>
                 </FormControl>
 
                 <FormControl isRequired>
