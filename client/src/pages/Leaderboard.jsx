@@ -16,8 +16,10 @@ import {
   InputGroup,
   Input,
   InputRightElement,
+  HStack,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
+import { MdSearchOff, MdVerified } from "react-icons/md";
 import Runningman from "../components/Runningman";
 
 function Leaderboard() {
@@ -171,6 +173,8 @@ function Leaderboard() {
     };
   }, [isError, message, dispatch]);
 
+  let searchedResults = search(results);
+
   if (isLoading || !(events.length > 0)) {
     return <Runningman />;
   } else {
@@ -225,7 +229,7 @@ function Leaderboard() {
 
         <InputGroup>
           <Input
-            placeholder={"Search athlete"}
+            placeholder={"Search athlete or institution"}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
@@ -233,14 +237,29 @@ function Leaderboard() {
         </InputGroup>
 
         <VStack align="stretch">
-          {filterParam.eventType === "Individual"
-            ? search(results).map((result, index) => (
-                <ResultItem result={result} user={user} index={index} />
-              ))
-            : search(results).map((entry, idx) => (
-                <ResultTeamItem entry={entry} idx={idx} user={user} />
-              ))}
+          {searchedResults.length == 0 ? (
+            <HStack justifyContent={"center"}>
+              <MdSearchOff size={"5em"} />
+              <Text fontSize={"md"} fontWeight={700}>
+                No results have been uploaded in this category yet
+              </Text>
+            </HStack>
+          ) : filterParam.eventType === "Individual" ? (
+            searchedResults.map((result, index) => (
+              <ResultItem result={result} user={user} index={index} />
+            ))
+          ) : (
+            searchedResults.map((entry, idx) => (
+              <ResultTeamItem entry={entry} idx={idx} user={user} />
+            ))
+          )}
         </VStack>
+        <HStack>
+          <MdVerified />
+          <Text fontSize={"sm"} fontWeight={400}>
+            Result verified
+          </Text>
+        </HStack>
       </Stack>
     );
   }

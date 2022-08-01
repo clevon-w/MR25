@@ -24,6 +24,7 @@ import {
   ListItem,
   Icon,
   Collapse,
+  Switch,
 } from "@chakra-ui/react";
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
@@ -32,7 +33,10 @@ import { useEffect, useState } from "react";
 import FormRadio from "../components/FormRadio";
 import FormCheckbox from "../components/FormCheckbox";
 import { update } from "../features/auth/authSlice";
-import { formatDateDDMonYYYY } from "../utils/helperFunctions";
+import {
+  formatDateDDMonYYYY,
+  filterCatOptions,
+} from "../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
 import { FiExternalLink } from "react-icons/fi";
 import MR25_paynowQR from "../images/MR25_paynowQR.jpeg";
@@ -48,8 +52,9 @@ function RegisterEvent() {
 
   const { user } = useSelector((state) => state.auth);
 
-  const [show, setShow] = useState(false);
-  const [readOnce, setReadOnce] = useState(false);
+  // const [show, setShow] = useState(false);
+  // const [readOnce, setReadOnce] = useState(false);
+  const [wantToBuy, setWantToBuy] = useState(false);
 
   const [formData, setFormData] = useState({
     category: "",
@@ -338,12 +343,22 @@ function RegisterEvent() {
                     onChange={onChange}
                     placeholder="Select category"
                   >
-                    {event.eventDetails.ageCategories.map((ageCat) => (
+                    {filterCatOptions(
+                      event.eventDetails.ageCategories,
+                      user.data.birthDate,
+                      user.data.gender
+                    ).map((ageCat) => (
                       <option value={ageCat} key={ageCat}>
                         {ageCat}
                       </option>
                     ))}
                   </Select>
+                  <FormHelperText>
+                    We have filtered the age categories according to your age
+                    and gender that you have entered when you created an
+                    account. If your birth date or gender is incorrect, please
+                    update your particulars in the "My Account" page.
+                  </FormHelperText>
                 </FormControl>
 
                 <FormControl isRequired>
@@ -360,9 +375,9 @@ function RegisterEvent() {
                     ))}
                   </Select>
                   <FormHelperText>
-                    Please enter the full name of your secondary school/junior
+                    Please select the full name of your secondary school/junior
                     college /centralised institution/tertiary institution for
-                    the team competition. Enter "N/A" if inapplicable.
+                    the team competition. Select "Nil" if inapplicable.
                   </FormHelperText>
                 </FormControl>
 
@@ -557,7 +572,10 @@ function RegisterEvent() {
                     direction="column"
                     setFormData={setFormData}
                   />
-                  <FormControl>
+                  <FormControl
+                    isDisabled={above18 === "yes"}
+                    isRequired={above18 === "no"}
+                  >
                     <FormLabel>Name of parent or guardian</FormLabel>
                     <Input
                       name="parentName"
@@ -565,7 +583,10 @@ function RegisterEvent() {
                       onChange={onChange}
                     />
                   </FormControl>
-                  <FormControl>
+                  <FormControl
+                    isDisabled={above18 === "yes"}
+                    isRequired={above18 === "no"}
+                  >
                     <FormLabel>
                       NRIC / FIN of parent or guardian (last 3 digits and ending
                       alphabet)
@@ -576,7 +597,10 @@ function RegisterEvent() {
                       onChange={onChange}
                     />
                   </FormControl>
-                  <FormControl>
+                  <FormControl
+                    isDisabled={above18 === "yes"}
+                    isRequired={above18 === "no"}
+                  >
                     <FormLabel>Mobile number of parent or guardian</FormLabel>
                     <Input
                       name="parentMobile"
@@ -599,28 +623,48 @@ function RegisterEvent() {
                   text="I acknowledge and consent to the collection, use and disclosure of my personal data by Vision Athletics for the purposes set out for this event."
                   /> */}
 
-                <FormControl isRequired>
-                  <FormLabel>T-shirt Size (chest)</FormLabel>
-                  <Select
-                    name="tShirtSize"
-                    onChange={onChange}
-                    placeholder="Select size"
-                  >
-                    <option value='XS-18"'>XS-18"</option>
-                    <option value='S-19"'>S-19"</option>
-                    <option value='M-20"'>M-20"</option>
-                    <option value='L-21"'>L-21"</option>
-                    <option value='XL-22"'>XL-22"</option>
-                    <option value='XXL-23"'>XXL-23"</option>
-                  </Select>
-                </FormControl>
+                {institution === "MR25" ? (
+                  <FormControl display="flex" alignItems="center">
+                    <FormLabel>Purchase event shirt?</FormLabel>
+                    <Switch
+                      onChange={() => {
+                        setWantToBuy(!wantToBuy);
+                        if (wantToBuy) {
+                          setFormData((prevState) => ({
+                            ...prevState,
+                            tShirtSize: "",
+                          }));
+                        }
+                      }}
+                    />
+                  </FormControl>
+                ) : null}
 
-                <Text fontWeight={600} fontSize={"sm"}>
-                  Measurement of Front Chest for T-shirt Size
-                </Text>
-                <Center w="100%">
-                  <Image src={tShirtSizeImg} alt="T-shirt size." />
-                </Center>
+                {institution != "MR25" || wantToBuy ? (
+                  <>
+                    <FormControl isRequired>
+                      <FormLabel>T-shirt Size (chest)</FormLabel>
+                      <Select
+                        name="tShirtSize"
+                        onChange={onChange}
+                        placeholder="Select size"
+                      >
+                        <option value='XS-18"'>XS-18"</option>
+                        <option value='S-19"'>S-19"</option>
+                        <option value='M-20"'>M-20"</option>
+                        <option value='L-21"'>L-21"</option>
+                        <option value='XL-22"'>XL-22"</option>
+                        <option value='XXL-23"'>XXL-23"</option>
+                      </Select>
+                    </FormControl>
+                    <Text fontWeight={600} fontSize={"sm"}>
+                      Measurement of Front Chest for T-shirt Size
+                    </Text>
+                    <Center w="100%">
+                      <Image src={tShirtSizeImg} alt="T-shirt size." />
+                    </Center>
+                  </>
+                ) : null}
 
                 <Divider
                   borderColor={"primary.800"}

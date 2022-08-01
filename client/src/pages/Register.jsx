@@ -23,6 +23,7 @@ import {
   Input,
   InputRightElement,
   Icon,
+  FormLabel,
 } from "@chakra-ui/react";
 import { FiEyeOff, FiEye } from "react-icons/fi";
 
@@ -257,7 +258,10 @@ function Register() {
                 type="date"
                 onChange={onChange}
               />
-              <FormHelperText>Birth date</FormHelperText>
+              <FormHelperText>
+                Enter your birth date. For mobile users, tap on top-left corner
+                of calendar for year and month options.
+              </FormHelperText>
               {/* <DatePicker
                 placeholderText="Birth Date (MM/DD/YYY)"
                 selected={date} // Need this prop to display the selected date in the UI.

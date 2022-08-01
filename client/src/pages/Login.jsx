@@ -108,7 +108,7 @@ function Login() {
           Welcome
         </Text>
         <form onSubmit={onSubmit}>
-          <Stack spacing={1}>
+          <Stack spacing={2}>
             {/* Email input */}
             <FormControl pb={2} isInvalid={invalidEmail} isRequired>
               <InputGroup>
@@ -130,7 +130,7 @@ function Login() {
             </FormControl>
 
             {/* Password input */}
-            <FormControl pb={4} isRequired>
+            <FormControl isRequired>
               <InputGroup>
                 <InputLeftElement
                   pointerEvents="none"
@@ -159,7 +159,7 @@ function Login() {
               </InputGroup>
             </FormControl>
             <HStack justify="space-between">
-              <Checkbox defaultChecked>Remember me</Checkbox>
+              {/* <Checkbox defaultChecked>Remember me</Checkbox> */}
               <Button
                 variant="link"
                 colorScheme="primary.800"
