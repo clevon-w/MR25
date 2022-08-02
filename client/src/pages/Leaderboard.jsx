@@ -189,7 +189,7 @@ function Leaderboard() {
             </Text>
             <Select onChange={handleChange} name="category">
               <option value={"All results"}>All results</option>
-              {events[0].eventDetails.ageCategories.map((ageCat) =>
+              {events[0].eventDetails.eventFormats.map((ageCat) =>
                 filterParam.eventType === "Team" &&
                 (ageCat === "Men's Open (individual event only)" ||
                   ageCat === "Men's Above 50 (individual event only)" ||

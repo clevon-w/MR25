@@ -344,7 +344,7 @@ function RegisterEvent() {
                     placeholder="Select category"
                   >
                     {filterCatOptions(
-                      event.eventDetails.ageCategories,
+                      event.eventDetails.eventFormats,
                       user.data.birthDate,
                       user.data.gender
                     ).map((ageCat) => (
