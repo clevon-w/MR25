@@ -4,35 +4,35 @@
  */
 
 // const req = require('express/lib/request')
-const User = require("../models/userModel")
-const Result = require('../models/resultModel')
-const asyncHandler = require('express-async-handler')
+const User = require("../models/userModel");
+const Result = require("../models/resultModel");
+const asyncHandler = require("express-async-handler");
 
 /**
-  * findAllResults gets the entire collection of Results.
-  * It is not protected.
-  * 
-  * @param {*} req the object containing information about the HTTP request that raised the event
-  * @param {*} res the object to send back to the desired HTTP response
-  */
+ * findAllResults gets the entire collection of Results.
+ * It is not protected.
+ *
+ * @param {*} req the object containing information about the HTTP request that raised the event
+ * @param {*} res the object to send back to the desired HTTP response
+ */
 exports.findAllResults = asyncHandler(async (req, res) => {
-  const results = await Result.find()
-  res.send(results)
-})
+  const results = await Result.find();
+  res.send(results);
+});
 
 /**
-  * createResult creates an result and saves it into the results collection.
-  * Protected to the user.
-  * 
-  * @param {*} req the object containing information about the HTTP request that raised the result
-  * @param {*} res the object to send back to the desired HTTP response
-  */
+ * createResult creates an result and saves it into the results collection.
+ * Protected to the user.
+ *
+ * @param {*} req the object containing information about the HTTP request that raised the result
+ * @param {*} res the object to send back to the desired HTTP response
+ */
 exports.createResult = asyncHandler(async (req, res) => {
-  const { eventId, runTiming, runDistance, runDate, verified } = req.body
+  const { eventId, runTiming, runDistance, runDate, verified } = req.body;
 
   if (!runDistance || !runTiming || !runDate) {
-    res.status(400)
-    throw new Error('Please input all fields')
+    res.status(400);
+    throw new Error("Please input all fields");
   }
 
   // req.user is put in by authMiddleware because of the authentication token
@@ -43,96 +43,101 @@ exports.createResult = asyncHandler(async (req, res) => {
     eventId: eventId,
     firstName: req.user.firstName,
     lastName: req.user.lastName,
-    institution: req.user.registeredEvents[0][eventId].institution,
-    ageCategory: req.user.registeredEvents[0][eventId].category,
+    gender: req.user.gender,
+    // institution: req.user.registeredEvents[0][eventId].institution,
+    // ageCategory: req.user.registeredEvents[0][eventId].category,
     runTiming: runTiming,
     runDistance: runDistance,
     runDate: runDate,
     // screenshot: `http://localhost:8000/api/results/file/${screenshot.filename}`,
     verified: verified,
-  })
+  });
 
-  res.status(200).json(result)
-})
+  res.status(200).json(result);
+});
 
 /**
-* findUserResults gets the results of a user.
-* 
-* @param {*} req the object containing information about the HTTP request that raised the event
-* @param {*} res the object to send back to the desired HTTP response
-*/
+ * findUserResults gets the results of a user.
+ *
+ * @param {*} req the object containing information about the HTTP request that raised the event
+ * @param {*} res the object to send back to the desired HTTP response
+ */
 exports.findUserResults = asyncHandler(async (req, res) => {
   try {
-    const result = await Result.find({ user: req.user.id })
-    res.send({ data: result })
+    const result = await Result.find({ user: req.user.id });
+    res.send({ data: result });
   } catch {
-    res.status(404)
-    throw new Error('Results is not found')
+    res.status(404);
+    throw new Error("Results is not found");
   }
-})
+});
 
 /**
-  * updateResult updates an result in the collection.
-  * Protected to the user
-  * 
-  * @param {*} req the object containing information about the HTTP request that raised the event
-  * @param {*} res the object to send back to the desired HTTP response
-  */
+ * updateResult updates an result in the collection.
+ * Protected to the user
+ *
+ * @param {*} req the object containing information about the HTTP request that raised the event
+ * @param {*} res the object to send back to the desired HTTP response
+ */
 exports.updateResult = asyncHandler(async (req, res) => {
   // Get the user and the result
-  const result = await Result.findById(req.params.id)
+  const result = await Result.findById(req.params.id);
 
   // Check if result exists
   if (!result) {
-  res.status(400)
-  throw new Error('Result not found')
+    res.status(400);
+    throw new Error("Result not found");
   }
 
   // Check if user exists
   if (!req.user) {
-    res.status(401)
-    throw new Error('User not found')
+    res.status(401);
+    throw new Error("User not found");
   }
 
   // Make sure the login user matches the result user
   if (result.user.toString() != req.user.id) {
-    res.status(401)
-    throw new Error('User not authorised')
+    res.status(401);
+    throw new Error("User not authorised");
   }
 
-  const updatedResult = await Result.findByIdAndUpdate(req.params.id, req.body, {new: true})
-  res.send({data: updatedResult})
-})
- 
+  const updatedResult = await Result.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    { new: true }
+  );
+  res.send({ data: updatedResult });
+});
+
 /**
-  * deleteResult deletes an result from the collection.
-  * Protected to the user.
-  * 
-  * @param {*} req the object containing information about the HTTP request that raised the event
-  * @param {*} res the object to send back to the desired HTTP response
-  */
+ * deleteResult deletes an result from the collection.
+ * Protected to the user.
+ *
+ * @param {*} req the object containing information about the HTTP request that raised the event
+ * @param {*} res the object to send back to the desired HTTP response
+ */
 exports.deleteResult = asyncHandler(async (req, res) => {
   // Get the user and the result
-  const result = await Result.findById(req.params.id)
+  const result = await Result.findById(req.params.id);
 
   // Check if result exists
   if (!result) {
-    res.status(400)
-    throw new Error('Result not found')
+    res.status(400);
+    throw new Error("Result not found");
   }
 
   // Check if user exists
   if (!req.user) {
-    res.status(401)
-    throw new Error('User not found')
+    res.status(401);
+    throw new Error("User not found");
   }
 
   // Make sure the login user matches the result user
   if (result.user.toString() != req.user.id) {
-    res.status(401)
-    throw new Error('User not authorised')
+    res.status(401);
+    throw new Error("User not authorised");
   }
-  await result.remove()
+  await result.remove();
 
-  res.status(200).json({id: req.params.id})
-})
+  res.status(200).json({ id: req.params.id });
+});

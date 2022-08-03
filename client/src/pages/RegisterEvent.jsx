@@ -42,7 +42,7 @@ import { FiExternalLink } from "react-icons/fi";
 import MR25_paynowQR from "../images/MR25_paynowQR.jpeg";
 import joinStravaClub from "../images/join-strava-club.jpeg";
 import tShirtSizeImg from "../images/tshirtsize.jpeg";
-import { institutionsArr } from "../utils/institutions";
+// import { institutionsArr } from "../utils/institutions";
 
 function RegisterEvent() {
   const navigate = useNavigate();
@@ -57,8 +57,8 @@ function RegisterEvent() {
   const [wantToBuy, setWantToBuy] = useState(false);
 
   const [formData, setFormData] = useState({
-    category: "",
-    institution: "",
+    // category: "",
+    // institution: "",
     heartCondition: "",
     chestPainWithPhysical: "",
     chestPainWoPhysical: "",
@@ -79,8 +79,8 @@ function RegisterEvent() {
   });
 
   let {
-    category,
-    institution,
+    // category,
+    // institution,
     heartCondition,
     chestPainWithPhysical,
     chestPainWoPhysical,
@@ -150,8 +150,8 @@ function RegisterEvent() {
       ...user.data.registeredEvents,
       {
         [events[0]._id]: {
-          category,
-          institution,
+          // category,
+          // institution,
           heartCondition,
           chestPainWithPhysical,
           chestPainWoPhysical,
@@ -265,7 +265,7 @@ function RegisterEvent() {
                   </Text>
                 </HStack>
 
-                <HStack spacing={4} fontSize={"sm"}>
+                {/* <HStack spacing={4} fontSize={"sm"}>
                   <Text fontWeight={700}>Category:</Text>
                   <Text fontWeight={400}>
                     {registrationDetails(event._id, "category")}
@@ -277,7 +277,7 @@ function RegisterEvent() {
                   <Text fontWeight={400}>
                     {registrationDetails(event._id, "institution")}
                   </Text>
-                </HStack>
+                </HStack> */}
 
                 <HStack spacing={4} fontSize={"sm"}>
                   <Text fontWeight={700}>Name of parent / guardian:</Text>
@@ -336,7 +336,7 @@ function RegisterEvent() {
                   </HStack>
                 </VStack>
 
-                <FormControl isRequired>
+                {/* <FormControl isRequired>
                   <FormLabel>Category</FormLabel>
                   <Select
                     name="category"
@@ -359,9 +359,9 @@ function RegisterEvent() {
                     account. If your birth date or gender is incorrect, please
                     update your particulars in the "My Account" page.
                   </FormHelperText>
-                </FormControl>
+                </FormControl> */}
 
-                <FormControl isRequired>
+                {/* <FormControl isRequired>
                   <FormLabel>Institution</FormLabel>
                   <Select
                     name="institution"
@@ -379,7 +379,7 @@ function RegisterEvent() {
                     college /centralised institution/tertiary institution for
                     the team competition. Select "Nil" if inapplicable.
                   </FormHelperText>
-                </FormControl>
+                </FormControl> */}
 
                 <Divider
                   borderColor={"primary.800"}
@@ -623,7 +623,7 @@ function RegisterEvent() {
                   text="I acknowledge and consent to the collection, use and disclosure of my personal data by Vision Athletics for the purposes set out for this event."
                   /> */}
 
-                {institution === "MR25" ? (
+                {/* {institution === "MR25" ? (
                   <FormControl display="flex" alignItems="center">
                     <FormLabel>Purchase event shirt?</FormLabel>
                     <Switch
@@ -638,33 +638,33 @@ function RegisterEvent() {
                       }}
                     />
                   </FormControl>
-                ) : null}
+                ) : null} */}
 
-                {institution != "MR25" || wantToBuy ? (
-                  <>
-                    <FormControl isRequired>
-                      <FormLabel>T-shirt Size (chest)</FormLabel>
-                      <Select
-                        name="tShirtSize"
-                        onChange={onChange}
-                        placeholder="Select size"
-                      >
-                        <option value='XS-18"'>XS-18"</option>
-                        <option value='S-19"'>S-19"</option>
-                        <option value='M-20"'>M-20"</option>
-                        <option value='L-21"'>L-21"</option>
-                        <option value='XL-22"'>XL-22"</option>
-                        <option value='XXL-23"'>XXL-23"</option>
-                      </Select>
-                    </FormControl>
-                    <Text fontWeight={600} fontSize={"sm"}>
-                      Measurement of Front Chest for T-shirt Size
-                    </Text>
-                    <Center w="100%">
-                      <Image src={tShirtSizeImg} alt="T-shirt size." />
-                    </Center>
-                  </>
-                ) : null}
+                {/* {institution != "MR25" || wantToBuy ? (
+                  <> */}
+                <FormControl isRequired>
+                  <FormLabel>T-shirt Size (chest)</FormLabel>
+                  <Select
+                    name="tShirtSize"
+                    onChange={onChange}
+                    placeholder="Select size"
+                  >
+                    <option value='XS-18"'>XS-18"</option>
+                    <option value='S-19"'>S-19"</option>
+                    <option value='M-20"'>M-20"</option>
+                    <option value='L-21"'>L-21"</option>
+                    <option value='XL-22"'>XL-22"</option>
+                    <option value='XXL-23"'>XXL-23"</option>
+                  </Select>
+                </FormControl>
+                <Text fontWeight={600} fontSize={"sm"}>
+                  Measurement of Front Chest for T-shirt Size
+                </Text>
+                <Center w="100%">
+                  <Image src={tShirtSizeImg} alt="T-shirt size." />
+                </Center>
+                {/* </>
+                ) : null} */}
 
                 <Divider
                   borderColor={"primary.800"}
