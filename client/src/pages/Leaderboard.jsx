@@ -36,8 +36,8 @@ function Leaderboard() {
   const [searchParam] = useState(["institution", "firstName", "lastName"]);
   const [query, setQuery] = useState("");
   const [filterParam, setFilterParam] = useState({
-    category: "All results",
-    eventType: "Individual",
+    eventFormat: "A",
+    gender: "M",
   });
 
   function sumTime(results) {
@@ -143,15 +143,15 @@ function Leaderboard() {
     }
   }
 
-  const withTeams = ["Individual", "Team"];
-  const woTeams = ["Individual"];
-  let indivOrTeamsOption =
-    filterParam.category === "Men's Open (individual event only)" ||
-    filterParam.category === "Men's Above 50 (individual event only)" ||
-    filterParam.category === "Women's Open (individual event only)" ||
-    filterParam.category === "Women's Above 50 (individual event only)"
-      ? woTeams
-      : withTeams;
+  // const withTeams = ["Individual", "Team"];
+  // const woTeams = ["Individual"];
+  // let indivOrTeamsOption =
+  //   filterParam.category === "Men's Open (individual event only)" ||
+  //   filterParam.category === "Men's Above 50 (individual event only)" ||
+  //   filterParam.category === "Women's Open (individual event only)" ||
+  //   filterParam.category === "Women's Above 50 (individual event only)"
+  //     ? woTeams
+  //     : withTeams;
 
   const handleChange = (e) => {
     setFilterParam((prevState) => ({
@@ -185,10 +185,10 @@ function Leaderboard() {
         <Grid w={"100%"} templateColumns="repeat(2, 1fr)" gap={4}>
           <GridItem colSpan={1}>
             <Text fontWeight={700} fontSize={"sm"}>
-              Category
+              Event Format
             </Text>
-            <Select onChange={handleChange} name="category">
-              <option value={"All results"}>All results</option>
+            <Select onChange={handleChange} name="eventFormat">
+              {/* <option value={"All results"}>All results</option>
               {events[0].eventDetails.eventFormats.map((ageCat) =>
                 filterParam.eventType === "Team" &&
                 (ageCat === "Men's Open (individual event only)" ||
@@ -200,17 +200,24 @@ function Leaderboard() {
                     {ageCat}
                   </option>
                 )
-              )}
+              )} */}
+              <option value={"A"}>Event A - Age Performance Index</option>
+              <option value={"B"}>Event B - Most Number of 10.5km Loops</option>
+              <option value={"C"}>
+                Event C - Seoul Garden -MR25 Ultramarathon
+              </option>
             </Select>
           </GridItem>
           <GridItem colSpan={1}>
             <Text fontWeight={700} fontSize={"sm"}>
-              Individual or Team
+              Gender
             </Text>
-            <Select name="eventType" onChange={handleChange}>
-              {indivOrTeamsOption.map((opt) => (
+            <Select name="gender" onChange={handleChange}>
+              {/* {indivOrTeamsOption.map((opt) => (
                 <option value={opt}>{opt}</option>
-              ))}
+              ))} */}
+              <option value={"M"}>Male</option>
+              <option value={"F"}>Female</option>
             </Select>
           </GridItem>
         </Grid>
@@ -222,9 +229,11 @@ function Leaderboard() {
           borderWidth={"thin"}
         >
           <AlertIcon color={"accents.blue"} />
-          {filterParam.eventType === "Individual"
-            ? "The top 8 runners from each age-gender category will be invited to the Grand Finale where the winner from each age-gender category will be declared Champion of Champions and awarded a trophy"
-            : "A team’s score is the sum of the timings of the 4 fastest athletes of each institution indicated in the registration. Winner medals will be given to the  athletes of the top-3 teams in each category."}
+          {filterParam.eventFormat === "A"
+            ? "The Age Performance Index is an indication of how close the participant is to the extrapolated age standard (100 being equal; >100 - exceeding the age standard) calculated based on the MR25 All-Inclusive 10.5km Trail Performance Index, a performance grading system that factors the runner’s age and gender. Please refer to the Table of Extrapolated Age Standards below"
+            : filterParam.eventFormat === "B"
+            ? "At the end of the qualifying period, on 19 Dec, the top 30 male and 30 female with the highest number of loops during the qualifying period will be invited to participate in the finals on 31 Dec."
+            : "Check back on 31 Dec 2022 for live results of the finals!"}
         </Alert>
 
         <InputGroup>
@@ -244,13 +253,9 @@ function Leaderboard() {
                 No results have been uploaded in this category yet
               </Text>
             </HStack>
-          ) : filterParam.eventType === "Individual" ? (
+          ) : (
             searchedResults.map((result, index) => (
               <ResultItem result={result} user={user} index={index} />
-            ))
-          ) : (
-            searchedResults.map((entry, idx) => (
-              <ResultTeamItem entry={entry} idx={idx} user={user} />
             ))
           )}
         </VStack>
