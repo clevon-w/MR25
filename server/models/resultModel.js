@@ -25,6 +25,10 @@ const resultSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please enter last name"],
     },
+    gender: {
+      type: String,
+      required: [true, "Please enter gender"],
+    },
     // institution:{
     //   type: String,
     //   required: [true, 'Please enter institution'],
@@ -49,6 +53,10 @@ const resultSchema = new mongoose.Schema(
     //   type: String,
     //   required: [true, 'Please upload a screenshot']
     // },
+    calculatedAPI: {
+      type: String,
+      required: [true, "No API was calculated"],
+    },
     verified: {
       type: Boolean,
     },

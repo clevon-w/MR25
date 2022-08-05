@@ -7,6 +7,7 @@
 const User = require("../models/userModel");
 const Result = require("../models/resultModel");
 const asyncHandler = require("express-async-handler");
+const APIjson = require("../utils/API");
 
 /**
  * findAllResults gets the entire collection of Results.
@@ -35,6 +36,16 @@ exports.createResult = asyncHandler(async (req, res) => {
     throw new Error("Please input all fields");
   }
 
+  // calculating users API
+  const ageOfUser = 2022 - req.user.birthDate.getUTCFullYear();
+  const API = APIjson[ageOfUser][req.user.gender];
+  let runTimeArr = runTiming.split(":");
+  let h = parseInt(runTimeArr[0]);
+  let m = parseInt(runTimeArr[1]);
+  let s = parseInt(runTimeArr[2]);
+  let runTimeInMins = h * 60 + m + s / 60;
+  const APIres = parseFloat((API / runTimeInMins) * 100).toFixed(2) + "%";
+
   // req.user is put in by authMiddleware because of the authentication token
   // we dont have a eventMiddleware to get the event entry
   // so we are just hardcoding the eventId in for now
@@ -49,6 +60,7 @@ exports.createResult = asyncHandler(async (req, res) => {
     runTiming: runTiming,
     runDistance: runDistance,
     runDate: runDate,
+    calculatedAPI: APIres,
     // screenshot: `http://localhost:8000/api/results/file/${screenshot.filename}`,
     verified: verified,
   });
