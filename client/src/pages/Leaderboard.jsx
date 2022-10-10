@@ -33,11 +33,11 @@ function Leaderboard() {
     (state) => state.results
   );
 
-  const [searchParam] = useState(["institution", "firstName", "lastName"]);
+  const [searchParam] = useState(["firstName", "lastName"]);
   const [query, setQuery] = useState("");
   const [filterParam, setFilterParam] = useState({
     eventFormat: "A",
-    gender: "M",
+    gender: "Male",
   });
 
   function sumTime(results) {
@@ -53,14 +53,12 @@ function Leaderboard() {
   }
 
   function search(results) {
-    // Check individual or team
-    if (filterParam.eventType === "Individual") {
-      // Filtered based on category and search
+    if (filterParam.eventFormat === "A") {
+      // Filter based on gender and search
       let filteredResults = results.filter((result) => {
-        if (
-          result.ageCategory === filterParam.category ||
-          filterParam.category === "All results"
-        ) {
+        // Check if gender of result is same and gender filter
+        if (result.gender === filterParam.gender) {
+          // Check for string typed into search bar
           return searchParam.some((attr) => {
             return (
               result[attr]
@@ -73,9 +71,11 @@ function Leaderboard() {
         return false;
       });
 
-      // Sort the filtered results based on time
+      // Sort the filtered results based on API
       let sortedFilteredResults = filteredResults.sort((resultA, resultB) => {
-        return resultA.runTiming.localeCompare(resultB.runTiming);
+        return parseFloat(resultA.calculatedAPI).localeCompare(
+          parseFloat(resultB.calculatedAPI)
+        );
       });
 
       const uniqueIds = [];
@@ -90,68 +90,58 @@ function Leaderboard() {
       });
 
       return duplicatesRemoved;
-    } else {
-      // Grouping the results by institution
-      let groupedResults = results.reduce(function (r, a) {
-        r[a.institution] = r[a.institution] || [];
-        r[a.institution].push(a);
-        return r;
-      }, Object.create(null));
-
-      const finalEntries = [];
-
-      // Iterate through each institutions array of results
-      for (let [inst, resultsArr] of Object.entries(groupedResults)) {
-        // Filter verified and category
-        let verifiedResArr = resultsArr.filter((res) => {
-          if (
-            res.ageCategory === filterParam.category ||
-            filterParam.category === "All results"
-          ) {
-            return res.verified;
-          }
-          return false;
-        });
-
-        // Sort the results based on runTiming
-        let sortedResArr = verifiedResArr.sort((resultA, resultB) => {
-          return resultA.runTiming.localeCompare(resultB.runTiming);
-        });
-
-        const uniqueIds = [];
-
-        // Remove the slower timings of duplicate user ids and take top 4 if there are more than 4 entries left
-        let duplicatesRemoved = sortedResArr
-          .filter((result) => {
-            if (!uniqueIds.includes(result.userId)) {
-              uniqueIds.push(result.userId);
-              return true;
-            }
-            return false;
-          })
-          .slice(0, 4);
-
-        // Find the sum of the top 4 runTimings
-        let totalRunTiming = sumTime(duplicatesRemoved);
-
-        // Check if there are 4 runTimings, if less than 4, institution not qualified for team event
-        if (duplicatesRemoved.length === 4) {
-          finalEntries.push([inst, duplicatesRemoved, totalRunTiming]);
+    } else if (filterParam.eventFormat === "B") {
+      // Filter based on gender and search
+      let filteredResults = results.filter((result) => {
+        // Check if gender of result is same and gender filter and if the result is verified
+        if (result.gender === filterParam.gender && result.verified === true) {
+          // Check for string typed into search bar
+          return searchParam.some((attr) => {
+            return (
+              result[attr]
+                .toString()
+                .toLowerCase()
+                .indexOf(query.toLowerCase()) > -1
+            );
+          });
         }
-      }
-      return finalEntries;
-    }
-  }
+        return false;
+      });
 
-  // const withTeams = ["Individual", "Team"];
-  // const woTeams = ["Individual"];
-  // let indivOrTeamsOption =
-  //   filterParam.category === "Men's Open (individual event only)" ||
-  //   filterParam.category === "Men's Above 50 (individual event only)" ||
-  //   filterParam.category === "Women's Open (individual event only)" ||
-  //   filterParam.category === "Women's Above 50 (individual event only)"
-  //     ? woTeams
-  //     : withTeams;
+      // Create new hashmap that counts number of loops
+      var countMap = new Map();
+
+      // Iterate through filtered array to count number of results
+      filteredResults.forEach((res) => {
+        countMap.set(res.userId, countMap.get(res.userId) + 1 || 1);
+      });
+
+      // Remove duplicates from filtered array
+      const uniqueIds = [];
+
+      let duplicatesRemoved = filteredResults.filter((result) => {
+        if (!uniqueIds.includes(result.userId)) {
+          uniqueIds.push(result.userId);
+          return true;
+        }
+        return false;
+      });
+
+      // Add count to each result in duplicatesRemoved
+      // duplicatesRemoved.forEach((res) => {
+      //   res["count"] = countMap.get(res.userId);
+      // });
+      var countedArray = duplicatesRemoved.map((item) => ({
+        ...item,
+        count: countMap.get(item.userId),
+      }));
+
+      return countedArray;
+    }
+    // when the time comes you will have to do this
+    // else if (filterParam.eventFormat === "C") {}
+    // first filter step code is repeated, if C also requires the same thing then abstract it to before the event format checking
+  }
 
   const handleChange = (e) => {
     setFilterParam((prevState) => ({
@@ -188,19 +178,6 @@ function Leaderboard() {
               Event Format
             </Text>
             <Select onChange={handleChange} name="eventFormat">
-              {/* <option value={"All results"}>All results</option>
-              {events[0].eventDetails.eventFormats.map((ageCat) =>
-                filterParam.eventType === "Team" &&
-                (ageCat === "Men's Open (individual event only)" ||
-                  ageCat === "Men's Above 50 (individual event only)" ||
-                  ageCat === "Women's Open (individual event only)" ||
-                  ageCat ===
-                    "Women's Above 50 (individual event only)") ? null : (
-                  <option value={ageCat} key={ageCat}>
-                    {ageCat}
-                  </option>
-                )
-              )} */}
               <option value={"A"}>Event A - Age Performance Index</option>
               <option value={"B"}>Event B - Most Number of 10.5km Loops</option>
               <option value={"C"}>
@@ -213,11 +190,8 @@ function Leaderboard() {
               Gender
             </Text>
             <Select name="gender" onChange={handleChange}>
-              {/* {indivOrTeamsOption.map((opt) => (
-                <option value={opt}>{opt}</option>
-              ))} */}
-              <option value={"M"}>Male</option>
-              <option value={"F"}>Female</option>
+              <option value={"Male"}>Male</option>
+              <option value={"Female"}>Female</option>
             </Select>
           </GridItem>
         </Grid>
