@@ -42,7 +42,7 @@ import { FiExternalLink } from "react-icons/fi";
 import MR25_paynowQR from "../images/MR25_paynowQR.jpeg";
 import joinStravaClub from "../images/join-strava-club.jpeg";
 import tShirtSizeImg from "../images/tshirtsize.jpeg";
-import { institutionsArr } from "../utils/institutions";
+// import { institutionsArr } from "../utils/institutions";
 
 function RegisterEvent() {
   const navigate = useNavigate();
@@ -57,45 +57,31 @@ function RegisterEvent() {
   const [wantToBuy, setWantToBuy] = useState(false);
 
   const [formData, setFormData] = useState({
-    category: "",
-    institution: "",
-    heartCondition: "",
-    chestPainWithPhysical: "",
-    chestPainWoPhysical: "",
-    loseBalance: "",
-    boneProblem: "",
-    prescribedDrugs: "",
-    otherReason: "",
-    // covid19: false,
-    termsAndCond: false,
+    condOfEntry: false,
+    parq: false,
+    covid19: false,
+    // termsAndCond: false,
     above18: "",
     parentName: "",
     parentNRIC: "",
     parentMobile: "",
-    tShirtSize: "",
-    // dataConsent: false,
+    shoeSize: "",
+    dataConsent: false,
     pending: "pending",
     registeredDate: "",
   });
 
   let {
-    category,
-    institution,
-    heartCondition,
-    chestPainWithPhysical,
-    chestPainWoPhysical,
-    loseBalance,
-    boneProblem,
-    prescribedDrugs,
-    otherReason,
-    // covid19,
-    termsAndCond,
+    condOfEntry,
+    parq,
+    covid19,
+    // termsAndCond,
     above18,
     parentName,
     parentNRIC,
     parentMobile,
-    tShirtSize,
-    // dataConsent,
+    shoeSize,
+    dataConsent,
     pending,
     registeredDate,
   } = formData;
@@ -150,23 +136,16 @@ function RegisterEvent() {
       ...user.data.registeredEvents,
       {
         [events[0]._id]: {
-          category,
-          institution,
-          heartCondition,
-          chestPainWithPhysical,
-          chestPainWoPhysical,
-          loseBalance,
-          boneProblem,
-          prescribedDrugs,
-          otherReason,
-          // covid19,
-          termsAndCond,
+          condOfEntry,
+          parq,
+          covid19,
+          // termsAndCond,
           above18,
           parentName,
           parentNRIC,
           parentMobile,
-          tShirtSize,
-          // dataConsent,
+          shoeSize,
+          dataConsent,
           pending,
           registeredDate,
         },
@@ -265,7 +244,7 @@ function RegisterEvent() {
                   </Text>
                 </HStack>
 
-                <HStack spacing={4} fontSize={"sm"}>
+                {/* <HStack spacing={4} fontSize={"sm"}>
                   <Text fontWeight={700}>Category:</Text>
                   <Text fontWeight={400}>
                     {registrationDetails(event._id, "category")}
@@ -277,7 +256,7 @@ function RegisterEvent() {
                   <Text fontWeight={400}>
                     {registrationDetails(event._id, "institution")}
                   </Text>
-                </HStack>
+                </HStack> */}
 
                 <HStack spacing={4} fontSize={"sm"}>
                   <Text fontWeight={700}>Name of parent / guardian:</Text>
@@ -336,7 +315,7 @@ function RegisterEvent() {
                   </HStack>
                 </VStack>
 
-                <FormControl isRequired>
+                {/* <FormControl isRequired>
                   <FormLabel>Category</FormLabel>
                   <Select
                     name="category"
@@ -344,7 +323,7 @@ function RegisterEvent() {
                     placeholder="Select category"
                   >
                     {filterCatOptions(
-                      event.eventDetails.ageCategories,
+                      event.eventDetails.eventFormats,
                       user.data.birthDate,
                       user.data.gender
                     ).map((ageCat) => (
@@ -359,9 +338,9 @@ function RegisterEvent() {
                     account. If your birth date or gender is incorrect, please
                     update your particulars in the "My Account" page.
                   </FormHelperText>
-                </FormControl>
+                </FormControl> */}
 
-                <FormControl isRequired>
+                {/* <FormControl isRequired>
                   <FormLabel>Institution</FormLabel>
                   <Select
                     name="institution"
@@ -379,7 +358,33 @@ function RegisterEvent() {
                     college /centralised institution/tertiary institution for
                     the team competition. Select "Nil" if inapplicable.
                   </FormHelperText>
-                </FormControl>
+                </FormControl> */}
+
+                <Divider
+                  borderColor={"primary.800"}
+                  opacity={1}
+                  borderBottomWidth={1.5}
+                />
+
+                <VStack spacing={4} align={"flex-start"}>
+                  <Text fontSize={"lg"} fontWeight={700}>
+                    Conditions of entry
+                  </Text>
+                  <Text fontWeight={400} fontSize={"sm"}>
+                    I assume and accept full responsibility for the risks of my
+                    participation in the event, and for any injury, damage,
+                    death, or other loss that I may suffer, resulting from those
+                    risks, include but not limited to the risk of a third
+                    party's passive or active negligence or other misconduct.
+                  </Text>
+                  <FormCheckbox
+                    name="condOfEntry"
+                    data={condOfEntry}
+                    setFormData={setFormData}
+                    isDisabled={false}
+                    text="I acknowledge that I have read and agree with the terms and conditions of entry"
+                  />
+                </VStack>
 
                 <Divider
                   borderColor={"primary.800"}
@@ -392,86 +397,33 @@ function RegisterEvent() {
                     PAR-Q Assessment
                   </Text>
                   <Text fontWeight={400} fontSize={"sm"}>
-                    Regular physical activity is fun and healthy, and
-                    increasingly more people are starting to become more active
-                    every day. Being more active is very safe for most people.
-                    However, some people should check with their doctor before
-                    they start becoming much more physically active.
+                    While the club organizes the event for members and the
+                    general public, it is the duty and responsibility of the
+                    participants to ensure their health and fitness status to
+                    take part in an activity as rigorous as a/multiple 10.5 km
+                    loop(s) run in the trail. If you are unwell or unsure, you
+                    are advised to seek medical advice. Start by answering seven
+                    questions stated in SportSG's PAR-Q, ensure that you are
+                    sports safe before participate in this activity:
                   </Text>
-                  <Text fontWeight={400} fontSize={"sm"}>
-                    If you are planning to become much more physically active
-                    than you are now, start by answering the seven questions in
-                    the box below. If you are between the ages of 15 and 69, the
-                    PAR-Q will tell you if you should check with your doctor
-                    before you start. If you are over 69 years of age, and you
-                    are not used to being very active, check with your doctor.
-                  </Text>
-
-                  <FormRadio
-                    question="Has your doctor ever said that you have a heart condition and that you should only do physical activity recommended by a doctor?"
-                    name="heartCondition"
-                    data={heartCondition}
-                    radioOption={yesNoRadio}
-                    direction="row"
+                  <Link
+                    fontWeight={400}
+                    fontSize={"sm"}
+                    color="teal.500"
+                    href="https://mr25.org.sg/wp-content/uploads/2021/07/PARQ-English.pdf"
+                  >
+                    https://mr25.org.sg/wp-content/uploads/2021/07/PARQ-English.pdf
+                  </Link>
+                  <FormCheckbox
+                    name="parq"
+                    data={parq}
                     setFormData={setFormData}
-                  />
-
-                  <FormRadio
-                    question="Do you feel pain in your chest when you do physical activity?"
-                    name="chestPainWithPhysical"
-                    data={chestPainWithPhysical}
-                    radioOption={yesNoRadio}
-                    direction="row"
-                    setFormData={setFormData}
-                  />
-
-                  <FormRadio
-                    question="In the past month, have you had chest pain when you were not doing physical activity?"
-                    name="chestPainWoPhysical"
-                    data={chestPainWoPhysical}
-                    radioOption={yesNoRadio}
-                    direction="row"
-                    setFormData={setFormData}
-                  />
-
-                  <FormRadio
-                    question="Do you lose your balance because of dizziness or do you ever lose consciousness?"
-                    name="loseBalance"
-                    data={loseBalance}
-                    radioOption={yesNoRadio}
-                    direction="row"
-                    setFormData={setFormData}
-                  />
-
-                  <FormRadio
-                    question="Do you have a bone or joint problem (for example, back, knee or hip) that could be made worse by a change in your physical activity?"
-                    name="boneProblem"
-                    data={boneProblem}
-                    radioOption={yesNoRadio}
-                    direction="row"
-                    setFormData={setFormData}
-                  />
-
-                  <FormRadio
-                    question="Is your doctor currently prescribing drugs (for example, water pills) for your blood pressure or heart condition?"
-                    name="prescribedDrugs"
-                    data={prescribedDrugs}
-                    radioOption={yesNoRadio}
-                    direction="row"
-                    setFormData={setFormData}
-                  />
-
-                  <FormRadio
-                    question="Do you know of any other reason why you should not do physical activity?"
-                    name="otherReason"
-                    data={otherReason}
-                    radioOption={yesNoRadio}
-                    direction="row"
-                    setFormData={setFormData}
+                    isDisabled={false}
+                    text="I have read the PAR-Q and it is my responsibility to participate only when I am well"
                   />
                 </VStack>
 
-                {/* <Divider
+                <Divider
                   borderColor={"primary.800"}
                   opacity={1}
                   borderBottomWidth={1.5}
@@ -502,7 +454,7 @@ function RegisterEvent() {
                     setFormData={setFormData}
                     text={"I agree to do my part in the fight against COVID-19"}
                   />
-                </VStack> */}
+                </VStack>
 
                 <Divider
                   borderColor={"primary.800"}
@@ -514,7 +466,7 @@ function RegisterEvent() {
                   <Text fontSize={"lg"} fontWeight={700}>
                     Indemnity Agreement
                   </Text>
-                  <Text fontSize={"md"} fontWeight={700}>
+                  {/* <Text fontSize={"md"} fontWeight={700}>
                     Terms and Conditions of entry
                   </Text>
                   <Text fontWeight={400} fontSize={"sm"}>
@@ -559,13 +511,10 @@ function RegisterEvent() {
                     setFormData={setFormData}
                     isDisabled={false}
                     text="I acknowledge that I have read and agree with the terms and conditions of entry"
-                  />
+                  /> */}
 
-                  <Text fontSize={"md"} fontWeight={700}>
-                    Parent's or guardian's consent
-                  </Text>
                   <FormRadio
-                    question=""
+                    question="Parent's or guardian's consent"
                     name="above18"
                     data={above18}
                     radioOption={above18Radio}
@@ -616,57 +565,29 @@ function RegisterEvent() {
                   borderBottomWidth={1.5}
                 />
 
-                {/* <FormCheckbox
+                <FormControl isRequired>
+                  <FormLabel>Shoe Size (US Sizing)</FormLabel>
+                  <Input
+                    name="shoeSize"
+                    type="shoeSize"
+                    value={formData.shoeSize}
+                    onChange={onChange}
+                    placeholder="Shoe Size"
+                  />
+                  <FormHelperText fontWeight={400} fontSize={"sm"}>
+                    One of the prizes awarded is a pair of Brooks Hyperion Tempo
+                    running shoes. Please indicate your shoe size (US sizing)
+                  </FormHelperText>
+                </FormControl>
+
+                <FormCheckbox
                   name="dataConsent"
                   data={dataConsent}
                   setFormData={setFormData}
-                  text="I acknowledge and consent to the collection, use and disclosure of my personal data by Vision Athletics for the purposes set out for this event."
-                  /> */}
+                  text="I acknowledge and consent to the collection, use and disclosure of my personal data by MR25 Running Club for the purposes set out for this 10.5km challenge"
+                />
 
-                {institution === "MR25" ? (
-                  <FormControl display="flex" alignItems="center">
-                    <FormLabel>Purchase event shirt?</FormLabel>
-                    <Switch
-                      onChange={() => {
-                        setWantToBuy(!wantToBuy);
-                        if (wantToBuy) {
-                          setFormData((prevState) => ({
-                            ...prevState,
-                            tShirtSize: "",
-                          }));
-                        }
-                      }}
-                    />
-                  </FormControl>
-                ) : null}
-
-                {institution != "MR25" || wantToBuy ? (
-                  <>
-                    <FormControl isRequired>
-                      <FormLabel>T-shirt Size (chest)</FormLabel>
-                      <Select
-                        name="tShirtSize"
-                        onChange={onChange}
-                        placeholder="Select size"
-                      >
-                        <option value='XS-18"'>XS-18"</option>
-                        <option value='S-19"'>S-19"</option>
-                        <option value='M-20"'>M-20"</option>
-                        <option value='L-21"'>L-21"</option>
-                        <option value='XL-22"'>XL-22"</option>
-                        <option value='XXL-23"'>XXL-23"</option>
-                      </Select>
-                    </FormControl>
-                    <Text fontWeight={600} fontSize={"sm"}>
-                      Measurement of Front Chest for T-shirt Size
-                    </Text>
-                    <Center w="100%">
-                      <Image src={tShirtSizeImg} alt="T-shirt size." />
-                    </Center>
-                  </>
-                ) : null}
-
-                <Divider
+                {/* <Divider
                   borderColor={"primary.800"}
                   opacity={1}
                   borderBottomWidth={1.5}
@@ -741,7 +662,7 @@ function RegisterEvent() {
                     verification. This Strava club will be deleted once the
                     event is over.
                   </Text>
-                </VStack>
+                </VStack> */}
 
                 <Button
                   type="submit"

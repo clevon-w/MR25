@@ -4,42 +4,42 @@
  */
 
 // import express, mongoose and middleware
-const path = require('path')
-const express = require('express')
-const mongoose = require('mongoose')
-const errorMiddleware = require('./middleware/errorMiddleware')
-const connectDB = require('./config/db')
-const Grid = require('gridfs-stream')
+const path = require("path");
+const express = require("express");
+const mongoose = require("mongoose");
+const errorMiddleware = require("./middleware/errorMiddleware");
+const connectDB = require("./config/db");
+const Grid = require("gridfs-stream");
 
 // load env variables
-const dotenv = require('dotenv').config()
-const port = process.env.PORT
+const dotenv = require("dotenv").config();
+const port = process.env.PORT;
 
-let gfs, gridfsBucket
+let gfs, gridfsBucket;
 
 // connect database
-connectDB()
+connectDB();
 
-const conn = mongoose.connection
-conn.once('open', () => {
+const conn = mongoose.connection;
+conn.once("open", () => {
   gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
-    bucketName:'photos'
-  })
-  gfs = Grid(conn.db, mongoose.mongo)
-  gfs.collection('photos')
-})
+    bucketName: "photos",
+  });
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection("photos");
+});
 
 // create express app
-const app = express()
+const app = express();
 
 // middleware
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // setup routes to mongodb
-app.use('/api/users', require('./routes/userRoutes'))
-app.use('/api/results', require('./routes/resultRoutes'))
-app.use('/api/events', require('./routes/eventRoutes'))
+app.use("/api/users", require("./routes/userRoutes"));
+app.use("/api/results", require("./routes/resultRoutes"));
+app.use("/api/events", require("./routes/eventRoutes"));
 
 // route for seeing screenshot
 // app.get('/api/results/file/:filename',async (req, res) => {
@@ -54,16 +54,22 @@ app.use('/api/events', require('./routes/eventRoutes'))
 // })
 
 // Serve frontend
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/build')))
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/build")));
 
-  app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, '../', 'client', 'build', 'index.html')))
+  app.get("*", (req, res) =>
+    res.sendFile(
+      path.resolve(__dirname, "../", "client", "build", "index.html")
+    )
+  );
 } else {
-  app.get('/', (req, res) => res.send('Please set to production'))
+  app.get("/", (req, res) => res.send("Please set to production"));
 }
 
 // use error handling middleware last
-app.use(errorMiddleware.errorHandler)
+app.use(errorMiddleware.errorHandler);
 
 // start backend
-app.listen(port, () => { console.log(`Server started on port ${port}`) })
+app.listen(port, () => {
+  console.log(`Server started on port ${port}`);
+});
