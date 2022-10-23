@@ -73,8 +73,8 @@ function Leaderboard() {
 
       // Sort the filtered results based on API
       let sortedFilteredResults = filteredResults.sort((resultA, resultB) => {
-        return parseFloat(resultA.calculatedAPI).localeCompare(
-          parseFloat(resultB.calculatedAPI)
+        return (
+          parseFloat(resultB.calculatedAPI) - parseFloat(resultA.calculatedAPI)
         );
       });
 
@@ -94,7 +94,7 @@ function Leaderboard() {
       // Filter based on gender and search
       let filteredResults = results.filter((result) => {
         // Check if gender of result is same and gender filter and if the result is verified
-        if (result.gender === filterParam.gender && result.verified === true) {
+        if (result.gender === filterParam.gender) {
           // Check for string typed into search bar
           return searchParam.some((attr) => {
             return (
@@ -108,18 +108,15 @@ function Leaderboard() {
         return false;
       });
 
-      // Create new hashmap that counts number of loops
-      var countMap = new Map();
-
-      // Iterate through filtered array to count number of results
-      filteredResults.forEach((res) => {
-        countMap.set(res.userId, countMap.get(res.userId) + 1 || 1);
+      // Sort the filtered results based on API
+      let sortedFilteredResults = filteredResults.sort((resultA, resultB) => {
+        return parseFloat(resultB.loops) - parseFloat(resultA.loops);
       });
 
       // Remove duplicates from filtered array
       const uniqueIds = [];
 
-      let duplicatesRemoved = filteredResults.filter((result) => {
+      let duplicatesRemoved = sortedFilteredResults.filter((result) => {
         if (!uniqueIds.includes(result.userId)) {
           uniqueIds.push(result.userId);
           return true;
@@ -127,16 +124,20 @@ function Leaderboard() {
         return false;
       });
 
+      return duplicatesRemoved;
+
       // Add count to each result in duplicatesRemoved
       // duplicatesRemoved.forEach((res) => {
       //   res["count"] = countMap.get(res.userId);
       // });
-      var countedArray = duplicatesRemoved.map((item) => ({
-        ...item,
-        count: countMap.get(item.userId),
-      }));
+      // var countedArray = duplicatesRemoved.map((item) => ({
+      //   ...item,
+      //   count: countMap.get(item.userId),
+      // }));
 
-      return countedArray;
+      // return countedArray;
+    } else if (filterParam.eventFormat === "C") {
+      return [];
     }
     // when the time comes you will have to do this
     // else if (filterParam.eventFormat === "C") {}
