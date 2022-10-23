@@ -15,8 +15,11 @@ import {
   GridItem,
   NumberInput,
   NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
   useToast,
-  Link
+  Link,
 } from "@chakra-ui/react";
 // import { FiImage } from 'react-icons/fi'
 import { createResult, resetResult } from "../features/results/resultSlice";
@@ -42,17 +45,18 @@ function UploadResults() {
   // as we only have one event
   const [formData, setFormData] = useState({
     eventId: "62864db1e76d2b7a270da2df",
-    runTiming: '',
-    runDate: '',
-    runDistance: '',
+    runTiming: "",
+    runDate: "",
+    runDistance: "",
+    loops: "",
     // screenshot: null,
-    verified: false
+    verified: false,
   });
 
   const [runTime, setRunTime] = useState({
     hours: "",
     minutes: "",
-    seconds: ""
+    seconds: "",
   });
 
   let {
@@ -61,7 +65,8 @@ function UploadResults() {
     // screenshot,
     verified,
     runDistance,
-    runDate
+    runDate,
+    loops,
   } = formData;
 
   useEffect(() => {
@@ -69,39 +74,48 @@ function UploadResults() {
       console.log(message);
     }
 
-    if (data.registeredEvents.length === 0){
+    if (data.registeredEvents.length === 0) {
       toast({
-        title: 'No registered event. Please register for the event to upload results',
+        title:
+          "No registered event. Please register for the event to upload results",
         status: "error",
-        isClosable: true
-      })
-      navigate('/registerEvent')
+        isClosable: true,
+      });
+      navigate("/registerEvent");
     }
 
     if (isSuccess) {
       toast({
         title: "Uploaded results successfully!",
         status: "success",
-        isClosable: true
+        isClosable: true,
       });
       navigate("/");
       return () => {
         dispatch(resetResult());
       };
     }
-  }, [dispatch, navigate, isSuccess, isError, message, toast, data.registeredEvents.length]);
+  }, [
+    dispatch,
+    navigate,
+    isSuccess,
+    isError,
+    message,
+    toast,
+    data.registeredEvents.length,
+  ]);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 
   const handleTimeChange = (e) => {
     setRunTime((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -111,7 +125,7 @@ function UploadResults() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    
+
     const h =
       runTime.hours === ""
         ? "00"
@@ -139,7 +153,8 @@ function UploadResults() {
       // screenshot,
       verified,
       runDistance,
-      runDate
+      runDate,
+      loops,
     };
 
     console.log(resultData);
@@ -156,20 +171,21 @@ function UploadResults() {
           </Text>
 
           <Text fontWeight={400} fontSize={"sm"} color={"primary.800"}>
-            You may run as often as you like and each time you upload your results within the day,
-            the leaderboard will be updated. Note that failure to submit your results before 2359 hrs
-            on the day would render the results invalid. In case of technical hitches preventing
-            submission, drop a note to{' '}
+            You may run as often as you like and each time you upload your
+            results within the day, the leaderboard will be updated. Note that
+            failure to submit your results before 2359 hrs on the day would
+            render the results invalid. In case of technical hitches preventing
+            submission, drop a note to{" "}
             <Link
-                color="teal.500"
-                href="mailto:running.route.tracking@gmail.com"
+              color="teal.500"
+              href="mailto:running.route.tracking@gmail.com"
             >
-              running.route.tracking@gmail.com 
-            </Link>
-            {' '}on the day itself.
+              running.route.tracking@gmail.com
+            </Link>{" "}
+            on the day itself.
           </Text>
 
-          <RaceInstructions />
+          {/* <RaceInstructions /> */}
 
           <Stack spacing={4}>
             <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
@@ -210,7 +226,9 @@ function UploadResults() {
 
           <Stack>
             <FormControl isRequired>
-              <FormLabel fontWeight={700} fontSize={"md"} color={"primary.800"} >Date of run</FormLabel>
+              <FormLabel fontWeight={700} fontSize={"md"} color={"primary.800"}>
+                Date of run
+              </FormLabel>
               <Input
                 name="runDate"
                 value={formData.runDate}
@@ -220,7 +238,9 @@ function UploadResults() {
               />
             </FormControl>
             <FormControl isRequired>
-              <FormLabel fontWeight={700} fontSize={"md"} color={"primary.800"} >Run Distance (as reflected on Strava)</FormLabel>
+              <FormLabel fontWeight={700} fontSize={"md"} color={"primary.800"}>
+                Run Distance (as reflected on Strava)
+              </FormLabel>
               <NumberInput precision={2}>
                 <NumberInputField
                   placeholder="Distance (in KM)"
@@ -233,10 +253,36 @@ function UploadResults() {
                 Run Distance as reflected in screenshot
               </FormHelperText> */}
             </FormControl>
+
+            <FormControl isRequired>
+              <FormLabel fontWeight={700} fontSize={"md"} color={"primary.800"}>
+                Number of 10.5km Loops
+              </FormLabel>
+              <NumberInput
+                min={0}
+                onChange={(value) =>
+                  setFormData((prevState) => ({
+                    ...prevState,
+                    ["loops"]: value,
+                  }))
+                }
+              >
+                <NumberInputField
+                  placeholder="Number of 10.5km loops"
+                  name="loops"
+                  value={loops}
+                  onChange={onChange}
+                />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </FormControl>
           </Stack>
 
           <Stack spacing={4}>
-            <Text fontWeight={700} fontSize={"md"} color={"primary.800"} >
+            <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
               Elapsed Time (as reflected on Strava)
             </Text>
             <SimpleGrid columns={3} spacing={4}>
@@ -347,4 +393,3 @@ function UploadResults() {
 }
 
 export default UploadResults;
-

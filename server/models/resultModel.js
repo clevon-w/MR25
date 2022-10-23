@@ -45,6 +45,10 @@ const resultSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Please enter run distancd"],
     },
+    loops: {
+      type: Number,
+      required: [true, "Please enter number of 10.5km loops"],
+    },
     runDate: {
       type: Date,
       required: [true, "Please add run date"],

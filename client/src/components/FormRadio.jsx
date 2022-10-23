@@ -16,7 +16,7 @@ function FormRadio(props) {
   };
 
   return (
-    <FormControl>
+    <FormControl isRequired>
       <FormLabel fontWeight={600} fontSize={"sm"}>
         {props.question}
       </FormLabel>

@@ -29,15 +29,22 @@ exports.findAllResults = asyncHandler(async (req, res) => {
  * @param {*} res the object to send back to the desired HTTP response
  */
 exports.createResult = asyncHandler(async (req, res) => {
-  const { eventId, runTiming, runDistance, runDate, verified } = req.body;
+  const { eventId, runTiming, runDistance, runDate, verified, loops } =
+    req.body;
 
-  if (!runDistance || !runTiming || !runDate) {
+  if (!runDistance || !runTiming || !runDate || !loops) {
     res.status(400);
     throw new Error("Please input all fields");
   }
 
   // calculating users API
   const ageOfUser = 2022 - req.user.birthDate.getUTCFullYear();
+
+  if (ageOfUser < 15 || ageOfUser > 85) {
+    res.status(400);
+    throw new Error("Participant's age have to be between 15 to 85 inclusive");
+  }
+
   const API = APIjson[ageOfUser][req.user.gender];
   let runTimeArr = runTiming.split(":");
   let h = parseInt(runTimeArr[0]);
@@ -59,6 +66,7 @@ exports.createResult = asyncHandler(async (req, res) => {
     // ageCategory: req.user.registeredEvents[0][eventId].category,
     runTiming: runTiming,
     runDistance: runDistance,
+    loops: loops,
     runDate: runDate,
     calculatedAPI: APIres,
     // screenshot: `http://localhost:8000/api/results/file/${screenshot.filename}`,
