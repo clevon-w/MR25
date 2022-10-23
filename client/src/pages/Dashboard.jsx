@@ -32,9 +32,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { getEvents, resetEvent } from "../features/event/eventSlice";
 import { useEffect } from "react";
 import routeMap from "../images/routeMap.jpeg";
-import seoul_garden from "../images/Seoul-Garden-Group.jpeg"
-import pocari from "../images/pocari_logo.jpg"
-import KPS from "../images/KPS.jpeg"
+import seoul_garden from "../images/Seoul-Garden-Group.jpeg";
+import pocari from "../images/pocari_logo.jpg";
+import KPS from "../images/KPS.jpeg";
 import { FiCalendar, FiMapPin, FiCheckCircle, FiXCircle } from "react-icons/fi";
 import ReadMoreToggle from "../components/ReadMoreToggle";
 import RaceInstructions from "../components/RaceInstructions";
@@ -373,30 +373,29 @@ function Dashboard() {
         </Text>
         <Text fontWeight={400} fontSize={"sm"}>
           Members who are keen to sign up for the event may do so using this
-          app. Create an account and then register for the event. Upon
-          registration, you will receive a confirmation email by the following
-          day. You may then proceed to time your 10.5 km run using Strava app
-          according to the event formats below and upload it on the MR25 10.5km
-          Challenge result upload page.
+          app. Create an account and then register for the event. Do take note
+          that this is a 2 step process. You may then proceed to time your 10.5
+          km run using Strava app according to the event formats below and
+          upload it on the MR25 10.5km Challenge result upload page.
         </Text>
 
         <VStack spacing={4} align={"flex-start"}>
-        <Text fontWeight={700} fontSize={"md"}>
-          Sponsors
-        </Text>
-        <Stack direction = 'row'>
-          <Image boxSize = '150px' src={seoul_garden} alt={"route-map-image"} />
-          <Image boxSize = '150px' src={KPS} alt={"route-map-image"} img_size={100}/>
-          <Image boxSize = '150px' src={pocari} alt={"route-map-image"} />
-        </Stack>
-        
-      </VStack>
-
+          <Text fontWeight={700} fontSize={"md"}>
+            Sponsors
+          </Text>
+          <Stack direction={["column", "row"]}>
+            <Image boxSize="150px" src={seoul_garden} alt={"route-map-image"} />
+            <Image
+              boxSize="150px"
+              src={KPS}
+              alt={"route-map-image"}
+              img_size={100}
+            />
+            <Image boxSize="150px" src={pocari} alt={"route-map-image"} />
+          </Stack>
+        </VStack>
       </VStack>
     </VStack>
-
-
-
   ));
 }
 

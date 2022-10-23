@@ -75,14 +75,27 @@ function HowToParticipate() {
       <Text textStyle="heading_s" pb={6}>
         How can I participate?
       </Text>
-      <Text textStyle="heading_xs">Step 1: Register</Text>
+      <Text textStyle="heading_xs">Step 1: Create user account</Text>
       <Text fontWeight={400} fontSize={"sm"} pb={4}>
-        Create an account and submit the registration form{" "}
+        Login to your account{" "}
+        <Link color="teal.500" href="./login">
+          here
+        </Link>{" "}
+        or create an account{" "}
+        <Link color="teal.500" href="./register">
+          here
+        </Link>
+        .
+      </Text>
+      <Text textStyle="heading_xs">Step 2: Register for the event</Text>
+      <Text fontWeight={400} fontSize={"sm"} pb={4}>
+        Submit the event registration form{" "}
         <Link color="teal.500" href="./registerEvent">
           here
         </Link>
         .
       </Text>
+
       {/* <Text textStyle="heading_xs">Step 2: Registration fee</Text>
       <Text fontWeight={400} fontSize={"sm"}>
         Kindly pay via PayNow (Scan QR code below or enter UEN: 52911537M).
@@ -103,7 +116,7 @@ function HowToParticipate() {
         Please email a screenshot of your payment to{" "}
         <b>vision_athletics@yahoo.com</b>
       </Text> */}
-      <Text textStyle="heading_xs">Step 2: Join our Strava club</Text>
+      <Text textStyle="heading_xs">Step 3: Join our Strava club</Text>
       <Text fontWeight={400} fontSize={"sm"}>
         The Strava club is still being created, more instructions coming soon!
         Stay tuned!
