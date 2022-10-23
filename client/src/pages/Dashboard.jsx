@@ -369,10 +369,11 @@ function Dashboard() {
         </Text>
         <Text fontWeight={400} fontSize={"sm"}>
           Members who are keen to sign up for the event may do so using this
-          Google form. Upon registration, you will receive a confirmation email
-          by the following day. You may then proceed to time your 10.5 km run
-          using Strava app according to the event formats below and upload it on
-          the MR25 10.5km Challenge result upload page.
+          app. Create an account and then register for the event. Upon
+          registration, you will receive a confirmation email by the following
+          day. You may then proceed to time your 10.5 km run using Strava app
+          according to the event formats below and upload it on the MR25 10.5km
+          Challenge result upload page.
         </Text>
       </VStack>
     </VStack>
