@@ -24,6 +24,7 @@ import {
   Tr,
   Td,
   Tbody,
+  Stack,
 } from "@chakra-ui/react";
 import { formatDateDDMonYYYY } from "../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
@@ -31,6 +32,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { getEvents, resetEvent } from "../features/event/eventSlice";
 import { useEffect } from "react";
 import routeMap from "../images/routeMap.jpeg";
+import seoul_garden from "../images/Seoul-Garden-Group.jpeg"
+import pocari from "../images/pocari_logo.jpg"
+import KPS from "../images/KPS.jpeg"
 import { FiCalendar, FiMapPin, FiCheckCircle, FiXCircle } from "react-icons/fi";
 import ReadMoreToggle from "../components/ReadMoreToggle";
 import RaceInstructions from "../components/RaceInstructions";
@@ -375,8 +379,24 @@ function Dashboard() {
           according to the event formats below and upload it on the MR25 10.5km
           Challenge result upload page.
         </Text>
+
+        <VStack spacing={4} align={"flex-start"}>
+        <Text fontWeight={700} fontSize={"md"}>
+          Sponsors
+        </Text>
+        <Stack direction = 'row'>
+          <Image boxSize = '150px' src={seoul_garden} alt={"route-map-image"} />
+          <Image boxSize = '150px' src={KPS} alt={"route-map-image"} img_size={100}/>
+          <Image boxSize = '150px' src={pocari} alt={"route-map-image"} />
+        </Stack>
+        
+      </VStack>
+
       </VStack>
     </VStack>
+
+
+
   ));
 }
 
