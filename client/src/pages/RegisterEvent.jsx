@@ -580,6 +580,29 @@ function RegisterEvent() {
                   </FormHelperText>
                 </FormControl>
 
+                <FormControl>
+                  <FormLabel>
+                    Are you inviting a guest or being invited?
+                  </FormLabel>
+                  <Input
+                    name="inviteName"
+                    type="inviteName"
+                    value={formData.inviteName}
+                    onChange={onChange}
+                    placeholder="Guest / Member name"
+                  />
+                  <FormHelperText fontWeight={400} fontSize={"sm"}>
+                    For members inviting a guest, please include the name of
+                    your guest in this field and assist him / her in
+                    registration. If you are not inviting a guest, leave this
+                    field blank.
+                  </FormHelperText>
+                  <FormHelperText fontWeight={400} fontSize={"sm"}>
+                    For guests, please include the name of the registered name
+                    of the person inviting you in this field.
+                  </FormHelperText>
+                </FormControl>
+
                 <FormCheckbox
                   name="dataConsent"
                   data={dataConsent}

@@ -140,6 +140,35 @@ function Dashboard() {
             {para}
           </Text>
         ))}
+        <Text fontWeight={700} fontSize={"sm"}>
+          Special feature
+        </Text>
+        <Text fontWeight={400} fontSize={"sm"}>
+          Each MR25 member is entitled to one guest invitation to the above
+          events! Registration for the invited guest is free too. The
+          non-members will compete in the exact same format, but only among
+          themselves. A separate set of prizes to be awarded to the winners in
+          the guest category. Participants will also receive a Finisher T-shirt.
+          Details of prizes will be updated in due course. (As the non-members
+          are not in our chatgroup / FB page, members will have to manage and
+          assist in communication and coordination with their invited guests.)
+        </Text>
+        <Text fontWeight={700} fontSize={"sm"}>
+          Important Note
+        </Text>
+        <Text fontWeight={400} fontSize={"sm"}>
+          Although there are prizes involved to make the event a little more
+          interesting, this is ultimately a fun event organized by the
+          management committee for the members. The management trusts all
+          members to display integrity and sportsmanship in this friendly event.
+          However, should there be a protest over the results, runners would
+          need to provide further evidence. (Common problems in previous events
+          were participants not following the direction stipulated in the rules
+          and participants submitting moving time instead of elapsed time.) The
+          organizing committee shall reserve the rights to judge and decide on
+          any aspects of the rules that has not been explicitly expressed in
+          this competition.
+        </Text>
       </VStack>
 
       <Text fontWeight={700} fontSize={"lg"}>
@@ -202,11 +231,11 @@ function Dashboard() {
           color={"primary.600"}
         >
           *The Age Performance Index is an indication of how close the
-          participant is to the extrapolated age standard (100 being equal;{" "}
-          {">"}100 - exceeding the age standard) calculated based on the MR25
+          participant is to the extrapolated age standard (100 being equal; >100
+          - exceeding the age standard) calculated based on the MR25
           All-Inclusive 10.5km Trail Performance Index, a performance grading
-          system that factors the runner{"’"}s age and gender. Please refer to
-          the Table of Extrapolated Age Standards below
+          system that factors the runner’s age and gender. Please refer to the
+          Table of Extrapolated Age Standards below
         </Text>
         <Text
           fontWeight={400}
@@ -214,10 +243,10 @@ function Dashboard() {
           fontStyle={"italic"}
           color={"primary.600"}
         >
-          ^The Standard 10.5km loop: Anti-clockwise from Mushroom Café (Start)
-          {">"} Northern Route {">"} Ranger Station {">"} Mosquito Ring
-          (Jelutong Tower) {">"} Golf Course {">"} Lornie Trail {">"}
-          Mushroom Café (marked in red in the map below)
+          ^The Standard 10.5km loop: Anti-clockwise from Mushroom Café (Start) >
+          Northern Route > Ranger Station > Mosquito Ring (Jelutong Tower) >
+          Golf Course > Lornie Trail > Mushroom Café (marked in red in the map
+          below)
         </Text>
 
         <TableContainer>
@@ -227,7 +256,6 @@ function Dashboard() {
               <Tr>
                 <Th>Event</Th>
                 <Th>Date/Period</Th>
-                <Th>Format</Th>
                 <Th>Winning Criteria</Th>
                 <Th>Prizes</Th>
               </Tr>
@@ -235,37 +263,21 @@ function Dashboard() {
             <Tbody>
               <Tr>
                 <Td>A</Td>
-                <Td>
-                  Qualifying from 1 Dec to 18 Dec <br /> Finals on 31 Dec
-                </Td>
-                <Td>Virtual qualifying + Physical finals</Td>
+                <Td>5 Dec to 26 Dec</Td>
                 <Td>Best API score based on 10.5km time</Td>
-                <Td>
-                  (A) Top 10 Male {"&"} Top 10 Female qualifies for finals (date
-                  and time TBC) <br /> (B) Top 5 Men and Top 5 Women
-                </Td>
+                <Td>(A) Top 10 Men {"&"} Top 10 Women</Td>
               </Tr>
               <Tr>
                 <Td>B</Td>
-                <Td>1 Dec to 18 Dec</Td>
-                <Td>Virtual</Td>
+                <Td>5 Dec to 26 Dec</Td>
                 <Td>Most number of 10.5km loops</Td>
-                <Td>Top 3 Male {"&"} Top 3 Female</Td>
+                <Td>Top 3 Men {"&"} Top 3 Women</Td>
               </Tr>
               <Tr>
                 <Td>C</Td>
-                <Td>
-                  Qualifying from 1 Dec to 18 Dec <br /> Finals on 31 Dec
-                </Td>
-                <Td>Virtual qualifying + Physical finals</Td>
-                <Td>
-                  Most loops covered within qualifying period; most loops in 12
-                  hours in the Finals
-                </Td>
-                <Td>
-                  (A) Top 30 Male {"&"} Top 30 Female qualifies for finals on 31
-                  Dec 7am to 7pm <br /> (B) Top 10 Men and Top 10 Women
-                </Td>
+                <Td>31 Dec, 7am to 7pm</Td>
+                <Td>Most loops in 12 hours</Td>
+                <Td>Top 5 Men and Top 5 Women</Td>
               </Tr>
             </Tbody>
           </Table>
@@ -281,7 +293,7 @@ function Dashboard() {
           (refer to the map for the exact paths to take in the route). Time your
           run taken for the route. End at the same start point and you would
           have recorded your time for the loop. Upload the results to the site
-          provided (Only result recorded by Strava app is accepted)
+          provided (Only results recorded by Strava app is accepted)
         </Text>
 
         <Text
@@ -292,7 +304,7 @@ function Dashboard() {
         >
           You may run as often as you like and each time you upload your results
           within the day, the leaderboard will be updated. Your results will be
-          added to the overall leaderboard for both formats the following day.
+          added to the overall leaderboard for both Events the following day.
           Note that failure to submit your results before 2359hr on the day
           would render the results invalid. In case of technical hitches
           preventing submission, drop a note to running.route.tracking@gmail.com
@@ -300,8 +312,7 @@ function Dashboard() {
         </Text>
 
         <Text fontWeight={700} fontSize={"md"}>
-          EVENT A - THE BEST AGE PERFORMANCE INDEX (Blended event - Virtual +
-          Physical)
+          EVENT A - THE BEST AGE PERFORMANCE INDEX
         </Text>
         <Text fontWeight={400} fontSize={"sm"}>
           Event A ranks participants using the Age Performance Index (API),
@@ -309,11 +320,11 @@ function Dashboard() {
           Index.
         </Text>
         <Text fontWeight={400} fontSize={"sm"}>
-          MR25 All-inclusive 10.km Trail Performance Index is a performance
+          MR25 All-inclusive 10.5km Trail Performance Index is a performance
           grading system that takes into account the runner’s age and gender to
           calculate a corresponding Age Performance Index (API). The API is an
           indication of how close the participant is to the extrapolated age
-          standard (100 being equal; {">"}100 - exceeding the age standard). The
+          standard (100 being equal; >100 - exceeding the age standard). The
           Trail Performance Index used in Event A aims to level the playing
           field by factoring age-related physiological changes to produce a
           performance marker (API) that is more equitable than clocked time. It
@@ -323,60 +334,61 @@ function Dashboard() {
         </Text>
         <Text fontWeight={400} fontSize={"sm"}>
           10 male participants and 10 female participants with the best API
-          scores will qualify for the Finals (tentatively scheduled in the
-          afternoon of 31 Dec). Trophies and attractive prizes, including $2500,
-          to be given out to the top- 5 winners in each category. Events T-shirt
-          will also be given out to all participants between 8am and 6pm on 31
-          Dec 2022 at MacRitchie Reservoir.
+          scores will win for themselves medals and attractive prizes. Finisher
+          T-shirts will also be given out to all participants. Please collect at
+          MacRitchie on 31 Dec, 5pm to 7pm.
         </Text>
 
         <Text fontWeight={700} fontSize={"md"}>
-          EVENT B - THE MOST NUMBER OF 10.5KM LOOPS (Virtual event from 1 Dec to
-          18 Dec)
+          EVENT B - THE MOST NUMBER OF 10.5KM LOOPS
         </Text>
         <Text fontWeight={400} fontSize={"sm"}>
           Event B hopes to encourage our members to return regularly to our
-          signature 10.5 km loop, to test our endurance while making our MR25
-          presence felt in MacRitchie Reservoir. (Do turn up in one of our
-          numerous MR25 official running vests!)
+          signature 10.5 km loop between 5 Dec and 26 Dec, to test our endurance
+          while making our MR25 presence felt in MacRitchie Reservoir. (Do turn
+          up in one of our numerous MR25 official running vests!)
         </Text>
         <Text fontWeight={400} fontSize={"sm"}>
-          $600 vouchers to be given out to the top 3 winners in each category.
-          Events T-shirt will also be given out to all participants between 8am
-          and 6pm on 31 Dec 2022 at MacRitchie Reservoir.
+          5 male participants and 5 female participants with the most loops will
+          win for themselves medals and attractive prizes. Finisher T-shirts
+          will also be given out to all participants. Please collect at
+          MacRitchie on 31 Dec, 5pm to 7pm.
         </Text>
 
         <Text fontWeight={700} fontSize={"md"}>
-          EVENT C - THE MOST NUMBER OF 10.5KM LOOPS (Blended event – Virtual +
-          Physical)
+          EVENT C - THE MOST NUMBER OF 10.5KM LOOPS
         </Text>
         <Text fontWeight={400} fontSize={"sm"}>
-          This is also the Seoul Garden - MR25 Ultramarathon that is also opened
-          to the general public. (Registration fees is $65. Members pay $25.) As
-          we have restriction on number of participants by Nparks, we are only
-          able to organise the event for limited number of participants on event
-          day. As such, we will organise this event in a blended format.
+          This follows the exact format of our traditional MR25 7am to 7pm
+          Ultramarathon. Participants are to cover as many 10.5km loops in an
+          anti-clockwise direction within the 12 hours. Unfortunately, due to
+          restrictions by NParks, it will not be organised as a physical event.
+          As such the club will not be able to provide physical support.
+          Participants may, however, collect Pocari drinks from the organisers
+          outside the Mushroom Cafe between 6.30am to 7.00am on race day, if
+          they choose to.
         </Text>
         <Text fontWeight={400} fontSize={"sm"}>
-          Participants are given from 1 Dec to 18 Dec to cover as many 10.5km
-          loops as possible at their own time. At the end of the qualifying
-          period, on 19 Dec, the top 30 male and 30 female with the highest
-          number of loops during the qualifying period will be invited to
-          participate in the finals on 31 Dec. Female runners have 6.45am to
-          6.45 pm to complete their 12 hour challenge while male runners have
-          7.15am to 7.15pm to do so.
+          Participants may collect your Finishers T-shirts at the Mushroom café
+          from the organisers from 5pm to 7pm. Medals and cash prizes will be
+          awarded to the top 5 finishers in both the men and women members
+          category.
         </Text>
-        <Text fontWeight={400} fontSize={"sm"}>
-          Events T-shirt will be given out to all participants on 31 Dec 2022 at
-          MacRitchie Reservoir. Trophies and $5000 cash prizes will be awarded
-          to the top 10 finishers in both the men and women category.
+        <Text fontWeight={700} fontSize={"md"}>
+          REGISTRATION
         </Text>
         <Text fontWeight={400} fontSize={"sm"}>
           Members who are keen to sign up for the event may do so using this
           app. Create an account and then register for the event. Do take note
           that this is a 2 step process. You may then proceed to time your 10.5
-          km run using Strava app according to the event formats below and
-          upload it on the MR25 10.5km Challenge result upload page.
+          km run using Strava app according to the event formats above and
+          upload it on the Seoul Garden - MR25 Endurance Challenge 2022 "Upload
+          Result +" page.
+        </Text>
+        <Text fontWeight={400} fontSize={"sm"}>
+          For members inviting a guest, please include the name of your guest
+          and assist him / her in the registration. He / She will need to
+          include your full name in his / her registration.
         </Text>
 
         <VStack spacing={4} align={"flex-start"}>
