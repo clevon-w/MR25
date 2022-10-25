@@ -31,7 +31,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getEvents, resetEvent } from "../features/event/eventSlice";
 import { useEffect } from "react";
-import routeMap from "../images/routeMap.jpeg";
+import routeMap from "../images/routeMap10_5km.jpeg";
 import seoul_garden from "../images/Seoul-Garden-Group.jpeg";
 import pocari from "../images/pocari_logo.jpg";
 import KPS from "../images/KPS.jpeg";
@@ -234,8 +234,7 @@ function Dashboard() {
           participant is to the extrapolated age standard (100 being equal; >100
           - exceeding the age standard) calculated based on the MR25
           All-Inclusive 10.5km Trail Performance Index, a performance grading
-          system that factors the runner’s age and gender. Please refer to the
-          Table of Extrapolated Age Standards below
+          system that factors the runner’s age and gender.
         </Text>
         <Text
           fontWeight={400}
@@ -246,7 +245,7 @@ function Dashboard() {
           ^The Standard 10.5km loop: Anti-clockwise from Mushroom Café (Start) >
           Northern Route > Ranger Station > Mosquito Ring (Jelutong Tower) >
           Golf Course > Lornie Trail > Mushroom Café (marked in red in the map
-          below)
+          above)
         </Text>
 
         <TableContainer>
