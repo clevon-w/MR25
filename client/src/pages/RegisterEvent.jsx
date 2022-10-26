@@ -25,6 +25,7 @@ import {
   Icon,
   Collapse,
   Switch,
+  Stack,
 } from "@chakra-ui/react";
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
@@ -180,10 +181,10 @@ function RegisterEvent() {
     <form onSubmit={onSubmit} key={event}>
       <VStack spacing={8} align={"flex-start"}>
         <Grid w={"100%"} templateColumns="repeat(6, 1fr)" gap={4}>
-          <GridItem colSpan={4}>
+          <GridItem colSpan={[6, 4]}>
             <Text textStyle="heading_s">{"Register: " + event.name}</Text>
           </GridItem>
-          <GridItem colSpan={2}>
+          <GridItem colSpan={[6, 2]}>
             {user ? (
               <Tag
                 size={"sm"}
@@ -217,9 +218,9 @@ function RegisterEvent() {
                 borderWidth={"thin"}
               >
                 <AlertIcon color={"accents.blue"} />
-                Upon registration and receipt of the registration fee, you may
-                proceed to time your 5km run using the Strava app and upload the
-                result to "Upload Result +" on this website.
+                Upon registration, you may proceed to time your 10.5km run using
+                the Strava app and upload the result to "Upload Result +" on
+                this website.
               </Alert>
             </VStack>
 
@@ -570,17 +571,21 @@ function RegisterEvent() {
 
                 <FormControl isRequired>
                   <FormLabel>Shoe Size (US Sizing)</FormLabel>
-                  <Input
+                  <Select
                     name="shoeSize"
-                    type="shoeSize"
-                    value={formData.shoeSize}
                     onChange={onChange}
-                    placeholder="Shoe Size"
-                  />
-                  <FormHelperText fontWeight={400} fontSize={"sm"}>
-                    One of the prizes awarded is a pair of Brooks Hyperion Tempo
-                    running shoes. Please indicate your shoe size (US sizing)
-                  </FormHelperText>
+                    placeholder="US Shoe Size"
+                  >
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                  </Select>
                 </FormControl>
 
                 <FormControl>
