@@ -66,7 +66,7 @@ function RegisterEvent() {
     parentName: "",
     parentNRIC: "",
     parentMobile: "",
-    shoeSize: "",
+    // shoeSize: "",
     inviteName: "",
     dataConsent: false,
     pending: "pending",
@@ -82,7 +82,7 @@ function RegisterEvent() {
     parentName,
     parentNRIC,
     parentMobile,
-    shoeSize,
+    // shoeSize,
     inviteName,
     dataConsent,
     pending,
@@ -147,7 +147,7 @@ function RegisterEvent() {
           parentName,
           parentNRIC,
           parentMobile,
-          shoeSize,
+          // shoeSize,
           inviteName,
           dataConsent,
           pending,
@@ -569,7 +569,7 @@ function RegisterEvent() {
                   borderBottomWidth={1.5}
                 />
 
-                <FormControl isRequired>
+                {/* <FormControl isRequired>
                   <FormLabel>Shoe Size (US Sizing)</FormLabel>
                   <Select
                     name="shoeSize"
@@ -597,7 +597,7 @@ function RegisterEvent() {
                     <option value="19">19</option>
                     <option value="20">20</option>
                   </Select>
-                </FormControl>
+                </FormControl> */}
 
                 <FormControl>
                   <FormLabel>
