@@ -231,8 +231,8 @@ function Dashboard() {
           color={"primary.600"}
         >
           *The Age Performance Index is an indication of how close the
-          participant is to the extrapolated age standard (100 being equal; >100
-          - exceeding the age standard) calculated based on the MR25
+          participant is to the extrapolated age standard (100 being equal;{" "}
+          {">"}100 - exceeding the age standard) calculated based on the MR25
           All-Inclusive 10.5km Trail Performance Index, a performance grading
           system that factors the runner’s age and gender.
         </Text>
@@ -242,10 +242,12 @@ function Dashboard() {
           fontStyle={"italic"}
           color={"primary.600"}
         >
-          ^The Standard 10.5km loop: Anti-clockwise from Mushroom Café (Start) >
-          Northern Route > Ranger Station > Mosquito Ring (Jelutong Tower) >
-          Golf Course > Lornie Trail > Mushroom Café (marked in red in the map
-          above)
+          ^The Standard 10.5km loop: Anti-clockwise from Mushroom Café (Start){" "}
+          {">"}
+          Northern Route {">"} Ranger Station {">"} Mosquito Ring (Jelutong
+          Tower) {">"}
+          Golf Course {">"} Lornie Trail {">"} Mushroom Café (marked in red in
+          the map above)
         </Text>
 
         <TableContainer>
@@ -270,7 +272,7 @@ function Dashboard() {
                 <Td>B</Td>
                 <Td>5 Dec to 26 Dec</Td>
                 <Td>Most number of 10.5km loops</Td>
-                <Td>Top 3 Men {"&"} Top 3 Women</Td>
+                <Td>Top 5 Men {"&"} Top 5 Women</Td>
               </Tr>
               <Tr>
                 <Td>C</Td>
@@ -323,7 +325,7 @@ function Dashboard() {
           grading system that takes into account the runner’s age and gender to
           calculate a corresponding Age Performance Index (API). The API is an
           indication of how close the participant is to the extrapolated age
-          standard (100 being equal; >100 - exceeding the age standard). The
+          standard (100 being equal; {">"}100 - exceeding the age standard). The
           Trail Performance Index used in Event A aims to level the playing
           field by factoring age-related physiological changes to produce a
           performance marker (API) that is more equitable than clocked time. It
