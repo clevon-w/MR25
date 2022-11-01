@@ -341,7 +341,7 @@ function Dashboard() {
         </Text>
 
         <Text fontWeight={700} fontSize={"md"}>
-          EVENT B - THE MOST NUMBER OF 10.5KM LOOPS
+          EVENT B - THE MOST NUMBER OF 10.5KM LOOPS IN 3 WEEKS
         </Text>
         <Text fontWeight={400} fontSize={"sm"}>
           Event B hopes to encourage our members to return regularly to our
@@ -357,7 +357,7 @@ function Dashboard() {
         </Text>
 
         <Text fontWeight={700} fontSize={"md"}>
-          EVENT C - THE MOST NUMBER OF 10.5KM LOOPS
+          EVENT C - THE MOST NUMBER OF 10.5KM LOOPS IN 12 HOURS
         </Text>
         <Text fontWeight={400} fontSize={"sm"}>
           This follows the exact format of our traditional MR25 7am to 7pm
