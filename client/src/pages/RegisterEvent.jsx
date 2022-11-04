@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  useToast,
   Tag,
   Text,
   TagLabel,
@@ -12,20 +13,11 @@ import {
   AlertIcon,
   HStack,
   Divider,
-  Select,
   FormControl,
   FormLabel,
   Input,
   Link,
   FormHelperText,
-  Center,
-  Image,
-  UnorderedList,
-  ListItem,
-  Icon,
-  Collapse,
-  Switch,
-  Stack,
 } from "@chakra-ui/react";
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
@@ -34,24 +26,17 @@ import { useEffect, useState } from "react";
 import FormRadio from "../components/FormRadio";
 import FormCheckbox from "../components/FormCheckbox";
 import { update } from "../features/auth/authSlice";
-import {
-  formatDateDDMonYYYY,
-  filterCatOptions,
-} from "../utils/helperFunctions";
+import { formatDateDDMonYYYY } from "../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
-import { FiExternalLink } from "react-icons/fi";
-import MR25_paynowQR from "../images/MR25_paynowQR.jpeg";
-import joinStravaClub from "../images/join-strava-club.jpeg";
-import tShirtSizeImg from "../images/tshirtsize.jpeg";
-// import { institutionsArr } from "../utils/institutions";
 
 function RegisterEvent() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const toast = useToast();
 
-  const { events, isError, message } = useSelector((state) => state.events);
-
-  const { user } = useSelector((state) => state.auth);
+  const { events } = useSelector((state) => state.events);
+  const { user, isError, message } = useSelector((state) => state.auth);
+  console.log({ user, isError, message });
 
   // const [show, setShow] = useState(false);
   // const [readOnce, setReadOnce] = useState(false);
@@ -67,7 +52,8 @@ function RegisterEvent() {
     parentNRIC: "",
     parentMobile: "",
     // shoeSize: "",
-    inviteName: "",
+    member: "",
+    inviteEmail: "",
     dataConsent: false,
     pending: "pending",
     registeredDate: "",
@@ -83,7 +69,8 @@ function RegisterEvent() {
     parentNRIC,
     parentMobile,
     // shoeSize,
-    inviteName,
+    member,
+    inviteEmail,
     dataConsent,
     pending,
     registeredDate,
@@ -91,7 +78,11 @@ function RegisterEvent() {
 
   useEffect(() => {
     if (isError) {
-      console.log(message);
+      toast({
+        title: message,
+        status: "error",
+        isClosable: true,
+      });
     }
 
     dispatch(getEvents());
@@ -148,7 +139,8 @@ function RegisterEvent() {
           parentNRIC,
           parentMobile,
           // shoeSize,
-          inviteName,
+          member,
+          inviteEmail,
           dataConsent,
           pending,
           registeredDate,
@@ -598,27 +590,44 @@ function RegisterEvent() {
                     <option value="20">20</option>
                   </Select>
                 </FormControl> */}
-
-                <FormControl>
+                <Text fontSize={"lg"} fontWeight={700}>
+                  Membership Details
+                </Text>
+                <FormRadio
+                  question="Are you a MR25 member?"
+                  name="member"
+                  data={member}
+                  radioOption={{
+                    yes: "Yes, I am a MR25 member",
+                    no: "No, I am a guest",
+                  }}
+                  direction="row"
+                  setFormData={setFormData}
+                />
+                <FormControl isRequired={member === "no"}>
                   <FormLabel>
                     Are you inviting a guest or being invited?
                   </FormLabel>
                   <Input
-                    name="inviteName"
-                    type="inviteName"
-                    value={formData.inviteName}
+                    name="inviteEmail"
+                    type="inviteEmail"
+                    value={formData.inviteEmail}
                     onChange={onChange}
-                    placeholder="Guest / Member name"
+                    placeholder="Guest / Member email account"
                   />
                   <FormHelperText fontWeight={400} fontSize={"sm"}>
-                    For members inviting a guest, please include the name of
-                    your guest in this field and assist him / her in
-                    registration. If you are not inviting a guest, leave this
-                    field blank.
+                    For members inviting a guest, please include the registered
+                    email account of your guest in this field and assist him /
+                    her in registration. If you are not inviting a guest, leave
+                    this field blank.
                   </FormHelperText>
                   <FormHelperText fontWeight={400} fontSize={"sm"}>
-                    For guests, please include the name of the registered name
-                    of the person inviting you in this field.
+                    For guests, please include the registered email account of
+                    the member inviting you in this field.
+                  </FormHelperText>
+                  <FormHelperText fontWeight={400} fontSize={"sm"}>
+                    Registered email accounts can be found in the "Personal
+                    Particulars" section at the top of this form
                   </FormHelperText>
                 </FormControl>
 

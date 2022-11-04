@@ -110,15 +110,42 @@ exports.createUser = asyncHandler(async (req, res) => {
  * @param {*} res the object to send back to the desired HTTP response
  */
 exports.updateUser = asyncHandler(async (req, res) => {
-  try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
+  if (Object.keys(req.body)[0] == "registeredEvents") {
+    // referral email
+    referral =
+      req.body["registeredEvents"][0]["634e3415d68ee70244ecc53f"][
+        "inviteEmail"
+      ];
+
+    // Check if E-mail is valid
+    const email_re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (!email_re.test(referral)) {
+      res.status(400);
+      throw new Error("Invalid E-mail Format");
+    }
+
+    // check if the referral email exists
+    const userExists = await User.findOne({ referral });
+    if (userExists) {
+      res.status(400);
+      throw new Error(
+        "There is no user registered with the email: " + referral
+      );
+    }
+  }
+
+  const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
+
+  if (user) {
+    res.status(201).send({
+      data: user,
+      token: generateToken(user._id),
     });
-    res.send({ data: user });
-  } catch {
-    console.log("im in update user");
-    res.status(404);
-    throw new Error("User is not found");
+  } else {
+    res.status(400);
+    throw new Error("User does not exist");
   }
 });
 

@@ -30,7 +30,7 @@ const forgetPassword = async (userData) => {
   return response.data;
 };
 
-// Reset pasword
+// Reset password
 const authenticateResetPassword = async (token) => {
   const response = await axios.get(API_URL + "reset/" + token);
   return response.data;

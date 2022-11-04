@@ -266,19 +266,28 @@ function Dashboard() {
                 <Td>A</Td>
                 <Td>5 Dec to 26 Dec</Td>
                 <Td>Best API score based on 10.5km time</Td>
-                <Td>(A) Top 10 Men {"&"} Top 10 Women</Td>
+                <Td>
+                  Top 5 Men {"&"} Top 5 Women (Members) <br /> Top 5 Men {"&"}{" "}
+                  Top 5 Women (Guests)
+                </Td>
               </Tr>
               <Tr>
                 <Td>B</Td>
                 <Td>5 Dec to 26 Dec</Td>
                 <Td>Most number of 10.5km loops</Td>
-                <Td>Top 5 Men {"&"} Top 5 Women</Td>
+                <Td>
+                  Top 5 Men {"&"} Top 5 Women (Members) <br /> Top 5 Men {"&"}{" "}
+                  Top 5 Women (Guests)
+                </Td>
               </Tr>
               <Tr>
                 <Td>C</Td>
                 <Td>31 Dec, 7am to 7pm</Td>
                 <Td>Most loops in 12 hours</Td>
-                <Td>Top 5 Men and Top 5 Women</Td>
+                <Td>
+                  Top 10 Men {"&"} Top 10 Women (Members) <br /> Top 10 Men{" "}
+                  {"&"} Top 10 Women (Guests)
+                </Td>
               </Tr>
             </Tbody>
           </Table>
