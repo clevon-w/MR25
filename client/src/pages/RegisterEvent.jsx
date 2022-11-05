@@ -36,7 +36,6 @@ function RegisterEvent() {
 
   const { events } = useSelector((state) => state.events);
   const { user, isError, message } = useSelector((state) => state.auth);
-  console.log({ user, isError, message });
 
   // const [show, setShow] = useState(false);
   // const [readOnce, setReadOnce] = useState(false);

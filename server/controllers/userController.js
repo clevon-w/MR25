@@ -57,10 +57,17 @@ exports.createUser = asyncHandler(async (req, res) => {
   }
 
   // Check if user exists
-  const userExists = await User.findOne({ email });
+  let userExists = await User.findOne({ email });
   if (userExists) {
     res.status(400);
     throw new Error("User already exists");
+  }
+
+  // Check if NRIC exists
+  userExists = await User.findOne({ nric });
+  if (userExists) {
+    res.status(400);
+    throw new Error("NRIC already exists");
   }
 
   // Check if NRIC/FIN is in the correct format
@@ -112,25 +119,75 @@ exports.createUser = asyncHandler(async (req, res) => {
 exports.updateUser = asyncHandler(async (req, res) => {
   if (Object.keys(req.body)[0] == "registeredEvents") {
     // referral email
-    referral =
+    let referral =
       req.body["registeredEvents"][0]["634e3415d68ee70244ecc53f"][
         "inviteEmail"
       ];
 
     // Check if E-mail is valid
     const email_re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (!email_re.test(referral)) {
+    if (referral != "" && !email_re.test(referral)) {
       res.status(400);
       throw new Error("Invalid E-mail Format");
     }
 
     // check if the referral email exists
-    const userExists = await User.findOne({ referral });
-    if (userExists) {
+    const referredUser = await User.findOne({ email: referral });
+    const currUser = await User.findById(req.params.id);
+    if (referral != "" && !referredUser) {
       res.status(400);
       throw new Error(
         "There is no user registered with the email: " + referral
       );
+    }
+
+    // instantiating all variables to validate
+    let member =
+      req.body["registeredEvents"][0]["634e3415d68ee70244ecc53f"]["member"];
+    let referred_inv_email = // if referredUser exists and is registered
+      referredUser && referredUser["registeredEvents"].length >= 1
+        ? referredUser["registeredEvents"][0]["634e3415d68ee70244ecc53f"][
+            "inviteEmail"
+          ]
+        : null;
+    let curr_email = currUser["email"];
+
+    // referredUser invite email needs to be same as currUser email
+    let validated = referred_inv_email == curr_email;
+
+    // if current user is a member
+    if (member == "yes") {
+      // if the referredUser (guest) is registered validate their emails
+      // this is not supposed to happen unless 2 members invite the same guest
+      if (
+        referredUser &&
+        !validated &&
+        referredUser["registeredEvents"].length >= 1
+      ) {
+        res.status(400);
+        throw new Error(
+          "The invitee you specified did not indicate you as their inviter. If there has been a mistake, please contact the admins."
+        );
+      }
+    } else if (member == "no") {
+      // if the referred user (member) is registered, validate their emails
+      if (referredUser["registeredEvents"].length >= 1) {
+        // OR referredUser invite email is empty string
+        validated ||= referred_inv_email == "";
+
+        if (!validated) {
+          res.status(400);
+          throw new Error(
+            "The inviter you specified did not indicate you as their invitee. If there has been a mistake, please contact the admins."
+          );
+        }
+      } else {
+        // if referred user (member) is not registered, the guest is not allowed to register
+        res.status(400);
+        throw new Error(
+          "The inviter you specified has not registered for the event. The inviter has to be registered first before assisting you in registration."
+        );
+      }
     }
   }
 
