@@ -125,6 +125,7 @@ function RegisterEvent() {
     registeredDate = new Date().toLocaleString("en-US", {
       timeZone: "Asia/Singapore",
     });
+    formData.inviteEmail = formData.inviteEmail.toLowerCase();
     const userData = [
       ...user.data.registeredEvents,
       {

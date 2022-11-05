@@ -17,7 +17,7 @@ import {
   Container,
   Flex,
   Spacer,
-  Input
+  Input,
 } from "@chakra-ui/react";
 import { update, resetAuth } from "../features/auth/authSlice";
 import { formatDateYYYYMMDD } from "../utils/helperFunctions";
@@ -44,7 +44,7 @@ function UpdateUser() {
     email: data.email,
     gender: data.gender,
     birthDate: data.birthDate,
-    nric: data.nric
+    nric: data.nric,
   });
 
   // For validating email input. True if email is INVALID.
@@ -65,14 +65,14 @@ function UpdateUser() {
       toast({
         title: message,
         status: "error",
-        isClosable: true
+        isClosable: true,
       });
     }
     if (isSuccess) {
       toast({
         title: "Updated personal particulars successfully!",
         status: "success",
-        isClosable: true
+        isClosable: true,
       });
       navigate("/MyAccount");
       return () => {
@@ -84,13 +84,13 @@ function UpdateUser() {
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-
+    formData.email = formData.email.toLowerCase();
     const userData = {
       _id,
       firstName,
@@ -98,12 +98,12 @@ function UpdateUser() {
       email,
       gender,
       birthDate,
-      nric
+      nric,
     };
 
     const args = {
       id: _id,
-      data: userData
+      data: userData,
     };
 
     dispatch(update(args));
@@ -167,7 +167,7 @@ function UpdateUser() {
                 onChange={(e) => {
                   setFormData((prevState) => ({
                     ...prevState,
-                    [e.target.name]: e.target.value.toUpperCase()
+                    [e.target.name]: e.target.value.toUpperCase(),
                   }));
                 }}
                 placeholder="NRIC/FIN (e.g. 789Z)"
