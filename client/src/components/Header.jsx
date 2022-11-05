@@ -132,6 +132,10 @@ const NavBarLinks = ({ isOpen }) => {
     toDashboard();
   };
 
+  const toAdminUI = () => {
+    navigate("/AdminPage");
+  }
+
   return (
     <Box
       display={{ base: isOpen ? "block" : "none", md: "block" }}
@@ -225,6 +229,13 @@ const NavBarLinks = ({ isOpen }) => {
             Login
           </Button>
         )}
+
+        {user && user.data.userrole === 1? (<NavBarItem
+          isSelected={window.location.pathname === "/AdminPage"}
+          to={toAdminUI}
+        >
+          AdminUI
+        </NavBarItem>) : (<></>)}
       </Stack>
     </Box>
   );

@@ -97,6 +97,7 @@ exports.createUser = asyncHandler(async (req, res) => {
     birthDate,
     nric,
     password: hashedPassword,
+    userrole: 0,
   });
 
   if (user) {
@@ -229,7 +230,7 @@ exports.deleteUser = asyncHandler(async (req, res) => {
  * @param {*} res the object to send back to the desired HTTP response
  */
 exports.loginUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password} = req.body;
 
   // Check for user email
   const user = await User.findOne({ email });
