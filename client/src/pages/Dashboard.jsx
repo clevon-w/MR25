@@ -285,8 +285,8 @@ function Dashboard() {
                 <Td>31 Dec, 7am to 7pm</Td>
                 <Td>Most loops in 12 hours</Td>
                 <Td>
-                  Top 10 Men {"&"} Top 10 Women (Members) <br /> Top 10 Men{" "}
-                  {"&"} Top 10 Women (Guests)
+                  Top 10 Men {"&"} Top 10 Women (Members) <br /> Top 5 Men {"&"}{" "}
+                  Top 5 Women (Guests)
                 </Td>
               </Tr>
             </Tbody>
@@ -343,10 +343,10 @@ function Dashboard() {
           challenge.
         </Text>
         <Text fontWeight={400} fontSize={"sm"}>
-          10 male participants and 10 female participants with the best API
-          scores will win for themselves medals and attractive prizes. Finisher
-          T-shirts will also be given out to all participants. Please collect at
-          MacRitchie on 31 Dec, 5pm to 7pm.
+          Top 5 Men & Top 5 Women (Members) Top 5 Men & Top 5 Women (Guests)
+          with the best API scores will win for themselves medals and attractive
+          prizes. Finisher T-shirts will also be given out to all participants.
+          Please collect at MacRitchie on 31 Dec, 5pm to 7pm.
         </Text>
 
         <Text fontWeight={700} fontSize={"md"}>
@@ -359,10 +359,10 @@ function Dashboard() {
           up in one of our numerous MR25 official running vests!)
         </Text>
         <Text fontWeight={400} fontSize={"sm"}>
-          5 male participants and 5 female participants with the most loops will
-          win for themselves medals and attractive prizes. Finisher T-shirts
-          will also be given out to all participants. Please collect at
-          MacRitchie on 31 Dec, 5pm to 7pm.
+          Top 5 Men & Top 5 Women (Members) Top 5 Men & Top 5 Women (Guests)
+          with the most loops will win for themselves medals and attractive
+          prizes. Finisher T-shirts will also be given out to all participants.
+          Please collect at MacRitchie on 31 Dec, 5pm to 7pm.
         </Text>
 
         <Text fontWeight={700} fontSize={"md"}>
@@ -374,15 +374,12 @@ function Dashboard() {
           anti-clockwise direction within the 12 hours. Unfortunately, due to
           restrictions by NParks, it will not be organised as a physical event.
           As such the club will not be able to provide physical support.
-          Participants may, however, collect Pocari drinks from the organisers
-          outside the Mushroom Cafe between 6.30am to 7.00am on race day, if
-          they choose to.
         </Text>
         <Text fontWeight={400} fontSize={"sm"}>
           Participants may collect your Finishers T-shirts at the Mushroom café
           from the organisers from 5pm to 7pm. Medals and cash prizes will be
-          awarded to the top 5 finishers in both the men and women members
-          category.
+          awarded to the Top 10 Men & Top 10 Women (Members) Top 5 Men & Top 5
+          Women (Guests).
         </Text>
         <Text fontWeight={700} fontSize={"md"}>
           REGISTRATION
