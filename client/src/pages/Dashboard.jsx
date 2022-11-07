@@ -181,20 +181,20 @@ function Dashboard() {
             Event Period
           </Text>
         </GridItem>
-        <GridItem colSpan={[2, 1]}>
+        <GridItem colSpan={[2, 2, 1]}>
           <Tag size={"lg"} variant="subtle" w={"100%"} p={4}>
             <TagLeftIcon boxSize={"24px"} as={FiCalendar} />
-            <TagLabel>
-              {formatDateDDMonYYYY(event.eventDetails.eventStart) +
-                " - " +
-                formatDateDDMonYYYY(event.eventDetails.eventEnd)}
+            <TagLabel fontSize={"sm"}>
+              Refer to the respective event formats
             </TagLabel>
           </Tag>
         </GridItem>
-        <GridItem colSpan={[2, 1]}>
+        <GridItem colSpan={[2, 2, 1]}>
           <Tag size={"lg"} variant="subtle" w={"100%"} p={4}>
             <TagLeftIcon boxSize={"24px"} as={FiMapPin} />
-            <TagLabel>{event.eventDetails.eventLocation}</TagLabel>
+            <TagLabel fontSize={"sm"}>
+              {event.eventDetails.eventLocation}
+            </TagLabel>
           </Tag>
         </GridItem>
       </Grid>

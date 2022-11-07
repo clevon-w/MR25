@@ -197,19 +197,19 @@ function Leaderboard() {
           </GridItem>
         </Grid>
 
-        <Alert
-          status="info"
-          borderRadius={"lg"}
-          borderColor={"accents.blue"}
-          borderWidth={"thin"}
-        >
-          <AlertIcon color={"accents.blue"} />
-          {filterParam.eventFormat === "A"
-            ? "The Age Performance Index is an indication of how close the participant is to the extrapolated age standard (100 being equal; >100 - exceeding the age standard) calculated based on the MR25 All-Inclusive 10.5km Trail Performance Index, a performance grading system that factors the runner’s age and gender. Please refer to the Table of Extrapolated Age Standards below"
-            : filterParam.eventFormat === "B"
-            ? "At the end of the qualifying period, on 19 Dec, the top 30 male and 30 female with the highest number of loops during the qualifying period will be invited to participate in the finals on 31 Dec."
-            : "Check back on 31 Dec 2022 for live results of the finals!"}
-        </Alert>
+        {filterParam.eventFormat === "A" || filterParam.eventFormat == "C" ? (
+          <Alert
+            status="info"
+            borderRadius={"lg"}
+            borderColor={"accents.blue"}
+            borderWidth={"thin"}
+          >
+            <AlertIcon color={"accents.blue"} />
+            {filterParam.eventFormat === "A"
+              ? "The Age Performance Index is an indication of how close the participant is to the extrapolated age standard (100 being equal; >100 - exceeding the age standard) calculated based on the MR25 All-Inclusive 10.5km Trail Performance Index, a performance grading system that factors the runner’s age and gender. Please refer to the Table of Extrapolated Age Standards below"
+              : "Check back on 31 Dec 2022 for live results of the finals!"}
+          </Alert>
+        ) : null}
 
         <InputGroup>
           <Input
