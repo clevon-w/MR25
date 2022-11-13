@@ -10,6 +10,7 @@ import authReducer from "../features/auth/authSlice";
 import resultReducer from "../features/results/resultSlice";
 import eventReducer from "../features/event/eventSlice";
 import resetPwAuthReducer from "../features/auth/resetPwAuthSlice";
+import usersReducer from "../features/users/usersSlice";
 
 export const store = configureStore({
   reducer: {
@@ -17,5 +18,6 @@ export const store = configureStore({
     results: resultReducer,
     events: eventReducer,
     resetPwAuth: resetPwAuthReducer,
+    users: usersReducer,
   },
 });
