@@ -210,9 +210,9 @@ function RegisterEvent() {
                 borderWidth={"thin"}
               >
                 <AlertIcon color={"accents.blue"} />
-                Upon registration, you may proceed to time your 10.5km run using
-                the Strava app and upload the result to "Upload Result +" on
-                this website.
+                Upon registration, you may proceed to time your 10.5km run
+                during the stipulated event period using the Strava app and
+                upload the result to "Upload Result +" on this website.
               </Alert>
             </VStack>
 
@@ -222,18 +222,18 @@ function RegisterEvent() {
                   Registration details
                 </Text>
 
-                <HStack spacing={4} fontSize={"sm"}>
+                <HStack spacing={4} fontSize={"sm"} alignItems={"top"}>
                   <Text fontWeight={700}>Status:</Text>
                   <Text fontWeight={400}>
                     {"Registration " +
                       registrationDetails(event._id, "pending")}
                     {registrationDetails(event._id, "pending") === "pending"
-                      ? " (You may start uploading results immediately!)"
+                      ? " (You may start uploading results during the stipulated event period!)"
                       : ""}
                   </Text>
                 </HStack>
 
-                <HStack spacing={4} fontSize={"sm"}>
+                <HStack spacing={4} fontSize={"sm"} alignItems={"top"}>
                   <Text fontWeight={700}>Registered on:</Text>
                   <Text fontWeight={400}>
                     {registrationDetails(event._id, "registeredDate")}
@@ -254,21 +254,21 @@ function RegisterEvent() {
                   </Text>
                 </HStack> */}
 
-                <HStack spacing={4} fontSize={"sm"}>
+                <HStack spacing={4} fontSize={"sm"} alignItems={"top"}>
                   <Text fontWeight={700}>Name of parent / guardian:</Text>
                   <Text fontWeight={400}>
                     {registrationDetails(event._id, "parentName")}
                   </Text>
                 </HStack>
 
-                <HStack spacing={4} fontSize={"sm"}>
+                <HStack spacing={4} fontSize={"sm"} alignItems={"top"}>
                   <Text fontWeight={700}>NRIC of parent / guardian:</Text>
                   <Text fontWeight={400}>
                     {registrationDetails(event._id, "parentNRIC")}
                   </Text>
                 </HStack>
 
-                <HStack spacing={4} fontSize={"sm"}>
+                <HStack spacing={4} fontSize={"sm"} alignItems={"top"}>
                   <Text fontWeight={700}>Mobile no. of parent / guardian:</Text>
                   <Text fontWeight={400}>
                     {registrationDetails(event._id, "parentMobile")}

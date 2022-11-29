@@ -206,14 +206,14 @@ function Leaderboard() {
           >
             <AlertIcon color={"accents.blue"} />
             {filterParam.eventFormat === "A"
-              ? "The Age Performance Index is an indication of how close the participant is to the extrapolated age standard (100 being equal; >100 - exceeding the age standard) calculated based on the MR25 All-Inclusive 10.5km Trail Performance Index, a performance grading system that factors the runner’s age and gender. Please refer to the Table of Extrapolated Age Standards below"
+              ? "The Age Performance Index is an indication of how close the participant is to the extrapolated age standard (100 being equal; >100 - exceeding the age standard) calculated based on the MR25 All-Inclusive 10.5km Trail Performance Index, a performance grading system that factors the runner’s age and gender."
               : "Check back on 31 Dec 2022 for live results of the finals!"}
           </Alert>
         ) : null}
 
         <InputGroup>
           <Input
-            placeholder={"Search athlete or institution"}
+            placeholder={"Search athlete"}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />

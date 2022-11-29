@@ -17,16 +17,12 @@ function RaceInstructions() {
   return (
     <VStack spacing={4} align={"flex-start"}>
       <Text fontWeight={700} fontSize={"md"}>
-        Race Instruction (Virtual Segment)
+        Race Instruction
       </Text>
 
       <Text fontWeight={600} fontSize={"sm"}>
-        Before your 1st run - Join this event’s Strava “club” for result
+        Before your 1st run - Follow "MR25 2022" on Strava for result
         verifications
-      </Text>
-      <Text fontWeight={400} fontSize={"sm"}>
-        The Strava club is still being created, more instructions coming soon!
-        Stay tuned!
       </Text>
       {/* <Text fontWeight={400} fontSize={"sm"}>
         Visit{" "}

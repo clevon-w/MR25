@@ -185,6 +185,14 @@ function UploadResults() {
             on the day itself.
           </Text>
 
+          <Text fontWeight={400} fontSize={"sm"} color={"primary.800"}>
+            Before your run and uploading of results, do check out the{" "}
+            <Link color="teal.500" href="./howToParticipate">
+              guide to set up Strava
+            </Link>{" "}
+            at the bottom of the "How to Participate" page.
+          </Text>
+
           {/* <RaceInstructions /> */}
 
           <Stack spacing={4}>
@@ -281,10 +289,10 @@ function UploadResults() {
             </FormControl>
           </Stack>
 
-          <Stack spacing={4}>
-            <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
+          <FormControl isRequired>
+            <FormLabel fontWeight={700} fontSize={"md"} color={"primary.800"}>
               Elapsed Time (as reflected on Strava)
-            </Text>
+            </FormLabel>
             <SimpleGrid columns={3} spacing={4}>
               <GridItem>
                 <FormControl isRequired>
@@ -362,7 +370,7 @@ function UploadResults() {
             >
               Attach Screenshot
             </Button> */}
-          </Stack>
+          </FormControl>
 
           <Stack spacing="2">
             <Button
