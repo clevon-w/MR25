@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { getUsers, resetUsers } from "../features/users/usersSlice";
 import { getResults, resetResult } from "../features/results/resultSlice";
 import UsersItem from "../components/UsersItem";
+import ResultItem from "../components/ResultItem";
 import {
   Stack,
   VStack,
@@ -85,6 +86,19 @@ function AdminPage() {
     toast,
   ]);
 
+  const [filterParam, setFilterParam] = useState({
+    format: "user",
+    // gender: "Male",
+  });
+
+  const handleChange = (e) => {
+    setFilterParam((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+    console.log(filterParam.format);
+  };
+
 
   // console.log(userdata);
   console.log(users.length);
@@ -96,7 +110,28 @@ function AdminPage() {
       } else {
     return (
       <Stack spacing={8}>
-        <Text textStyle="heading_s">User database</Text>
+        <Text textStyle="heading_s">Database</Text>
+
+        <Grid w={"100%"} templateColumns="repeat(2, 1fr)" gap={4}>
+          <GridItem colSpan={1}>
+            <Text fontWeight={700} fontSize={"sm"}>
+              Format
+            </Text>
+            <Select onChange={handleChange} name="format">
+              <option value={"user"}>User database</option>
+              <option value={"result"}>Results database</option>
+            </Select>
+          </GridItem>
+          <GridItem colSpan={1}>
+            <Text fontWeight={700} fontSize={"sm"}>
+              Gender
+            </Text>
+            <Select name="gender" onChange={handleChange}>
+              <option value={"Male"}>Male</option>
+              <option value={"Female"}>Female</option>
+            </Select>
+          </GridItem>
+        </Grid>
 
         <VStack align="stretch">
             <HStack justifyContent={"center"}>
@@ -108,7 +143,34 @@ function AdminPage() {
         </VStack>
 
         <VStack align="stretch">
-          {users.length == 0 ? (
+          {filterParam.format === "user" ? (
+            users.length == 0 ? (
+              <HStack justifyContent={"center"}>
+                <MdSearchOff size={"5em"} />
+                <Text fontSize={"md"} fontWeight={700}>
+                  No users found
+                </Text>
+              </HStack>
+            ) : (
+              users.map((user, index) => (
+                <UsersItem user={user} index={index} />
+              ))
+            )
+          ) : (results.length == 0 ? (
+            <HStack justifyContent={"center"}>
+              <MdSearchOff size={"5em"} />
+              <Text fontSize={"md"} fontWeight={700}>
+                No results found
+              </Text>
+            </HStack>
+          ) : (
+            results.map((result, index) => (
+              <ResultItem result={result} user={user} index={index} />
+            ))
+          ))}
+
+{/* 
+          {users.length === 0 ? (
             <HStack justifyContent={"center"}>
               <MdSearchOff size={"5em"} />
               <Text fontSize={"md"} fontWeight={700}>
@@ -119,7 +181,7 @@ function AdminPage() {
             users.map((user, index) => (
               <UsersItem user={user} index={index} />
             ))
-          )}
+          )} */}
         </VStack>
 
         <HStack>
