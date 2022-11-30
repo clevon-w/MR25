@@ -165,6 +165,7 @@ function Leaderboard() {
   }, [isError, message, dispatch]);
 
   let searchedResults = search(results);
+  console.log(events.length);
 
   if (isLoading || !(events.length > 0)) {
     return <Runningman />;

@@ -11,7 +11,7 @@ const initialState = {
 
 // Get user results
 export const getUsers = createAsyncThunk(
-  "users/getUsers",
+  "users/findUsers",
   async (_, thunkAPI) => {
     try {
       return await usersService.getUsers();

@@ -17,10 +17,26 @@ const dotenv = require("dotenv").config();
  * @param {*} req the object containing information about the HTTP request that raised the event
  * @param {*} res the object to send back to the desired HTTP response
  */
+// exports.findUsers = asyncHandler(async (req, res) => {
+//   const users = await User.find();
+//   res.send({data: users});
+// });
+
 exports.findUsers = asyncHandler(async (req, res) => {
   const users = await User.find();
-  res.send({ data: users });
+  res.send(users);
 });
+
+//DONT USE BELOW
+// exports.findUsers = asyncHandler(async (req, res) => {
+//   try {
+//     const users = await User.find({});
+//     res.send({ data: users });
+//   } catch {
+//     res.status(404);
+//     throw new Error("User is not found");
+//   }
+// });
 
 /**
  * getMe gets the user data.
