@@ -198,25 +198,23 @@ function UploadResults() {
       <Modal onClose={close} isOpen={isOpen && hide != "true"} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Before you upload...</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Text fontWeight={400} fontSize={"sm"} color={"primary.800"}>
-              Before you upload your results, have you followed MR25 2022 on
-              Strava?
-            </Text>
             <Text fontWeight={400} fontSize={"sm"} color={"primary.800"} pt={4}>
-              If you haven't, do check out the{" "}
+              Prior to your first result upload, request to follow “MR25 2022”
+              on Strava. Respond and approve the request to follow you upon
+              receiving notification on Strava. This is for result verification
+              and ratification. For more details,{" "}
               <Link color="teal.500" href="./howToParticipate">
-                guide to follow MR25 2022 on Strava
-              </Link>{" "}
-              under Step 3 on the "How to Participate" page.
+                click here
+              </Link>
+              .
             </Text>
           </ModalBody>
           <ModalFooter>
             <Checkbox value={checked} onChange={handleOnchange} size={"sm"}>
               I have followed MR25 2022 on Strava and approved the request to
-              follow me
+              follow
             </Checkbox>
           </ModalFooter>
         </ModalContent>
