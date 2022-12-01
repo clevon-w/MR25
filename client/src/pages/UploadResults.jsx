@@ -20,6 +20,15 @@ import {
   NumberDecrementStepper,
   useToast,
   Link,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Checkbox,
 } from "@chakra-ui/react";
 // import { FiImage } from 'react-icons/fi'
 import { createResult, resetResult } from "../features/results/resultSlice";
@@ -32,6 +41,8 @@ function UploadResults() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  // const [cookieConsent, showCookieConsent] = useState(true);
 
   /**
    * state.auth retrieves the states of the user
@@ -162,8 +173,54 @@ function UploadResults() {
     dispatch(createResult(resultData));
   };
 
+  const [checked, setIsChecked] = useState(0);
+
+  const handleOnchange = (e) => {
+    setIsChecked(e.target.checked);
+  };
+
+  const close = () => {
+    localStorage.setItem("hide", checked);
+    onClose();
+  };
+
+  // useEffect(() => {
+  //   let modalStorage = localStorage.getItem("hide", checked);
+  //   if (modalStorage) {
+  //     showCookieConsent(false);
+  //   }
+  // }, []);
+
+  let hide = localStorage.getItem("hide", checked);
+
   return (
     <Container>
+      <Modal onClose={close} isOpen={isOpen && hide != "true"} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Before you upload...</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text fontWeight={400} fontSize={"sm"} color={"primary.800"}>
+              Before you upload your results, have you followed MR25 2022 on
+              Strava?
+            </Text>
+            <Text fontWeight={400} fontSize={"sm"} color={"primary.800"} pt={4}>
+              If you haven't, do check out the{" "}
+              <Link color="teal.500" href="./howToParticipate">
+                guide to follow MR25 2022 on Strava
+              </Link>{" "}
+              under Step 3 on the "How to Participate" page.
+            </Text>
+          </ModalBody>
+          <ModalFooter>
+            <Checkbox value={checked} onChange={handleOnchange} size={"sm"}>
+              I have followed MR25 2022 on Strava and will approve/approved the
+              request to follow me
+            </Checkbox>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <form onSubmit={onSubmit}>
         <Stack spacing={8}>
           <Text fontWeight={700} fontSize={"2xl"} color={"primary.800"}>
