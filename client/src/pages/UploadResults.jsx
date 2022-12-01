@@ -215,8 +215,8 @@ function UploadResults() {
           </ModalBody>
           <ModalFooter>
             <Checkbox value={checked} onChange={handleOnchange} size={"sm"}>
-              I have followed MR25 2022 on Strava and will approve/approved the
-              request to follow me
+              I have followed MR25 2022 on Strava and approved the request to
+              follow me
             </Checkbox>
           </ModalFooter>
         </ModalContent>
