@@ -173,29 +173,24 @@ function UploadResults() {
     dispatch(createResult(resultData));
   };
 
-  const [checked, setIsChecked] = useState(0);
+  const [checked, setIsChecked] = useState(false);
 
   const handleOnchange = (e) => {
     setIsChecked(e.target.checked);
+    localStorage.setItem("hide", e.target.checked);
   };
-
-  const close = () => {
-    localStorage.setItem("hide", checked);
-    onClose();
-  };
-
-  // useEffect(() => {
-  //   let modalStorage = localStorage.getItem("hide", checked);
-  //   if (modalStorage) {
-  //     showCookieConsent(false);
-  //   }
-  // }, []);
 
   let hide = localStorage.getItem("hide", checked);
 
   return (
     <Container>
-      <Modal onClose={close} isOpen={isOpen && hide != "true"} isCentered>
+      <Modal
+        closeOnOverlayClick={false}
+        blockScrollOnMount={true}
+        onClose={onClose}
+        isOpen={isOpen && hide != "true"}
+        isCentered
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />
