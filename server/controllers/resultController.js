@@ -110,16 +110,16 @@ exports.updateResult = asyncHandler(async (req, res) => {
   }
 
   // Check if user exists
-  if (!req.user) {
-    res.status(401);
-    throw new Error("User not found");
-  }
+  // if (!req.user) {
+  //   res.status(401);
+  //   throw new Error("User not found");
+  // }
 
   // Make sure the login user matches the result user
-  if (result.user.toString() != req.user.id) {
-    res.status(401);
-    throw new Error("User not authorised");
-  }
+  // if (result.user.toString() != req.user.id) {
+  //   res.status(401);
+  //   throw new Error("User not authorised");
+  // }
 
   const updatedResult = await Result.findByIdAndUpdate(
     req.params.id,

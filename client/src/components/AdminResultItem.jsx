@@ -3,13 +3,16 @@
  * ReturnItem() can be mapped to display the data
  */
 
-import { Text, Box, Flex, HStack, useToast, FormControl, FormLabel, Select, Button } from "@chakra-ui/react";
+import { Text, Box, Flex, HStack, useToast, FormControl, FormLabel, Select, Button, Switch } from "@chakra-ui/react";
 import { CheckIcon } from "@chakra-ui/icons";
 import { formatDateDDMonYYYY } from "../utils/helperFunctions";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { update, resetAuth } from "../features/auth/authSlice";
+import { updateResult } from "../features/results/resultSlice";
 import { useNavigate } from "react-router-dom";
+import { useBoolean } from "@chakra-ui/react";
+import { MdVerified } from "react-icons/md";
+
 
 function AdminResultItem(props) {
   // const finalist = props.index <= 8 && props.result.verified;
@@ -21,29 +24,30 @@ function AdminResultItem(props) {
     (state) => state.auth
   );
 
-  const { data } = useSelector((state) => state.auth.user);
+  const data = props.result;
 
   const [formData, setFormData] = useState({
     _id: data._id,
-    resultstatus: data.verified,
+    verified: data.verified,
+    userid: user._id,
   });
 
-  const { _id, resultstaxstus } = formData;
+  const { _id, verified, userid } = formData;
 
-  const [resultstatus, setResultStatus] = useBoolean();
 
-  // const onChange = (e) => {
-  //   setFormData((prevState) => ({
-  //     ...prevState,
-  //     [e.target.name]: e.target.value
-  //   }));
-  // };
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.checked
+    }));
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
 
     const userData = {
-      resultstatus,
+      verified,
+      userid,
     };
 
     const args = {
@@ -51,9 +55,8 @@ function AdminResultItem(props) {
       data: userData
     };
 
-    console.log(formData.resultstatus);
-    dispatch(update(args));
-    console.log(formData.resultstatus);
+    dispatch(updateResult(args));
+    navigate("/AdminPage");
   };
 
   useEffect(() => {
@@ -68,14 +71,16 @@ function AdminResultItem(props) {
       toast({
         title: "Results verification changed successfully!",
         status: "success",
-        isClosable: true
+        isClosable: true,
       });
+
       // navigate("/");
       // return () => {
       //   dispatch(resetAuth());
       // };
     }
   }, [user, isError, isSuccess, message, dispatch, navigate, toast]);
+
 
 
   return (
@@ -114,33 +119,18 @@ function AdminResultItem(props) {
               <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
                 {props.result.runTiming}
               </Text>
-              {/* {props.result.verified ? <MdVerified /> : null} */}
-              <FormControl isRequired>
-              <FormLabel>Status</FormLabel>
-              <Select name="resultstatus" placeholder="Status" onChange={onChange}>
-                <option value={true}>
-                  Verified
-                </option>
-                <option value={false}>
-                  Not verified
-                </option>
-              </Select>
+              {props.result.verified ? <MdVerified /> : <Text>not verified</Text>} 
+              <FormControl >
+              
+              <FormLabel>Verify result</FormLabel>
+              <Switch name="verified" defaultChecked={verified} onChange={onChange} />
             </FormControl>
+            <Button type="submit">Confirm</Button>
             </HStack>
             <Text fontWeight={400} fontSize={"sm"} color={"primary.600"}>
               {formatDateDDMonYYYY(props.result.runDate)}
             </Text>
           </Flex>
-
-          <Button
-            type="submit"
-            color="primary.white"
-            bg="primary.800"
-            size="lg"
-          >
-            Update
-            <CheckIcon w={8} />
-          </Button>
         </Flex>
         {/* {finalist ? (
          <Flex

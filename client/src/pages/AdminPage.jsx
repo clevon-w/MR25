@@ -100,9 +100,6 @@ function AdminPage() {
   };
 
 
-  // console.log(userdata);
-  console.log(users.length);
-  console.log(results);
 
 
   if (isLoading) {
@@ -169,19 +166,6 @@ function AdminPage() {
             ))
           ))}
 
-{/* 
-          {users.length === 0 ? (
-            <HStack justifyContent={"center"}>
-              <MdSearchOff size={"5em"} />
-              <Text fontSize={"md"} fontWeight={700}>
-                No users found
-              </Text>
-            </HStack>
-          ) : (
-            users.map((user, index) => (
-              <UsersItem user={user} index={index} />
-            ))
-          )} */}
         </VStack>
 
         <HStack>
