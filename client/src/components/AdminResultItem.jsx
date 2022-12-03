@@ -8,7 +8,7 @@ import { CheckIcon } from "@chakra-ui/icons";
 import { formatDateDDMonYYYY } from "../utils/helperFunctions";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateResult } from "../features/results/resultSlice";
+import { updateResult, resetResult } from "../features/results/resultSlice";
 import { useNavigate } from "react-router-dom";
 import { useBoolean } from "@chakra-ui/react";
 import { MdVerified } from "react-icons/md";
@@ -56,7 +56,7 @@ function AdminResultItem(props) {
     };
 
     dispatch(updateResult(args));
-    navigate("/AdminPage");
+
   };
 
   useEffect(() => {
@@ -73,7 +73,8 @@ function AdminResultItem(props) {
         status: "success",
         isClosable: true,
       });
-
+      dispatch(resetResult);
+      navigate("/AdminPage");
       // navigate("/");
       // return () => {
       //   dispatch(resetAuth());

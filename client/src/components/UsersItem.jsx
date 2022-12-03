@@ -8,14 +8,10 @@
  import { formatDateDDMonYYYY } from "../utils/helperFunctions";
  
  function UsersItem(props) {
-   // const finalist = props.index <= 8 && props.result.verified;
- 
    return (
      <Flex direction={"column"}>
        <Flex
          bg={"primary.100"}
-         // borderTopRadius={"lg"}
-         // borderBottomRadius={finalist ? "none" : "lg"}
          borderRadius={"lg"}
          justifyContent={"space-between"}
          p={4}
@@ -33,31 +29,21 @@
              </Text>
            </Flex>
          </HStack>
+
+         <Flex>
+          <Text>
+            Test
+          </Text>
+         </Flex>
  
          <Flex direction={"column"}>
            <HStack>
              <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
                {props.user.userrole}
              </Text>
-             {/* {props.result.verified ? <MdVerified /> : null} */}
            </HStack>
-           {/* <Text fontWeight={400} fontSize={"sm"} color={"primary.600"}>
-             {formatDateDDMonYYYY(props.result.runDate)}
-           </Text> */}
          </Flex>
        </Flex>
-       {/* {finalist ? (
-         <Flex
-           bg={"primary.200"}
-           borderBottomRadius={"lg"}
-           justifyContent={"flex-end"}
-           p={2.5}
-         >
-           <Text fontWeight={400} fontSize={"xs"} color={"primary.800"}>
-             Qualified for Grand Finale
-           </Text>
-         </Flex>
-       ) : null} */}
      </Flex>
    );
  }
