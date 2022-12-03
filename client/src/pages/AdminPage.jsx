@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { getUsers, resetUsers } from "../features/users/usersSlice";
 import { getResults, resetResult } from "../features/results/resultSlice";
 import UsersItem from "../components/UsersItem";
-import ResultItem from "../components/ResultItem";
+import AdminResultItem from "../components/AdminResultItem";
 import {
   Stack,
   VStack,
@@ -165,7 +165,7 @@ function AdminPage() {
             </HStack>
           ) : (
             results.map((result, index) => (
-              <ResultItem result={result} user={user} index={index} />
+              <AdminResultItem result={result} user={user} index={index} />
             ))
           ))}
 
