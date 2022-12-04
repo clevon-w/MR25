@@ -50,8 +50,8 @@ exports.createResult = asyncHandler(async (req, res) => {
   let h = parseInt(runTimeArr[0]);
   let m = parseInt(runTimeArr[1]);
   let s = parseInt(runTimeArr[2]);
-  let runTimeInMins = h * 60 + m + s / 60;
-  const APIres = parseFloat((API / runTimeInMins) * 100).toFixed(2) + "%";
+  let aveRunTimeInMins = (h * 60 + m + s / 60) / loops;
+  const APIres = parseFloat((API / aveRunTimeInMins) * 100).toFixed(2) + "%";
 
   // req.user is put in by authMiddleware because of the authentication token
   // we dont have a eventMiddleware to get the event entry
@@ -62,6 +62,7 @@ exports.createResult = asyncHandler(async (req, res) => {
     firstName: req.user.firstName,
     lastName: req.user.lastName,
     gender: req.user.gender,
+    member: req.user.registeredEvents[0]["634e3415d68ee70244ecc53f"].member,
     // institution: req.user.registeredEvents[0][eventId].institution,
     // ageCategory: req.user.registeredEvents[0][eventId].category,
     runTiming: runTiming,

@@ -7,15 +7,11 @@ import { Text, Box, Flex, HStack } from "@chakra-ui/react";
 import { MdVerified } from "react-icons/md";
 import { formatDateDDMonYYYY } from "../utils/helperFunctions";
 
-function ResultItem(props) {
-  // const finalist = props.index <= 8 && props.result.verified;
-
+function ResultLoopItem(props) {
   return (
     <Flex direction={"column"}>
       <Flex
         bg={"primary.100"}
-        // borderTopRadius={"lg"}
-        // borderBottomRadius={finalist ? "none" : "lg"}
         borderRadius={"lg"}
         justifyContent={"space-between"}
         p={4}
@@ -28,38 +24,23 @@ function ResultItem(props) {
             <Text fontWeight={400} fontSize={"sm"} color={"primary.800"}>
               {props.result.firstName + " " + props.result.lastName}
             </Text>
-            {/* <Text fontWeight={400} fontSize={"sm"} color={"primary.600"}>
-              {props.result.institution}
-            </Text> */}
           </Flex>
         </HStack>
 
-        <Flex direction={"column"}>
+        <Flex direction={"column"} alignItems={"end"}>
           <HStack>
             <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
-              {props.result.runTiming}
+              {props.result.loops + " loops"}
             </Text>
             {props.result.verified ? <MdVerified /> : null}
           </HStack>
-          <Text fontWeight={400} fontSize={"sm"} color={"primary.600"}>
-            {formatDateDDMonYYYY(props.result.runDate)}
+          <Text fontWeight={400} fontSize={"sm"} color={"primary.800"}>
+            {"Last ran: " + formatDateDDMonYYYY(props.result.runDate)}
           </Text>
         </Flex>
       </Flex>
-      {/* {finalist ? (
-        <Flex
-          bg={"primary.200"}
-          borderBottomRadius={"lg"}
-          justifyContent={"flex-end"}
-          p={2.5}
-        >
-          <Text fontWeight={400} fontSize={"xs"} color={"primary.800"}>
-            Qualified for Grand Finale
-          </Text>
-        </Flex>
-      ) : null} */}
     </Flex>
   );
 }
 
-export default ResultItem;
+export default ResultLoopItem;
