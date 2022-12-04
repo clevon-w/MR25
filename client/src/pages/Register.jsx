@@ -115,7 +115,7 @@ function Register() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-
+    formData.email = formData.email.toLowerCase();
     if (formData.password !== formData.password2) {
       toast({
         title: "Passwords do not match",

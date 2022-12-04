@@ -20,6 +20,15 @@ import {
   NumberDecrementStepper,
   useToast,
   Link,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Checkbox,
 } from "@chakra-ui/react";
 // import { FiImage } from 'react-icons/fi'
 import { createResult, resetResult } from "../features/results/resultSlice";
@@ -32,6 +41,8 @@ function UploadResults() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  // const [cookieConsent, showCookieConsent] = useState(true);
 
   /**
    * state.auth retrieves the states of the user
@@ -162,8 +173,47 @@ function UploadResults() {
     dispatch(createResult(resultData));
   };
 
+  const [checked, setIsChecked] = useState(false);
+
+  const handleOnchange = (e) => {
+    setIsChecked(e.target.checked);
+    localStorage.setItem("hide", e.target.checked);
+  };
+
+  let hide = localStorage.getItem("hide", checked);
+
   return (
     <Container>
+      <Modal
+        closeOnOverlayClick={false}
+        blockScrollOnMount={true}
+        onClose={onClose}
+        isOpen={isOpen && hide != "true"}
+        isCentered
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text fontWeight={400} fontSize={"sm"} color={"primary.800"} pt={4}>
+              Prior to your first result upload, request to follow “MR25 2022”
+              on Strava. Respond and approve the request to follow you upon
+              receiving notification on Strava. This is for result verification
+              and ratification. For more details,{" "}
+              <Link color="teal.500" href="./howToParticipate">
+                click here
+              </Link>
+              .
+            </Text>
+          </ModalBody>
+          <ModalFooter>
+            <Checkbox value={checked} onChange={handleOnchange} size={"sm"}>
+              I have followed MR25 2022 on Strava and approved the request to
+              follow
+            </Checkbox>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <form onSubmit={onSubmit}>
         <Stack spacing={8}>
           <Text fontWeight={700} fontSize={"2xl"} color={"primary.800"}>
@@ -183,6 +233,14 @@ function UploadResults() {
               running.route.tracking@gmail.com
             </Link>{" "}
             on the day itself.
+          </Text>
+
+          <Text fontWeight={400} fontSize={"sm"} color={"primary.800"}>
+            Before your run and uploading of results, do check out the{" "}
+            <Link color="teal.500" href="./howToParticipate">
+              guide to set up Strava
+            </Link>{" "}
+            at the bottom of the "How to Participate" page.
           </Text>
 
           {/* <RaceInstructions /> */}
@@ -281,10 +339,10 @@ function UploadResults() {
             </FormControl>
           </Stack>
 
-          <Stack spacing={4}>
-            <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
+          <FormControl isRequired>
+            <FormLabel fontWeight={700} fontSize={"md"} color={"primary.800"}>
               Elapsed Time (as reflected on Strava)
-            </Text>
+            </FormLabel>
             <SimpleGrid columns={3} spacing={4}>
               <GridItem>
                 <FormControl isRequired>
@@ -362,7 +420,7 @@ function UploadResults() {
             >
               Attach Screenshot
             </Button> */}
-          </Stack>
+          </FormControl>
 
           <Stack spacing="2">
             <Button

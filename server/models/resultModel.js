@@ -29,6 +29,10 @@ const resultSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please enter gender"],
     },
+    member: {
+      type: String,
+      required: [true, "Please enter membership status"],
+    },
     // institution:{
     //   type: String,
     //   required: [true, 'Please enter institution'],

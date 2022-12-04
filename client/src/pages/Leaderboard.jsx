@@ -4,6 +4,7 @@ import { getResults, resetResult } from "../features/results/resultSlice";
 import { getEvents } from "../features/event/eventSlice";
 import ResultItem from "../components/ResultItem";
 import ResultTeamItem from "../components/ResultTeamItem";
+import ResultLoopItem from "../components/ResultLoopItem";
 import {
   Stack,
   VStack,
@@ -37,7 +38,7 @@ function Leaderboard() {
   const [query, setQuery] = useState("");
   const [filterParam, setFilterParam] = useState({
     eventFormat: "A",
-    gender: "Male",
+    genderMember: "Male_yes",
   });
 
   function sumTime(results) {
@@ -53,11 +54,14 @@ function Leaderboard() {
   }
 
   function search(results) {
+    // split into gender and member status
+    var gender = filterParam.genderMember.split("_")[0],
+      member = filterParam.genderMember.split("_")[1];
     if (filterParam.eventFormat === "A") {
       // Filter based on gender and search
       let filteredResults = results.filter((result) => {
-        // Check if gender of result is same and gender filter
-        if (result.gender === filterParam.gender) {
+        // Check if gender and member status of result is same as filter
+        if (result.gender === gender && result.member === member) {
           // Check for string typed into search bar
           return searchParam.some((attr) => {
             return (
@@ -94,7 +98,7 @@ function Leaderboard() {
       // Filter based on gender and search
       let filteredResults = results.filter((result) => {
         // Check if gender of result is same and gender filter and if the result is verified
-        if (result.gender === filterParam.gender) {
+        if (result.gender === gender && result.member === member) {
           // Check for string typed into search bar
           return searchParam.some((attr) => {
             return (
@@ -108,34 +112,46 @@ function Leaderboard() {
         return false;
       });
 
-      // Sort the filtered results based on API
-      let sortedFilteredResults = filteredResults.sort((resultA, resultB) => {
-        return parseFloat(resultB.loops) - parseFloat(resultA.loops);
-      });
+      let accumulateFiltered = {};
 
-      // Remove duplicates from filtered array
-      const uniqueIds = [];
+      for (let idx in filteredResults) {
+        let currRes = filteredResults[idx];
+        if (currRes.userId in accumulateFiltered) {
+          // take the value of the dictionary
+          let currValue = accumulateFiltered[currRes.userId];
 
-      let duplicatesRemoved = sortedFilteredResults.filter((result) => {
-        if (!uniqueIds.includes(result.userId)) {
-          uniqueIds.push(result.userId);
-          return true;
+          // create a copy of the currValue that is inside accumulateFiltered
+          let currCopy = { ...currValue };
+
+          // add the loops
+          currCopy.loops += currRes.loops;
+
+          // and verified status
+          currCopy.verified &= currRes.verified;
+
+          // compare dates and keep the latest date
+          if (currCopy.runDate < currRes.runDate) {
+            currCopy.runDate = currRes.runDate;
+          }
+
+          // reassign it back into accumulateFiltered
+          accumulateFiltered[currRes.userId] = currCopy;
+        } else {
+          // create new key value pair
+          accumulateFiltered[currRes.userId] = currRes;
         }
-        return false;
-      });
+      }
 
-      return duplicatesRemoved;
+      let arrayOfAccumulatedLoops = Object.values(accumulateFiltered);
 
-      // Add count to each result in duplicatesRemoved
-      // duplicatesRemoved.forEach((res) => {
-      //   res["count"] = countMap.get(res.userId);
-      // });
-      // var countedArray = duplicatesRemoved.map((item) => ({
-      //   ...item,
-      //   count: countMap.get(item.userId),
-      // }));
+      // Sort the filtered results based on number of loop
+      let sortedFilteredResults = arrayOfAccumulatedLoops.sort(
+        (resultA, resultB) => {
+          return parseFloat(resultB.loops) - parseFloat(resultA.loops);
+        }
+      );
 
-      // return countedArray;
+      return sortedFilteredResults;
     } else if (filterParam.eventFormat === "C") {
       return [];
     }
@@ -183,7 +199,7 @@ function Leaderboard() {
               <option value={"A"}>Event A - Age Performance Index</option>
               <option value={"B"}>Event B - Most Number of 10.5km Loops</option>
               <option value={"C"}>
-                Event C - Seoul Garden -MR25 Ultramarathon
+                Event C - Seoul Garden-MR25 Ultramarathon
               </option>
             </Select>
           </GridItem>
@@ -191,30 +207,32 @@ function Leaderboard() {
             <Text fontWeight={700} fontSize={"sm"}>
               Gender
             </Text>
-            <Select name="gender" onChange={handleChange}>
-              <option value={"Male"}>Male</option>
-              <option value={"Female"}>Female</option>
+            <Select name="genderMember" onChange={handleChange}>
+              <option value={"Male_yes"}>Male (Member)</option>
+              <option value={"Female_yes"}>Female (Member)</option>
+              <option value={"Male_no"}>Male (Guest)</option>
+              <option value={"Female_no"}>Female (Guest)</option>
             </Select>
           </GridItem>
         </Grid>
 
-        <Alert
-          status="info"
-          borderRadius={"lg"}
-          borderColor={"accents.blue"}
-          borderWidth={"thin"}
-        >
-          <AlertIcon color={"accents.blue"} />
-          {filterParam.eventFormat === "A"
-            ? "The Age Performance Index is an indication of how close the participant is to the extrapolated age standard (100 being equal; >100 - exceeding the age standard) calculated based on the MR25 All-Inclusive 10.5km Trail Performance Index, a performance grading system that factors the runner’s age and gender. Please refer to the Table of Extrapolated Age Standards below"
-            : filterParam.eventFormat === "B"
-            ? "At the end of the qualifying period, on 19 Dec, the top 30 male and 30 female with the highest number of loops during the qualifying period will be invited to participate in the finals on 31 Dec."
-            : "Check back on 31 Dec 2022 for live results of the finals!"}
-        </Alert>
+        {filterParam.eventFormat === "A" || filterParam.eventFormat == "C" ? (
+          <Alert
+            status="info"
+            borderRadius={"lg"}
+            borderColor={"accents.blue"}
+            borderWidth={"thin"}
+          >
+            <AlertIcon color={"accents.blue"} />
+            {filterParam.eventFormat === "A"
+              ? "The Age Performance Index is an indication of how close the participant is to the extrapolated age standard (100 being equal; >100 - exceeding the age standard) calculated based on the MR25 All-Inclusive 10.5km Trail Performance Index, a performance grading system that factors the runner’s age and gender."
+              : "Check back on 31 Dec 2022 for live results of the finals!"}
+          </Alert>
+        ) : null}
 
         <InputGroup>
           <Input
-            placeholder={"Search athlete or institution"}
+            placeholder={"Search athlete"}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
@@ -229,9 +247,13 @@ function Leaderboard() {
                 No results have been uploaded in this category yet
               </Text>
             </HStack>
-          ) : (
+          ) : filterParam.eventFormat === "A" ? (
             searchedResults.map((result, index) => (
               <ResultItem result={result} user={user} index={index} />
+            ))
+          ) : (
+            searchedResults.map((result, index) => (
+              <ResultLoopItem result={result} user={user} index={index} />
             ))
           )}
         </VStack>
