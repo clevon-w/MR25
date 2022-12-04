@@ -61,7 +61,7 @@ function AdminPage() {
     dispatch(getUsers());
     dispatch(getResults());
 
-    if (user.data.userrole === 0) {
+    if (user.data.userrole !== 1) {
       toast({
         title:
           "No permission to enter page",
