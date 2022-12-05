@@ -65,7 +65,10 @@ const resultSchema = new mongoose.Schema(
       type: String,
       required: [true, "No API was calculated"],
     },
-    verified: {
+    apiVerified: {
+      type: Boolean,
+    },
+    loopsVerified: {
       type: Boolean,
     },
   },

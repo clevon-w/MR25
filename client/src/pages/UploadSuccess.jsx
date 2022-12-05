@@ -6,7 +6,7 @@ import {
   Stack,
   Button,
   Flex,
-  HStack
+  HStack,
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -84,7 +84,7 @@ function UploadSuccess() {
 
             <HStack spacing={4} fontSize={"sm"}>
               <Text fontWeight={700}>Verification:</Text>
-              <Text fontWeight={400}>{result.verified}</Text>
+              <Text fontWeight={400}>{result.apiVerified}</Text>
             </HStack>
           </Stack>
         </Stack>

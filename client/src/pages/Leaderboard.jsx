@@ -127,7 +127,7 @@ function Leaderboard() {
           currCopy.loops += currRes.loops;
 
           // and verified status
-          currCopy.verified &= currRes.verified;
+          currCopy.loopsVerified &= currRes.loopsVerified;
 
           // compare dates and keep the latest date
           if (currCopy.runDate < currRes.runDate) {

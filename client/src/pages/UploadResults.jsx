@@ -61,7 +61,8 @@ function UploadResults() {
     runDistance: "",
     loops: "",
     // screenshot: null,
-    verified: false,
+    apiVerified: false,
+    loopsVerified: false,
   });
 
   const [runTime, setRunTime] = useState({
@@ -74,7 +75,8 @@ function UploadResults() {
     eventId,
     runTiming,
     // screenshot,
-    verified,
+    apiVerified,
+    loopsVerified,
     runDistance,
     runDate,
     loops,
@@ -162,7 +164,8 @@ function UploadResults() {
       eventId,
       runTiming,
       // screenshot,
-      verified,
+      apiVerified,
+      loopsVerified,
       runDistance,
       runDate,
       loops,

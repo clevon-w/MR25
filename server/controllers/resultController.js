@@ -29,8 +29,15 @@ exports.findAllResults = asyncHandler(async (req, res) => {
  * @param {*} res the object to send back to the desired HTTP response
  */
 exports.createResult = asyncHandler(async (req, res) => {
-  const { eventId, runTiming, runDistance, runDate, verified, loops } =
-    req.body;
+  const {
+    eventId,
+    runTiming,
+    runDistance,
+    runDate,
+    apiVerified,
+    loopsVerified,
+    loops,
+  } = req.body;
 
   if (!runDistance || !runTiming || !runDate || !loops) {
     res.status(400);
@@ -71,7 +78,8 @@ exports.createResult = asyncHandler(async (req, res) => {
     runDate: runDate,
     calculatedAPI: APIres,
     // screenshot: `http://localhost:8000/api/results/file/${screenshot.filename}`,
-    verified: verified,
+    apiVerified: apiVerified,
+    loopsVerified: loopsVerified,
   });
 
   res.status(200).json(result);

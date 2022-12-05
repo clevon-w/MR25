@@ -32,7 +32,7 @@ function ResultLoopItem(props) {
             <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
               {props.result.loops + " loops"}
             </Text>
-            {props.result.verified ? <MdVerified /> : null}
+            {props.result.loopsVerified ? <MdVerified /> : null}
           </HStack>
           <Text fontWeight={400} fontSize={"sm"} color={"primary.800"}>
             {"Last ran: " + formatDateDDMonYYYY(props.result.runDate)}
