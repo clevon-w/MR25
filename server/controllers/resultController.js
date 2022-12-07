@@ -70,6 +70,7 @@ exports.createResult = asyncHandler(async (req, res) => {
     lastName: req.user.lastName,
     gender: req.user.gender,
     member: req.user.registeredEvents[0]["634e3415d68ee70244ecc53f"].member,
+    age: ageOfUser,
     // institution: req.user.registeredEvents[0][eventId].institution,
     // ageCategory: req.user.registeredEvents[0][eventId].category,
     runTiming: runTiming,

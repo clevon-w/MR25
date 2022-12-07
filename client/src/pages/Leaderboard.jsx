@@ -147,7 +147,10 @@ function Leaderboard() {
       // Sort the filtered results based on number of loop
       let sortedFilteredResults = arrayOfAccumulatedLoops.sort(
         (resultA, resultB) => {
-          return parseFloat(resultB.loops) - parseFloat(resultA.loops);
+          const loopdiff =
+            parseFloat(resultB.loops) - parseFloat(resultA.loops);
+          const agediff = resultB.age - resultA.age;
+          return loopdiff == 0 ? agediff : loopdiff;
         }
       );
 
