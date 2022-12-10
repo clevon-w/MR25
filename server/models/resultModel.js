@@ -29,6 +29,14 @@ const resultSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please enter gender"],
     },
+    member: {
+      type: String,
+      required: [true, "Please enter membership status"],
+    },
+    age: {
+      type: Number,
+      required: [true, "Please enter age"],
+    },
     // institution:{
     //   type: String,
     //   required: [true, 'Please enter institution'],
@@ -61,7 +69,10 @@ const resultSchema = new mongoose.Schema(
       type: String,
       required: [true, "No API was calculated"],
     },
-    verified: {
+    apiVerified: {
+      type: Boolean,
+    },
+    loopsVerified: {
       type: Boolean,
     },
   },

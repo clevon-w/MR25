@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  useToast,
   Tag,
   Text,
   TagLabel,
@@ -12,19 +13,11 @@ import {
   AlertIcon,
   HStack,
   Divider,
-  Select,
   FormControl,
   FormLabel,
   Input,
   Link,
   FormHelperText,
-  Center,
-  Image,
-  UnorderedList,
-  ListItem,
-  Icon,
-  Collapse,
-  Switch,
 } from "@chakra-ui/react";
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
@@ -33,24 +26,16 @@ import { useEffect, useState } from "react";
 import FormRadio from "../components/FormRadio";
 import FormCheckbox from "../components/FormCheckbox";
 import { update } from "../features/auth/authSlice";
-import {
-  formatDateDDMonYYYY,
-  filterCatOptions,
-} from "../utils/helperFunctions";
+import { formatDateDDMonYYYY } from "../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
-import { FiExternalLink } from "react-icons/fi";
-import MR25_paynowQR from "../images/MR25_paynowQR.jpeg";
-import joinStravaClub from "../images/join-strava-club.jpeg";
-import tShirtSizeImg from "../images/tshirtsize.jpeg";
-// import { institutionsArr } from "../utils/institutions";
 
 function RegisterEvent() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const toast = useToast();
 
-  const { events, isError, message } = useSelector((state) => state.events);
-
-  const { user } = useSelector((state) => state.auth);
+  const { events } = useSelector((state) => state.events);
+  const { user, isError, message } = useSelector((state) => state.auth);
 
   // const [show, setShow] = useState(false);
   // const [readOnce, setReadOnce] = useState(false);
@@ -65,7 +50,9 @@ function RegisterEvent() {
     parentName: "",
     parentNRIC: "",
     parentMobile: "",
-    shoeSize: "",
+    // shoeSize: "",
+    member: "",
+    inviteEmail: "",
     dataConsent: false,
     pending: "pending",
     registeredDate: "",
@@ -80,7 +67,9 @@ function RegisterEvent() {
     parentName,
     parentNRIC,
     parentMobile,
-    shoeSize,
+    // shoeSize,
+    member,
+    inviteEmail,
     dataConsent,
     pending,
     registeredDate,
@@ -88,7 +77,11 @@ function RegisterEvent() {
 
   useEffect(() => {
     if (isError) {
-      console.log(message);
+      toast({
+        title: message,
+        status: "error",
+        isClosable: true,
+      });
     }
 
     dispatch(getEvents());
@@ -132,6 +125,7 @@ function RegisterEvent() {
     registeredDate = new Date().toLocaleString("en-US", {
       timeZone: "Asia/Singapore",
     });
+    formData.inviteEmail = formData.inviteEmail.toLowerCase();
     const userData = [
       ...user.data.registeredEvents,
       {
@@ -144,7 +138,9 @@ function RegisterEvent() {
           parentName,
           parentNRIC,
           parentMobile,
-          shoeSize,
+          // shoeSize,
+          member,
+          inviteEmail,
           dataConsent,
           pending,
           registeredDate,
@@ -177,10 +173,10 @@ function RegisterEvent() {
     <form onSubmit={onSubmit} key={event}>
       <VStack spacing={8} align={"flex-start"}>
         <Grid w={"100%"} templateColumns="repeat(6, 1fr)" gap={4}>
-          <GridItem colSpan={4}>
+          <GridItem colSpan={[6, 4]}>
             <Text textStyle="heading_s">{"Register: " + event.name}</Text>
           </GridItem>
-          <GridItem colSpan={2}>
+          <GridItem colSpan={[6, 2]}>
             {user ? (
               <Tag
                 size={"sm"}
@@ -214,9 +210,9 @@ function RegisterEvent() {
                 borderWidth={"thin"}
               >
                 <AlertIcon color={"accents.blue"} />
-                Upon registration and receipt of the registration fee, you may
-                proceed to time your 5km run using the Strava app and upload the
-                result to "Upload Result +" on this website.
+                Upon registration, you may proceed to time your 10.5km run
+                during the stipulated event period using the Strava app and
+                upload the result to "Upload Result +" on this website.
               </Alert>
             </VStack>
 
@@ -226,18 +222,18 @@ function RegisterEvent() {
                   Registration details
                 </Text>
 
-                <HStack spacing={4} fontSize={"sm"}>
+                <HStack spacing={4} fontSize={"sm"} alignItems={"top"}>
                   <Text fontWeight={700}>Status:</Text>
                   <Text fontWeight={400}>
                     {"Registration " +
                       registrationDetails(event._id, "pending")}
                     {registrationDetails(event._id, "pending") === "pending"
-                      ? " (You may start uploading results immediately!)"
+                      ? " (You may start uploading results during the stipulated event period!)"
                       : ""}
                   </Text>
                 </HStack>
 
-                <HStack spacing={4} fontSize={"sm"}>
+                <HStack spacing={4} fontSize={"sm"} alignItems={"top"}>
                   <Text fontWeight={700}>Registered on:</Text>
                   <Text fontWeight={400}>
                     {registrationDetails(event._id, "registeredDate")}
@@ -258,21 +254,21 @@ function RegisterEvent() {
                   </Text>
                 </HStack> */}
 
-                <HStack spacing={4} fontSize={"sm"}>
+                <HStack spacing={4} fontSize={"sm"} alignItems={"top"}>
                   <Text fontWeight={700}>Name of parent / guardian:</Text>
                   <Text fontWeight={400}>
                     {registrationDetails(event._id, "parentName")}
                   </Text>
                 </HStack>
 
-                <HStack spacing={4} fontSize={"sm"}>
+                <HStack spacing={4} fontSize={"sm"} alignItems={"top"}>
                   <Text fontWeight={700}>NRIC of parent / guardian:</Text>
                   <Text fontWeight={400}>
                     {registrationDetails(event._id, "parentNRIC")}
                   </Text>
                 </HStack>
 
-                <HStack spacing={4} fontSize={"sm"}>
+                <HStack spacing={4} fontSize={"sm"} alignItems={"top"}>
                   <Text fontWeight={700}>Mobile no. of parent / guardian:</Text>
                   <Text fontWeight={400}>
                     {registrationDetails(event._id, "parentMobile")}
@@ -565,18 +561,73 @@ function RegisterEvent() {
                   borderBottomWidth={1.5}
                 />
 
-                <FormControl isRequired>
+                {/* <FormControl isRequired>
                   <FormLabel>Shoe Size (US Sizing)</FormLabel>
-                  <Input
+                  <Select
                     name="shoeSize"
-                    type="shoeSize"
-                    value={formData.shoeSize}
                     onChange={onChange}
-                    placeholder="Shoe Size"
+                    placeholder="US Shoe Size"
+                  >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                  </Select>
+                </FormControl> */}
+                <Text fontSize={"lg"} fontWeight={700}>
+                  Membership Details
+                </Text>
+                <FormRadio
+                  question="Are you a MR25 member?"
+                  name="member"
+                  data={member}
+                  radioOption={{
+                    yes: "Yes, I am a MR25 member",
+                    no: "No, I am a guest",
+                  }}
+                  direction="row"
+                  setFormData={setFormData}
+                />
+                <FormControl isRequired={member === "no"}>
+                  <FormLabel>
+                    Are you inviting a guest or being invited?
+                  </FormLabel>
+                  <Input
+                    name="inviteEmail"
+                    type="inviteEmail"
+                    value={formData.inviteEmail}
+                    onChange={onChange}
+                    placeholder="Guest / Member email account"
                   />
                   <FormHelperText fontWeight={400} fontSize={"sm"}>
-                    One of the prizes awarded is a pair of Brooks Hyperion Tempo
-                    running shoes. Please indicate your shoe size (US sizing)
+                    For members inviting a guest, please include the registered
+                    email account of your guest in this field and assist him /
+                    her in registration. If you are not inviting a guest, leave
+                    this field blank.
+                  </FormHelperText>
+                  <FormHelperText fontWeight={400} fontSize={"sm"}>
+                    For guests, please include the registered email account of
+                    the member inviting you in this field.
+                  </FormHelperText>
+                  <FormHelperText fontWeight={400} fontSize={"sm"}>
+                    Registered email accounts can be found in the "Personal
+                    Particulars" section at the top of this form
                   </FormHelperText>
                 </FormControl>
 

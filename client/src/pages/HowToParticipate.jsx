@@ -47,6 +47,10 @@ import ios6 from "../images/ios6.jpg";
 import ios7 from "../images/ios7.jpg";
 import ios8 from "../images/ios8.jpg";
 import ios9 from "../images/ios9.jpg";
+import follow1 from "../images/follow1.jpeg";
+import follow2 from "../images/follow2.jpeg";
+import follow3 from "../images/follow3.jpeg";
+import follow4 from "../images/follow4.jpeg";
 import MR25_paynowQR from "../images/MR25_paynowQR.jpeg";
 import joinStravaClub from "../images/join-strava-club.jpeg";
 import RaceInstructions from "../components/RaceInstructions";
@@ -69,20 +73,54 @@ let iosSetupKMData = [
   { title: 'Step 2: Select "Kilometres"', image: ios2 },
 ];
 
+let followMR25 = [
+  {
+    title: "Step 1: Click on the Friends icon on the top left corner.",
+    image: follow1,
+  },
+  {
+    title: "Step 2: Search for “MR25 2022” and click “Follow”",
+    image: follow2,
+  },
+  {
+    title:
+      "Step 3: Click on the above notification which you will receive in the next 24 hours after doing Step 2.",
+    image: follow3,
+  },
+  {
+    title:
+      "Step 4: Click on the “Respond” button on top and follow by the “Approve” button at the bottom of the screen.",
+    image: follow4,
+  },
+];
+
 function HowToParticipate() {
   return (
     <Container>
       <Text textStyle="heading_s" pb={6}>
         How can I participate?
       </Text>
-      <Text textStyle="heading_xs">Step 1: Register</Text>
+      <Text textStyle="heading_xs">Step 1: Create user account</Text>
       <Text fontWeight={400} fontSize={"sm"} pb={4}>
-        Create an account and submit the registration form{" "}
+        Login to your account{" "}
+        <Link color="teal.500" href="./login">
+          here
+        </Link>{" "}
+        or create an account{" "}
+        <Link color="teal.500" href="./register">
+          here
+        </Link>
+        .
+      </Text>
+      <Text textStyle="heading_xs">Step 2: Register for the event</Text>
+      <Text fontWeight={400} fontSize={"sm"} pb={4}>
+        Submit the event registration form{" "}
         <Link color="teal.500" href="./registerEvent">
           here
         </Link>
         .
       </Text>
+
       {/* <Text textStyle="heading_xs">Step 2: Registration fee</Text>
       <Text fontWeight={400} fontSize={"sm"}>
         Kindly pay via PayNow (Scan QR code below or enter UEN: 52911537M).
@@ -103,11 +141,31 @@ function HowToParticipate() {
         Please email a screenshot of your payment to{" "}
         <b>vision_athletics@yahoo.com</b>
       </Text> */}
-      <Text textStyle="heading_xs">Step 2: Join our Strava club</Text>
+      <Text textStyle="heading_xs">Step 3: Follow "MR25 2022" on Strava</Text>
       <Text fontWeight={400} fontSize={"sm"}>
-        The Strava club is still being created, more instructions coming soon!
-        Stay tuned!
+        Request to follow MR25 2022. Respond and approve the request to follow
+        you once you receive the notification. This is to facilitate the
+        verification and validation of your runs. Follow the instructions below.
       </Text>
+      <Accordion allowMultiple pt={2}>
+        {followMR25.map((accordionData) => (
+          <AccordionItem>
+            <h2>
+              <AccordionButton>
+                <Box flex="1" textAlign="left">
+                  {accordionData.title}
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>
+              <Center w={"100%"}>
+                <Image w={"50%"} src={accordionData.image} />
+              </Center>
+            </AccordionPanel>
+          </AccordionItem>
+        ))}
+      </Accordion>
       {/* <Text fontWeight={400} fontSize={"sm"} pb={4}>
         Submit a request to join our Strava club. Your request to join will be
         approved once you have completed step 1.
@@ -142,10 +200,11 @@ function HowToParticipate() {
         Done 🎉
       </Text>
       <Text fontWeight={400} fontSize={"sm"} pb={8}>
-        Upon registration, read the race instruction below and START RUNNING!
+        Upon registration, read the race instruction below and START RUNNING
+        during the stipulated event period!
       </Text>
       <RaceInstructions />
-      <Text textStyle={"heading_s"} py={6}>
+      <Text textStyle={"heading_s"} py={6} id={"setupGuide"}>
         Guide to setting up Strava
       </Text>
       <Tabs isFitted size="sm">
@@ -169,7 +228,7 @@ function HowToParticipate() {
                   </h2>
                   <AccordionPanel pb={4}>
                     <Center w={"100%"}>
-                      <Image src={accordionData.image} />
+                      <Image w={"50%"} src={accordionData.image} />
                     </Center>
                   </AccordionPanel>
                 </AccordionItem>
@@ -190,7 +249,7 @@ function HowToParticipate() {
                 </h2>
                 <AccordionPanel pb={4}>
                   <Center w={"100%"}>
-                    <Image src={android5} />
+                    <Image w={"50%"} src={android5} />
                   </Center>
                 </AccordionPanel>
               </AccordionItem>
@@ -210,7 +269,7 @@ function HowToParticipate() {
                 </h2>
                 <AccordionPanel pb={4}>
                   <Center w={"100%"}>
-                    <Image src={android6} />
+                    <Image w={"50%"} src={android6} />
                   </Center>
                 </AccordionPanel>
               </AccordionItem>
@@ -226,7 +285,7 @@ function HowToParticipate() {
                 </h2>
                 <AccordionPanel pb={4}>
                   <Center w={"100%"}>
-                    <Image src={android7} />
+                    <Image w={"50%"} src={android7} />
                   </Center>
                 </AccordionPanel>
               </AccordionItem>
@@ -242,7 +301,7 @@ function HowToParticipate() {
                 </h2>
                 <AccordionPanel pb={4}>
                   <Center w={"100%"}>
-                    <Image src={android8} />
+                    <Image w={"50%"} src={android8} />
                   </Center>
                 </AccordionPanel>
               </AccordionItem>
@@ -258,7 +317,7 @@ function HowToParticipate() {
                 </h2>
                 <AccordionPanel pb={4}>
                   <Center w={"100%"}>
-                    <Image src={android9} />
+                    <Image w={"50%"} src={android9} />
                   </Center>
                 </AccordionPanel>
               </AccordionItem>
@@ -274,7 +333,7 @@ function HowToParticipate() {
                 </h2>
                 <AccordionPanel pb={4}>
                   <Center w={"100%"}>
-                    <Image src={android10} />
+                    <Image w={"50%"} src={android10} />
                   </Center>
                 </AccordionPanel>
               </AccordionItem>
@@ -296,7 +355,7 @@ function HowToParticipate() {
                   </h2>
                   <AccordionPanel pb={4}>
                     <Center w={"100%"}>
-                      <Image src={accordionData.image} />
+                      <Image w={"50%"} src={accordionData.image} />
                     </Center>
                   </AccordionPanel>
                 </AccordionItem>
@@ -317,7 +376,7 @@ function HowToParticipate() {
                 </h2>
                 <AccordionPanel pb={4}>
                   <Center w={"100%"}>
-                    <Image src={ios3} />
+                    <Image w={"50%"} src={ios3} />
                   </Center>
                 </AccordionPanel>
               </AccordionItem>
@@ -336,7 +395,7 @@ function HowToParticipate() {
                 </h2>
                 <AccordionPanel pb={4}>
                   <Center w={"100%"}>
-                    <Image src={ios4} />
+                    <Image w={"50%"} src={ios4} />
                   </Center>
                 </AccordionPanel>
               </AccordionItem>
@@ -352,7 +411,7 @@ function HowToParticipate() {
                 </h2>
                 <AccordionPanel pb={4}>
                   <Center w={"100%"}>
-                    <Image src={ios5} />
+                    <Image w={"50%"} src={ios5} />
                   </Center>
                 </AccordionPanel>
               </AccordionItem>
@@ -368,7 +427,7 @@ function HowToParticipate() {
                 </h2>
                 <AccordionPanel pb={4}>
                   <Center w={"100%"}>
-                    <Image src={ios6} />
+                    <Image w={"50%"} src={ios6} />
                   </Center>
                 </AccordionPanel>
               </AccordionItem>
@@ -384,7 +443,7 @@ function HowToParticipate() {
                 </h2>
                 <AccordionPanel pb={4}>
                   <Center w={"100%"}>
-                    <Image src={ios7} />
+                    <Image w={"50%"} src={ios7} />
                   </Center>
                 </AccordionPanel>
               </AccordionItem>
@@ -401,7 +460,7 @@ function HowToParticipate() {
                 </h2>
                 <AccordionPanel pb={4}>
                   <Center w={"100%"}>
-                    <Image src={ios8} />
+                    <Image w={"50%"} src={ios8} />
                   </Center>
                 </AccordionPanel>
               </AccordionItem>
@@ -417,7 +476,7 @@ function HowToParticipate() {
                 </h2>
                 <AccordionPanel pb={4}>
                   <Center w={"100%"}>
-                    <Image src={ios9} />
+                    <Image w={"50%"} src={ios9} />
                   </Center>
                 </AccordionPanel>
               </AccordionItem>

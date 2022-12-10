@@ -1,5 +1,5 @@
 import { React } from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
@@ -20,6 +20,21 @@ import {
   NumberDecrementStepper,
   useToast,
   Link,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Checkbox,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogBody,
+  AlertDialogFooter,
 } from "@chakra-ui/react";
 // import { FiImage } from 'react-icons/fi'
 import { createResult, resetResult } from "../features/results/resultSlice";
@@ -50,7 +65,8 @@ function UploadResults() {
     runDistance: "",
     loops: "",
     // screenshot: null,
-    verified: false,
+    apiVerified: false,
+    loopsVerified: false,
   });
 
   const [runTime, setRunTime] = useState({
@@ -63,7 +79,8 @@ function UploadResults() {
     eventId,
     runTiming,
     // screenshot,
-    verified,
+    apiVerified,
+    loopsVerified,
     runDistance,
     runDate,
     loops,
@@ -123,9 +140,7 @@ function UploadResults() {
     navigate("/");
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-
+  const convertRunTime = (runTime) => {
     const h =
       runTime.hours === ""
         ? "00"
@@ -146,12 +161,20 @@ function UploadResults() {
         : String(runTime.seconds).padStart(2, "0");
 
     runTiming = h + ":" + m + ":" + s;
+    return runTiming;
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    runTiming = convertRunTime(runTime);
 
     const resultData = {
       eventId,
       runTiming,
       // screenshot,
-      verified,
+      apiVerified,
+      loopsVerified,
       runDistance,
       runDate,
       loops,
@@ -162,9 +185,162 @@ function UploadResults() {
     dispatch(createResult(resultData));
   };
 
+  // MODAL SCRIPTS
+  const [checked, setIsChecked] = useState(false);
+  const {
+    isOpen: isModalOpen,
+    onOpen: onModalOpen,
+    onClose: onModalClose,
+  } = useDisclosure({
+    defaultIsOpen: true,
+  });
+
+  const handleOnchange = (e) => {
+    setIsChecked(e.target.checked);
+    localStorage.setItem("hide", e.target.checked);
+  };
+
+  let hide = localStorage.getItem("hide", checked);
+
+  // ALERT DIALOG SCRIPTS
+  const {
+    isOpen: isAD1Open,
+    onOpen: onAD1Open,
+    onClose: onAD1Close,
+  } = useDisclosure();
+  const cancelAD1Ref = useRef();
+  const {
+    isOpen: isAD2Open,
+    onOpen: onAD2Open,
+    onClose: onAD2Close,
+  } = useDisclosure();
+  const cancelAD2Ref = useRef();
+
+  const closeAD1 = () => {
+    onAD1Close();
+    onAD2Open();
+  };
+
+  const closeAD2 = (e) => {
+    onAD2Close();
+    onSubmit(e);
+  };
+
   return (
     <Container>
+      <Modal
+        closeOnOverlayClick={false}
+        blockScrollOnMount={true}
+        onClose={onModalClose}
+        isOpen={isModalOpen && hide != "true"}
+        isCentered
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text fontWeight={400} fontSize={"sm"} color={"primary.800"} pt={4}>
+              Prior to your first result upload, request to follow “MR25 2022”
+              on Strava. Respond and approve the request to follow you upon
+              receiving notification on Strava. This is for result verification
+              and ratification. For more details,{" "}
+              <Link color="teal.500" href="./howToParticipate">
+                click here
+              </Link>
+              .
+            </Text>
+          </ModalBody>
+          <ModalFooter>
+            <Checkbox value={checked} onChange={handleOnchange} size={"sm"}>
+              I have followed MR25 2022 on Strava and approved the request to
+              follow
+            </Checkbox>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
       <form onSubmit={onSubmit}>
+        <AlertDialog
+          isOpen={isAD1Open}
+          leastDestructiveRef={cancelAD1Ref}
+          onClose={closeAD1}
+          isCentered
+        >
+          <AlertDialogOverlay>
+            <AlertDialogContent>
+              <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                Are all data inputs correct?
+              </AlertDialogHeader>
+
+              <AlertDialogBody>
+                <Stack spacing={2}>
+                  <HStack spacing={4} fontSize={"sm"}>
+                    <Text fontWeight={700}>Date of run:</Text>
+                    <Text fontWeight={400}>{runDate}</Text>
+                  </HStack>
+
+                  <HStack spacing={4} fontSize={"sm"}>
+                    <Text fontWeight={700}>Run Distance:</Text>
+                    <Text fontWeight={400}>{runDistance}</Text>
+                  </HStack>
+
+                  <HStack spacing={4} fontSize={"sm"}>
+                    <Text fontWeight={700}>Number of 10.5km Loops:</Text>
+                    <Text fontWeight={400}>{loops}</Text>
+                  </HStack>
+
+                  <HStack spacing={4} fontSize={"sm"}>
+                    <Text fontWeight={700}>Elapsed Time:</Text>
+                    <Text fontWeight={400}>{convertRunTime(runTime)}</Text>
+                  </HStack>
+                </Stack>
+              </AlertDialogBody>
+
+              <AlertDialogFooter>
+                <Button ref={cancelAD1Ref} onClick={onAD1Close}>
+                  No
+                </Button>
+                <Button colorScheme="red" onClick={closeAD1} ml={3}>
+                  Yes
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
+
+        <AlertDialog
+          isOpen={isAD2Open}
+          leastDestructiveRef={cancelAD2Ref}
+          onClose={onAD2Close}
+          isCentered
+        >
+          <AlertDialogOverlay>
+            <AlertDialogContent>
+              <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                Is the input time Elapsed Time?
+              </AlertDialogHeader>
+
+              <AlertDialogBody>
+                Are you sure? You can't undo this action afterwards.
+              </AlertDialogBody>
+
+              <AlertDialogFooter>
+                <Button ref={cancelAD2Ref} onClick={onAD2Close}>
+                  No - back to edit screen
+                </Button>
+                <Button
+                  colorScheme="red"
+                  onClick={closeAD2}
+                  ml={3}
+                  type={"submit"}
+                >
+                  Yes - Proceed to Upload
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
+
         <Stack spacing={8}>
           <Text fontWeight={700} fontSize={"2xl"} color={"primary.800"}>
             Upload Result
@@ -183,6 +359,14 @@ function UploadResults() {
               running.route.tracking@gmail.com
             </Link>{" "}
             on the day itself.
+          </Text>
+
+          <Text fontWeight={400} fontSize={"sm"} color={"primary.800"}>
+            Before your run and uploading of results, do check out the{" "}
+            <Link color="teal.500" href="./howToParticipate">
+              guide to set up Strava
+            </Link>{" "}
+            at the bottom of the "How to Participate" page.
           </Text>
 
           {/* <RaceInstructions /> */}
@@ -281,10 +465,10 @@ function UploadResults() {
             </FormControl>
           </Stack>
 
-          <Stack spacing={4}>
-            <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
+          <FormControl isRequired>
+            <FormLabel fontWeight={700} fontSize={"md"} color={"primary.800"}>
               Elapsed Time (as reflected on Strava)
-            </Text>
+            </FormLabel>
             <SimpleGrid columns={3} spacing={4}>
               <GridItem>
                 <FormControl isRequired>
@@ -362,16 +546,16 @@ function UploadResults() {
             >
               Attach Screenshot
             </Button> */}
-          </Stack>
+          </FormControl>
 
           <Stack spacing="2">
             <Button
-              type="submit"
               color="primary.white"
               bg="primary.800"
               size="lg"
               fontSize="lg"
               fontWeight="700"
+              onClick={onAD1Open}
             >
               Upload Now
             </Button>

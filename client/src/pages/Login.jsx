@@ -76,7 +76,7 @@ function Login() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-
+    formData.email = formData.email.toLowerCase();
     const userData = {
       email,
       password,
