@@ -89,6 +89,11 @@ function UploadResults() {
   useEffect(() => {
     if (isError) {
       console.log(message);
+      toast({
+        title: message,
+        status: "error",
+        isClosable: true 
+      });
     }
 
     if (data.registeredEvents.length === 0) {
