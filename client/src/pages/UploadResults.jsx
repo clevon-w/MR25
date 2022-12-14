@@ -92,7 +92,7 @@ function UploadResults() {
       toast({
         title: message,
         status: "error",
-        isClosable: true 
+        isClosable: true,
       });
     }
 
@@ -331,7 +331,7 @@ function UploadResults() {
 
               <AlertDialogFooter>
                 <Button ref={cancelAD2Ref} onClick={onAD2Close}>
-                  No - back to edit screen
+                  No - Back to edit
                 </Button>
                 <Button
                   colorScheme="red"
@@ -339,7 +339,7 @@ function UploadResults() {
                   ml={3}
                   type={"submit"}
                 >
-                  Yes - Proceed to Upload
+                  Yes - Proceed
                 </Button>
               </AlertDialogFooter>
             </AlertDialogContent>
