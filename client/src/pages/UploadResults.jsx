@@ -147,11 +147,7 @@ function UploadResults() {
 
   const convertRunTime = (runTime) => {
     const h =
-      runTime.hours === ""
-        ? "00"
-        : runTime.hours > 23
-        ? "23"
-        : String(runTime.hours).padStart(2, "0");
+      runTime.hours === "" ? "00" : String(runTime.hours).padStart(2, "0");
     const m =
       runTime.minutes === ""
         ? "00"
@@ -477,7 +473,7 @@ function UploadResults() {
             <SimpleGrid columns={3} spacing={4}>
               <GridItem>
                 <FormControl isRequired>
-                  <NumberInput min={0} max={23}>
+                  <NumberInput min={0}>
                     <NumberInputField
                       placeholder="HH"
                       name="hours"
@@ -495,6 +491,7 @@ function UploadResults() {
                       name="minutes"
                       value={runTime.minutes}
                       onChange={handleTimeChange}
+                      maxLength={2}
                     />
                   </NumberInput>
                 </FormControl>
@@ -507,6 +504,7 @@ function UploadResults() {
                       name="seconds"
                       value={runTime.seconds}
                       onChange={handleTimeChange}
+                      maxLength={2}
                     />
                   </NumberInput>
                 </FormControl>
