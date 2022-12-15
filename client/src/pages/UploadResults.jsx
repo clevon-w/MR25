@@ -56,12 +56,22 @@ function UploadResults() {
   // const { events } = useSelector((state) => state.events);
   const { isError, isSuccess, message } = useSelector((state) => state.results);
 
+  const [runDate, setrunDate] = useState(
+    changeTimezone(new Date(), "Asia/Singapore").toDateString()
+  );
+  useEffect(() => {
+    setInterval(
+      () =>
+        setrunDate(changeTimezone(new Date(), "Asia/Singapore").toDateString()),
+      1000
+    );
+  }, []);
+
   // eventid is hard coded at the moment
   // as we only have one event
   const [formData, setFormData] = useState({
     eventId: "62864db1e76d2b7a270da2df",
     runTiming: "",
-    runDate: changeTimezone(new Date(), "Asia/Singapore").toDateString(),
     runDistance: "",
     loops: "",
     // screenshot: null,
@@ -82,7 +92,6 @@ function UploadResults() {
     apiVerified,
     loopsVerified,
     runDistance,
-    runDate,
     loops,
   } = formData;
 
@@ -169,7 +178,6 @@ function UploadResults() {
     e.preventDefault();
 
     runTiming = convertRunTime(runTime);
-
     const resultData = {
       eventId,
       runTiming,
@@ -410,26 +418,16 @@ function UploadResults() {
           </Stack>
 
           <Stack>
-            <FormControl isRequired>
+            <FormControl>
               <FormLabel fontWeight={700} fontSize={"md"} color={"primary.800"}>
-                Date of run
+                Date (only result from the date shown below will be accepted)
               </FormLabel>
               <Input
                 name="runDate"
-                value={formData.runDate}
+                value={runDate}
                 pr="9px"
-                onChange={onChange}
                 isDisabled={true}
               />
-              {/* <Text>
-                {
-                  new Date()
-                    .toLocaleString("en-US", {
-                      timeZone: "Asia/Singapore",
-                    })
-                    .split(", ")[0]
-                }
-              </Text> */}
             </FormControl>
             <FormControl isRequired>
               <FormLabel fontWeight={700} fontSize={"md"} color={"primary.800"}>
