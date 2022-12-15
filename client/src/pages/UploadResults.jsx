@@ -38,7 +38,7 @@ import {
 } from "@chakra-ui/react";
 // import { FiImage } from 'react-icons/fi'
 import { createResult, resetResult } from "../features/results/resultSlice";
-import { formatDateDDMonYYYY } from "../utils/helperFunctions";
+import { formatDateDDMonYYYY, changeTimezone } from "../utils/helperFunctions";
 import RaceInstructions from "../components/RaceInstructions";
 // import FileUpload from '../components/FileUpload';
 // import { useForm } from 'react-hook-form';
@@ -61,7 +61,7 @@ function UploadResults() {
   const [formData, setFormData] = useState({
     eventId: "62864db1e76d2b7a270da2df",
     runTiming: "",
-    runDate: "",
+    runDate: changeTimezone(new Date(), "Asia/Singapore").toDateString(),
     runDistance: "",
     loops: "",
     // screenshot: null,
@@ -418,9 +418,18 @@ function UploadResults() {
                 name="runDate"
                 value={formData.runDate}
                 pr="9px"
-                type="date"
                 onChange={onChange}
+                isDisabled={true}
               />
+              {/* <Text>
+                {
+                  new Date()
+                    .toLocaleString("en-US", {
+                      timeZone: "Asia/Singapore",
+                    })
+                    .split(", ")[0]
+                }
+              </Text> */}
             </FormControl>
             <FormControl isRequired>
               <FormLabel fontWeight={700} fontSize={"md"} color={"primary.800"}>
