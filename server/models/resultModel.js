@@ -79,6 +79,9 @@ const resultSchema = new mongoose.Schema(
     loopsVerified: {
       type: Boolean,
     },
+    rejected: {
+      type: Boolean,
+    },
   },
   {
     timestamps: true,

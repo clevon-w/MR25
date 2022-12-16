@@ -82,6 +82,7 @@ exports.createResult = asyncHandler(async (req, res) => {
     // screenshot: `http://localhost:8000/api/results/file/${screenshot.filename}`,
     apiVerified: apiVerified,
     loopsVerified: loopsVerified,
+    rejected: false,
   });
 
   res.status(200).json(result);

@@ -61,7 +61,11 @@ function Leaderboard() {
       // Filter based on gender and search
       let filteredResults = results.filter((result) => {
         // Check if gender and member status of result is same as filter
-        if (result.gender === gender && result.member === member) {
+        if (
+          result.gender === gender &&
+          result.member === member &&
+          !result.rejected
+        ) {
           // Check for string typed into search bar
           return searchParam.some((attr) => {
             return (
@@ -98,7 +102,11 @@ function Leaderboard() {
       // Filter based on gender and search
       let filteredResults = results.filter((result) => {
         // Check if gender of result is same and gender filter and if the result is verified
-        if (result.gender === gender && result.member === member) {
+        if (
+          result.gender === gender &&
+          result.member === member &&
+          !result.rejected
+        ) {
           // Check for string typed into search bar
           return searchParam.some((attr) => {
             return (
