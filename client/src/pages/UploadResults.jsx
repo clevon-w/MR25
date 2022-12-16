@@ -35,6 +35,7 @@ import {
   AlertDialogHeader,
   AlertDialogBody,
   AlertDialogFooter,
+  Flex,
 } from "@chakra-ui/react";
 // import { FiImage } from 'react-icons/fi'
 import { createResult, resetResult } from "../features/results/resultSlice";
@@ -419,9 +420,24 @@ function UploadResults() {
 
           <Stack>
             <FormControl>
-              <FormLabel fontWeight={700} fontSize={"md"} color={"primary.800"}>
-                Date (only result from the date shown below will be accepted)
-              </FormLabel>
+              <Flex direction={["column", "row"]}>
+                <FormLabel
+                  fontWeight={700}
+                  fontSize={"md"}
+                  color={"primary.800"}
+                  mb={[0, 2]}
+                >
+                  Date
+                </FormLabel>
+                <Text
+                  as={"i"}
+                  fontWeight={400}
+                  fontSize={"md"}
+                  color={"accents.red"}
+                >
+                  (only result from the date shown below will be accepted)
+                </Text>
+              </Flex>
               <Input
                 name="runDate"
                 value={runDate}
@@ -430,9 +446,24 @@ function UploadResults() {
               />
             </FormControl>
             <FormControl isRequired>
-              <FormLabel fontWeight={700} fontSize={"md"} color={"primary.800"}>
-                Run Distance (as reflected on Strava)
-              </FormLabel>
+              <Flex direction={["column", "row"]}>
+                <FormLabel
+                  fontWeight={700}
+                  fontSize={"md"}
+                  color={"primary.800"}
+                  mb={[0, 2]}
+                >
+                  Run Distance
+                </FormLabel>
+                <Text
+                  as={"i"}
+                  fontWeight={400}
+                  fontSize={"md"}
+                  color={"accents.red"}
+                >
+                  (as reflected on Strava)
+                </Text>
+              </Flex>
               <NumberInput precision={2}>
                 <NumberInputField
                   placeholder="Distance (in KM)"
@@ -474,9 +505,24 @@ function UploadResults() {
           </Stack>
 
           <FormControl isRequired>
-            <FormLabel fontWeight={700} fontSize={"md"} color={"primary.800"}>
-              Elapsed Time (as reflected on Strava)
-            </FormLabel>
+            <Flex direction={["column", "row"]}>
+              <FormLabel
+                fontWeight={700}
+                fontSize={"md"}
+                color={"primary.800"}
+                mb={[0, 2]}
+              >
+                Elapsed Time
+              </FormLabel>
+              <Text
+                as={"i"}
+                fontWeight={400}
+                fontSize={"md"}
+                color={"accents.red"}
+              >
+                (as reflected on Strava)
+              </Text>
+            </Flex>
             <SimpleGrid columns={3} spacing={4}>
               <GridItem>
                 <FormControl isRequired>
