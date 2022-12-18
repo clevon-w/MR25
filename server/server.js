@@ -55,13 +55,7 @@ app.use("/api/events", require("./routes/eventRoutes"));
 
 // Serve frontend
 if (process.env.NODE_ENV === "production") {
-  res.setHeader("Cache-Control", "no-cache");
-  res.set("etag", false);
-  res.removeHeader("ETag");
-  app.disable("etag");
-  app.use(express.static(path.join(__dirname, "../client/build")), {
-    etag: false,
-  });
+  app.use(express.static(path.join(__dirname, "../client/build")));
 
   app.get("*", (req, res) =>
     res.sendFile(
