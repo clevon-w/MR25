@@ -29,8 +29,15 @@ exports.findAllResults = asyncHandler(async (req, res) => {
  * @param {*} res the object to send back to the desired HTTP response
  */
 exports.createResult = asyncHandler(async (req, res) => {
-  const { eventId, runTiming, runDistance, runDate, verified, loops } =
-    req.body;
+  const {
+    eventId,
+    runTiming,
+    runDistance,
+    runDate,
+    apiVerified,
+    loopsVerified,
+    loops,
+  } = req.body;
 
   if (!runDistance || !runTiming || !runDate || !loops) {
     res.status(400);
@@ -63,15 +70,19 @@ exports.createResult = asyncHandler(async (req, res) => {
     lastName: req.user.lastName,
     gender: req.user.gender,
     member: req.user.registeredEvents[0]["634e3415d68ee70244ecc53f"].member,
+    age: ageOfUser,
     // institution: req.user.registeredEvents[0][eventId].institution,
     // ageCategory: req.user.registeredEvents[0][eventId].category,
     runTiming: runTiming,
     runDistance: runDistance,
     loops: loops,
-    runDate: runDate,
+    runDate: new Date(runDate),
+    runDateString: runDate,
     calculatedAPI: APIres,
     // screenshot: `http://localhost:8000/api/results/file/${screenshot.filename}`,
-    verified: verified,
+    apiVerified: apiVerified,
+    loopsVerified: loopsVerified,
+    rejected: false,
   });
 
   res.status(200).json(result);

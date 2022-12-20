@@ -34,12 +34,12 @@ function ResultItem(props) {
           </Flex>
         </HStack>
 
-        <Flex direction={"column"}>
+        <Flex direction={"column"} alignItems={"end"}>
           <HStack>
             <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
-              {props.result.runTiming}
+              {props.result.calculatedAPI}
             </Text>
-            {props.result.verified ? <MdVerified /> : null}
+            {props.result.apiVerified ? <MdVerified /> : null}
           </HStack>
           <Text fontWeight={400} fontSize={"sm"} color={"primary.600"}>
             {formatDateDDMonYYYY(props.result.runDate)}

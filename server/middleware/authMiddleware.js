@@ -1,33 +1,41 @@
-const jwt = require('jsonwebtoken')
-const asyncHandler = require('express-async-handler')
-const User = require('../models/userModel')
+const jwt = require("jsonwebtoken");
+const asyncHandler = require("express-async-handler");
+const User = require("../models/userModel");
 
 const protect = asyncHandler(async (req, res, next) => {
-  let token
+  let token;
 
-  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
     try {
       // Get token from header (it looks like 'Bearer <token>')
-      token = req.headers.authorization.split(' ')[1]
+      token = req.headers.authorization.split(" ")[1];
 
       // Verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET)
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       // Get user from the token
-      req.user = await User.findById(decoded.id).select('-password')
+      req.user = await User.findById(decoded.id).select("-password");
 
-      next()
+      next();
     } catch (error) {
-      console.log(error)
-      res.status(401)
-      throw new Error('Not authorised')
+      if (error instanceof jwt.TokenExpiredError) {
+        res.status(401);
+        throw new jwt.TokenExpiredError(
+          "Your login security token has expired, please logout and login again."
+        );
+      }
+      res.status(401);
+      throw new Error("Not authorised");
     }
   }
 
   if (!token) {
-    res.status(401)
-    throw new Error('Not authorised, no token')
+    res.status(401);
+    throw new Error("Not authorised, no token");
   }
-})
+});
 
-module.exports = { protect }
+module.exports = { protect };

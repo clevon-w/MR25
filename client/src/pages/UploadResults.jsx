@@ -1,5 +1,5 @@
 import { React } from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
@@ -29,10 +29,17 @@ import {
   ModalCloseButton,
   useDisclosure,
   Checkbox,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogBody,
+  AlertDialogFooter,
+  Flex,
 } from "@chakra-ui/react";
 // import { FiImage } from 'react-icons/fi'
 import { createResult, resetResult } from "../features/results/resultSlice";
-import { formatDateDDMonYYYY } from "../utils/helperFunctions";
+import { formatDateDDMonYYYY, changeTimezone } from "../utils/helperFunctions";
 import RaceInstructions from "../components/RaceInstructions";
 // import FileUpload from '../components/FileUpload';
 // import { useForm } from 'react-hook-form';
@@ -41,8 +48,6 @@ function UploadResults() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const toast = useToast();
-  const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
-  // const [cookieConsent, showCookieConsent] = useState(true);
 
   /**
    * state.auth retrieves the states of the user
@@ -52,16 +57,27 @@ function UploadResults() {
   // const { events } = useSelector((state) => state.events);
   const { isError, isSuccess, message } = useSelector((state) => state.results);
 
+  const [runDate, setrunDate] = useState(
+    changeTimezone(new Date(), "Asia/Singapore").toDateString()
+  );
+  useEffect(() => {
+    setInterval(
+      () =>
+        setrunDate(changeTimezone(new Date(), "Asia/Singapore").toDateString()),
+      1000
+    );
+  }, []);
+
   // eventid is hard coded at the moment
   // as we only have one event
   const [formData, setFormData] = useState({
     eventId: "62864db1e76d2b7a270da2df",
     runTiming: "",
-    runDate: "",
     runDistance: "",
     loops: "",
     // screenshot: null,
-    verified: false,
+    apiVerified: false,
+    loopsVerified: false,
   });
 
   const [runTime, setRunTime] = useState({
@@ -74,15 +90,20 @@ function UploadResults() {
     eventId,
     runTiming,
     // screenshot,
-    verified,
+    apiVerified,
+    loopsVerified,
     runDistance,
-    runDate,
     loops,
   } = formData;
 
   useEffect(() => {
     if (isError) {
       console.log(message);
+      toast({
+        title: message,
+        status: "error",
+        isClosable: true,
+      });
     }
 
     if (data.registeredEvents.length === 0) {
@@ -134,15 +155,9 @@ function UploadResults() {
     navigate("/");
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-
+  const convertRunTime = (runTime) => {
     const h =
-      runTime.hours === ""
-        ? "00"
-        : runTime.hours > 23
-        ? "23"
-        : String(runTime.hours).padStart(2, "0");
+      runTime.hours === "" ? "00" : String(runTime.hours).padStart(2, "0");
     const m =
       runTime.minutes === ""
         ? "00"
@@ -157,12 +172,19 @@ function UploadResults() {
         : String(runTime.seconds).padStart(2, "0");
 
     runTiming = h + ":" + m + ":" + s;
+    return runTiming;
+  };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    runTiming = convertRunTime(runTime);
     const resultData = {
       eventId,
       runTiming,
       // screenshot,
-      verified,
+      apiVerified,
+      loopsVerified,
       runDistance,
       runDate,
       loops,
@@ -173,7 +195,15 @@ function UploadResults() {
     dispatch(createResult(resultData));
   };
 
+  // MODAL SCRIPTS
   const [checked, setIsChecked] = useState(false);
+  const {
+    isOpen: isModalOpen,
+    onOpen: onModalOpen,
+    onClose: onModalClose,
+  } = useDisclosure({
+    defaultIsOpen: true,
+  });
 
   const handleOnchange = (e) => {
     setIsChecked(e.target.checked);
@@ -182,13 +212,37 @@ function UploadResults() {
 
   let hide = localStorage.getItem("hide", checked);
 
+  // ALERT DIALOG SCRIPTS
+  const {
+    isOpen: isAD1Open,
+    onOpen: onAD1Open,
+    onClose: onAD1Close,
+  } = useDisclosure();
+  const cancelAD1Ref = useRef();
+  const {
+    isOpen: isAD2Open,
+    onOpen: onAD2Open,
+    onClose: onAD2Close,
+  } = useDisclosure();
+  const cancelAD2Ref = useRef();
+
+  const closeAD1 = () => {
+    onAD1Close();
+    onAD2Open();
+  };
+
+  const closeAD2 = (e) => {
+    onAD2Close();
+    onSubmit(e);
+  };
+
   return (
     <Container>
       <Modal
         closeOnOverlayClick={false}
         blockScrollOnMount={true}
-        onClose={onClose}
-        isOpen={isOpen && hide != "true"}
+        onClose={onModalClose}
+        isOpen={isModalOpen && hide != "true"}
         isCentered
       >
         <ModalOverlay />
@@ -214,7 +268,89 @@ function UploadResults() {
           </ModalFooter>
         </ModalContent>
       </Modal>
+
       <form onSubmit={onSubmit}>
+        <AlertDialog
+          isOpen={isAD1Open}
+          leastDestructiveRef={cancelAD1Ref}
+          onClose={closeAD1}
+          isCentered
+        >
+          <AlertDialogOverlay>
+            <AlertDialogContent>
+              <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                Are all data inputs correct?
+              </AlertDialogHeader>
+
+              <AlertDialogBody>
+                <Stack spacing={2}>
+                  <HStack spacing={4} fontSize={"sm"}>
+                    <Text fontWeight={700}>Date of run:</Text>
+                    <Text fontWeight={400}>{runDate}</Text>
+                  </HStack>
+
+                  <HStack spacing={4} fontSize={"sm"}>
+                    <Text fontWeight={700}>Run Distance:</Text>
+                    <Text fontWeight={400}>{runDistance}</Text>
+                  </HStack>
+
+                  <HStack spacing={4} fontSize={"sm"}>
+                    <Text fontWeight={700}>Number of 10.5km Loops:</Text>
+                    <Text fontWeight={400}>{loops}</Text>
+                  </HStack>
+
+                  <HStack spacing={4} fontSize={"sm"}>
+                    <Text fontWeight={700}>Elapsed Time:</Text>
+                    <Text fontWeight={400}>{convertRunTime(runTime)}</Text>
+                  </HStack>
+                </Stack>
+              </AlertDialogBody>
+
+              <AlertDialogFooter>
+                <Button ref={cancelAD1Ref} onClick={onAD1Close}>
+                  No
+                </Button>
+                <Button colorScheme="red" onClick={closeAD1} ml={3}>
+                  Yes
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
+
+        <AlertDialog
+          isOpen={isAD2Open}
+          leastDestructiveRef={cancelAD2Ref}
+          onClose={onAD2Close}
+          isCentered
+        >
+          <AlertDialogOverlay>
+            <AlertDialogContent>
+              <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                Is the input time Elapsed Time?
+              </AlertDialogHeader>
+
+              <AlertDialogBody>
+                Are you sure? You can't undo this action afterwards.
+              </AlertDialogBody>
+
+              <AlertDialogFooter>
+                <Button ref={cancelAD2Ref} onClick={onAD2Close}>
+                  No - Back to edit
+                </Button>
+                <Button
+                  colorScheme="red"
+                  onClick={closeAD2}
+                  ml={3}
+                  type={"submit"}
+                >
+                  Yes - Proceed
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
+
         <Stack spacing={8}>
           <Text fontWeight={700} fontSize={"2xl"} color={"primary.800"}>
             Upload Result
@@ -283,22 +419,51 @@ function UploadResults() {
           </Stack>
 
           <Stack>
-            <FormControl isRequired>
-              <FormLabel fontWeight={700} fontSize={"md"} color={"primary.800"}>
-                Date of run
-              </FormLabel>
+            <FormControl>
+              <Flex direction={["column", "row"]}>
+                <FormLabel
+                  fontWeight={700}
+                  fontSize={"md"}
+                  color={"primary.800"}
+                  mb={[0, 2]}
+                >
+                  Date
+                </FormLabel>
+                <Text
+                  as={"i"}
+                  fontWeight={400}
+                  fontSize={"md"}
+                  color={"accents.red"}
+                >
+                  (only result from the date shown below will be accepted)
+                </Text>
+              </Flex>
               <Input
                 name="runDate"
-                value={formData.runDate}
+                value={runDate}
                 pr="9px"
-                type="date"
-                onChange={onChange}
+                isDisabled={true}
               />
             </FormControl>
             <FormControl isRequired>
-              <FormLabel fontWeight={700} fontSize={"md"} color={"primary.800"}>
-                Run Distance (as reflected on Strava)
-              </FormLabel>
+              <Flex direction={["column", "row"]}>
+                <FormLabel
+                  fontWeight={700}
+                  fontSize={"md"}
+                  color={"primary.800"}
+                  mb={[0, 2]}
+                >
+                  Run Distance
+                </FormLabel>
+                <Text
+                  as={"i"}
+                  fontWeight={400}
+                  fontSize={"md"}
+                  color={"accents.red"}
+                >
+                  (as reflected on Strava)
+                </Text>
+              </Flex>
               <NumberInput precision={2}>
                 <NumberInputField
                   placeholder="Distance (in KM)"
@@ -340,13 +505,28 @@ function UploadResults() {
           </Stack>
 
           <FormControl isRequired>
-            <FormLabel fontWeight={700} fontSize={"md"} color={"primary.800"}>
-              Elapsed Time (as reflected on Strava)
-            </FormLabel>
+            <Flex direction={["column", "row"]}>
+              <FormLabel
+                fontWeight={700}
+                fontSize={"md"}
+                color={"primary.800"}
+                mb={[0, 2]}
+              >
+                Elapsed Time
+              </FormLabel>
+              <Text
+                as={"i"}
+                fontWeight={400}
+                fontSize={"md"}
+                color={"accents.red"}
+              >
+                (as reflected on Strava)
+              </Text>
+            </Flex>
             <SimpleGrid columns={3} spacing={4}>
               <GridItem>
                 <FormControl isRequired>
-                  <NumberInput min={0} max={23}>
+                  <NumberInput min={0}>
                     <NumberInputField
                       placeholder="HH"
                       name="hours"
@@ -364,6 +544,7 @@ function UploadResults() {
                       name="minutes"
                       value={runTime.minutes}
                       onChange={handleTimeChange}
+                      maxLength={2}
                     />
                   </NumberInput>
                 </FormControl>
@@ -376,6 +557,7 @@ function UploadResults() {
                       name="seconds"
                       value={runTime.seconds}
                       onChange={handleTimeChange}
+                      maxLength={2}
                     />
                   </NumberInput>
                 </FormControl>
@@ -424,12 +606,12 @@ function UploadResults() {
 
           <Stack spacing="2">
             <Button
-              type="submit"
               color="primary.white"
               bg="primary.800"
               size="lg"
               fontSize="lg"
               fontWeight="700"
+              onClick={onAD1Open}
             >
               Upload Now
             </Button>

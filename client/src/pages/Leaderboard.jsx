@@ -61,7 +61,11 @@ function Leaderboard() {
       // Filter based on gender and search
       let filteredResults = results.filter((result) => {
         // Check if gender and member status of result is same as filter
-        if (result.gender === gender && result.member === member) {
+        if (
+          result.gender === gender &&
+          result.member === member &&
+          !result.rejected
+        ) {
           // Check for string typed into search bar
           return searchParam.some((attr) => {
             return (
@@ -98,7 +102,11 @@ function Leaderboard() {
       // Filter based on gender and search
       let filteredResults = results.filter((result) => {
         // Check if gender of result is same and gender filter and if the result is verified
-        if (result.gender === gender && result.member === member) {
+        if (
+          result.gender === gender &&
+          result.member === member &&
+          !result.rejected
+        ) {
           // Check for string typed into search bar
           return searchParam.some((attr) => {
             return (
@@ -127,7 +135,7 @@ function Leaderboard() {
           currCopy.loops += currRes.loops;
 
           // and verified status
-          currCopy.verified &= currRes.verified;
+          currCopy.loopsVerified &= currRes.loopsVerified;
 
           // compare dates and keep the latest date
           if (currCopy.runDate < currRes.runDate) {
@@ -147,7 +155,10 @@ function Leaderboard() {
       // Sort the filtered results based on number of loop
       let sortedFilteredResults = arrayOfAccumulatedLoops.sort(
         (resultA, resultB) => {
-          return parseFloat(resultB.loops) - parseFloat(resultA.loops);
+          const loopdiff =
+            parseFloat(resultB.loops) - parseFloat(resultA.loops);
+          const agediff = resultB.age - resultA.age;
+          return loopdiff == 0 ? agediff : loopdiff;
         }
       );
 

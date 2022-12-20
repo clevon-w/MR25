@@ -33,6 +33,10 @@ const resultSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please enter membership status"],
     },
+    age: {
+      type: Number,
+      required: [true, "Please enter age"],
+    },
     // institution:{
     //   type: String,
     //   required: [true, 'Please enter institution'],
@@ -57,6 +61,10 @@ const resultSchema = new mongoose.Schema(
       type: Date,
       required: [true, "Please add run date"],
     },
+    runDateString: {
+      type: String,
+      required: [true, "Please add run date"],
+    },
     // screenshot:{
     //   type: String,
     //   required: [true, 'Please upload a screenshot']
@@ -65,7 +73,13 @@ const resultSchema = new mongoose.Schema(
       type: String,
       required: [true, "No API was calculated"],
     },
-    verified: {
+    apiVerified: {
+      type: Boolean,
+    },
+    loopsVerified: {
+      type: Boolean,
+    },
+    rejected: {
       type: Boolean,
     },
   },
