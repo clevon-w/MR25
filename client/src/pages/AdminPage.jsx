@@ -26,7 +26,6 @@ import {
 import Runningman from "../components/Runningman";
 import { MdSearchOff, MdSmartDisplay, MdVerified } from "react-icons/md";
 
-
 function AdminPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -53,7 +52,6 @@ function AdminPage() {
   // }
 
   useEffect(() => {
-
     if (isError) {
       console.log(message);
     }
@@ -63,20 +61,17 @@ function AdminPage() {
 
     if (user.data.userrole !== 1) {
       toast({
-        title:
-          "No permission to enter page",
+        title: "No permission to enter page",
         status: "error",
         isClosable: true,
       });
       navigate("/");
-    } 
+    }
 
     return () => {
       dispatch(resetUsers);
       dispatch(resetResult);
-    }
-
-
+    };
   }, [
     dispatch,
     navigate,
@@ -99,12 +94,9 @@ function AdminPage() {
     console.log(filterParam.format);
   };
 
-
-
-
   if (isLoading) {
     return <Runningman />;
-      } else {
+  } else {
     return (
       <Stack spacing={8}>
         <Text textStyle="heading_s">Database</Text>
@@ -119,7 +111,7 @@ function AdminPage() {
               <option value={"result"}>Results database</option>
             </Select>
           </GridItem>
-          <GridItem colSpan={1}>
+          {/* <GridItem colSpan={1}>
             <Text fontWeight={700} fontSize={"sm"}>
               Gender
             </Text>
@@ -127,17 +119,8 @@ function AdminPage() {
               <option value={"Male"}>Male</option>
               <option value={"Female"}>Female</option>
             </Select>
-          </GridItem>
+          </GridItem> */}
         </Grid>
-
-        <VStack align="stretch">
-            <HStack justifyContent={"center"}>
-              <MdSearchOff size={"5em"} />
-              <Text fontSize={"md"} fontWeight={700}>
-                There are no users in the database
-              </Text>
-            </HStack>
-        </VStack>
 
         <VStack align="stretch">
           {filterParam.format === "user" ? (
@@ -153,7 +136,7 @@ function AdminPage() {
                 <UsersItem user={user} index={index} />
               ))
             )
-          ) : (results.length == 0 ? (
+          ) : results.length == 0 ? (
             <HStack justifyContent={"center"}>
               <MdSearchOff size={"5em"} />
               <Text fontSize={"md"} fontWeight={700}>
@@ -164,15 +147,8 @@ function AdminPage() {
             results.map((result, index) => (
               <AdminResultItem result={result} user={user} index={index} />
             ))
-          ))}
-
+          )}
         </VStack>
-
-        <HStack>
-          <MdVerified />
-          <Text fontSize={"sm"} fontWeight={400}>
-          </Text>
-        </HStack>
       </Stack>
     );
   }
