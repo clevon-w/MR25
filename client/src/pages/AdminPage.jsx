@@ -69,8 +69,8 @@ function AdminPage() {
     }
 
     return () => {
-      dispatch(resetUsers);
-      dispatch(resetResult);
+      dispatch(resetUsers());
+      dispatch(resetResult());
     };
   }, [
     dispatch,
@@ -93,6 +93,16 @@ function AdminPage() {
     }));
     console.log(filterParam.format);
   };
+
+  if (!Array.isArray(results)) {
+    toast({
+      title: "Results verification changed successfully!",
+      status: "success",
+      isClosable: true,
+    });
+    dispatch(resetResult());
+    dispatch(getResults());
+  }
 
   if (isLoading) {
     return <Runningman />;
@@ -136,7 +146,7 @@ function AdminPage() {
                 <UsersItem user={user} index={index} />
               ))
             )
-          ) : results.length == 0 ? (
+          ) : results.length == 0 || !Array.isArray(results) ? (
             <HStack justifyContent={"center"}>
               <MdSearchOff size={"5em"} />
               <Text fontSize={"md"} fontWeight={700}>

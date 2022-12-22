@@ -42,7 +42,7 @@ function AdminResultItem(props) {
     loopsVerified: data.loopsVerified,
     apiVerified: data.apiVerified,
     rejected: data.rejected,
-    userid: user._id,
+    userid: props.user._id,
   });
 
   const { _id, loopsVerified, apiVerified, rejected, userid } = formData;
@@ -72,28 +72,28 @@ function AdminResultItem(props) {
     dispatch(updateResult(args));
   };
 
-  useEffect(() => {
-    if (isError) {
-      toast({
-        title: message,
-        status: "error",
-        isClosable: true,
-      });
-    }
-    if (isSuccess) {
-      toast({
-        title: "Results verification changed successfully!",
-        status: "success",
-        isClosable: true,
-      });
-      dispatch(resetResult);
-      navigate("/AdminPage");
-      // navigate("/");
-      // return () => {
-      //   dispatch(resetAuth());
-      // };
-    }
-  }, [user, isError, isSuccess, message, dispatch, navigate, toast]);
+  // useEffect(() => {
+  //   if (isError) {
+  //     toast({
+  //       title: message,
+  //       status: "error",
+  //       isClosable: true,
+  //     });
+  //   }
+  //   if (isSuccess) {
+  //     toast({
+  //       title: "Results verification changed successfully!",
+  //       status: "success",
+  //       isClosable: true,
+  //     });
+  //     dispatch(resetResult);
+  //     navigate("/AdminPage");
+  //     // navigate("/");
+  //     // return () => {
+  //     //   dispatch(resetAuth());
+  //     // };
+  //   }
+  // }, [user, isError, isSuccess, message, dispatch, navigate, toast]);
 
   return (
     <>
@@ -112,6 +112,12 @@ function AdminResultItem(props) {
               </Text>
               <Text fontWeight={400} fontSize={"sm"} color={"primary.800"}>
                 {props.result.firstName + " " + props.result.lastName}
+              </Text>
+              <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
+                Age:
+              </Text>
+              <Text fontWeight={400} fontSize={"sm"} color={"primary.800"}>
+                {props.result.age}
               </Text>
             </Flex>
 
