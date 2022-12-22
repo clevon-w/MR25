@@ -96,7 +96,7 @@ function AdminPage() {
 
   if (!Array.isArray(results)) {
     toast({
-      title: "Results verification changed successfully!",
+      title: "Results updated successfully!",
       status: "success",
       isClosable: true,
     });

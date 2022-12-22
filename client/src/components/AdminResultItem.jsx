@@ -15,10 +15,18 @@ import {
   Button,
   Switch,
   Checkbox,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogBody,
+  AlertDialogFooter,
+  Stack,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { CheckIcon } from "@chakra-ui/icons";
 import { formatDateDDMonYYYY } from "../utils/helperFunctions";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateResult, resetResult } from "../features/results/resultSlice";
 import { useNavigate } from "react-router-dom";
@@ -72,6 +80,19 @@ function AdminResultItem(props) {
     dispatch(updateResult(args));
   };
 
+  // ALERT DIALOG SCRIPTS
+  const {
+    isOpen: isAD1Open,
+    onOpen: onAD1Open,
+    onClose: onAD1Close,
+  } = useDisclosure();
+  const cancelAD1Ref = useRef();
+
+  const closeAD1 = (e) => {
+    onAD1Close();
+    onSubmit(e);
+  };
+
   // useEffect(() => {
   //   if (isError) {
   //     toast({
@@ -98,6 +119,65 @@ function AdminResultItem(props) {
   return (
     <>
       <form onSubmit={onSubmit}>
+        <AlertDialog
+          isOpen={isAD1Open}
+          leastDestructiveRef={cancelAD1Ref}
+          onClose={closeAD1}
+          isCentered
+        >
+          <AlertDialogOverlay>
+            <AlertDialogContent>
+              <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                Are all the result updates correct?
+              </AlertDialogHeader>
+
+              <AlertDialogBody>
+                <Stack spacing={2}>
+                  <HStack spacing={4} fontSize={"sm"}>
+                    <Text fontWeight={700}>Name:</Text>
+                    <Text fontWeight={400}>
+                      {props.result.firstName + " " + props.result.lastName}
+                    </Text>
+                  </HStack>
+
+                  <HStack spacing={4} fontSize={"sm"}>
+                    <Text fontWeight={700}>API Verified:</Text>
+                    <Text fontWeight={400}>
+                      {apiVerified ? "True" : "False"}
+                    </Text>
+                  </HStack>
+
+                  <HStack spacing={4} fontSize={"sm"}>
+                    <Text fontWeight={700}>Loops Verifed:</Text>
+                    <Text fontWeight={400}>
+                      {loopsVerified ? "True" : "False"}
+                    </Text>
+                  </HStack>
+
+                  <HStack spacing={4} fontSize={"sm"}>
+                    <Text fontWeight={700}>Rejected:</Text>
+                    <Text fontWeight={400}>{rejected ? "True" : "False"}</Text>
+                  </HStack>
+                </Stack>
+              </AlertDialogBody>
+
+              <AlertDialogFooter>
+                <Button ref={cancelAD1Ref} onClick={onAD1Close}>
+                  No
+                </Button>
+                <Button
+                  colorScheme="red"
+                  type="submit"
+                  onClick={closeAD1}
+                  ml={3}
+                >
+                  Yes
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
+
         <Flex direction={"column"}>
           <Flex
             bg={"primary.100"}
@@ -110,7 +190,12 @@ function AdminResultItem(props) {
               <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
                 Name:
               </Text>
-              <Text fontWeight={400} fontSize={"sm"} color={"primary.800"}>
+              <Text
+                fontWeight={400}
+                fontSize={"sm"}
+                color={"primary.800"}
+                pb={2.5}
+              >
                 {props.result.firstName + " " + props.result.lastName}
               </Text>
               <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
@@ -134,8 +219,19 @@ function AdminResultItem(props) {
               <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
                 Run Date:
               </Text>
-              <Text fontWeight={400} fontSize={"sm"} color={"primary.600"}>
+              <Text
+                fontWeight={400}
+                fontSize={"sm"}
+                color={"primary.600"}
+                pb={2.5}
+              >
                 {formatDateDDMonYYYY(props.result.runDate)}
+              </Text>
+              <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
+                Upload Date:
+              </Text>
+              <Text fontWeight={400} fontSize={"sm"} color={"primary.600"}>
+                {formatDateDDMonYYYY(props.result.createdAt)}
               </Text>
             </Flex>
 
@@ -143,7 +239,12 @@ function AdminResultItem(props) {
               <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
                 API:
               </Text>
-              <Text fontWeight={400} fontSize={"md"} color={"primary.800"}>
+              <Text
+                fontWeight={400}
+                fontSize={"md"}
+                color={"primary.800"}
+                pb={2.5}
+              >
                 {props.result.calculatedAPI}
               </Text>
 
@@ -159,7 +260,12 @@ function AdminResultItem(props) {
               <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
                 Loops:
               </Text>
-              <Text fontWeight={400} fontSize={"md"} color={"primary.800"}>
+              <Text
+                fontWeight={400}
+                fontSize={"md"}
+                color={"primary.800"}
+                pb={2.5}
+              >
                 {props.result.loops}
               </Text>
 
@@ -213,7 +319,7 @@ function AdminResultItem(props) {
                 Rejected
               </Checkbox>
             </FormControl>
-            <Button type="submit" backgroundColor={"accents.red"}>
+            <Button onClick={onAD1Open} backgroundColor={"accents.red"}>
               Confirm
             </Button>
           </Flex>
