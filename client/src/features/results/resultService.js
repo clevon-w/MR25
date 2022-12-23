@@ -25,8 +25,16 @@ const createResult = async (resultData, token) => {
   return response.data
 }
 
+const updateResult = async (resultData) => {
+  const response = await axios.patch(API_URL + resultData.id, resultData.data);
+  if (response.data) {
+    localStorage.setItem("result", JSON.stringify(response.data));
+  }
+  return response.data;
+};
+
 const resultService = {
-  getResults, createResult
+  getResults, createResult, updateResult
 }
 
 export default resultService

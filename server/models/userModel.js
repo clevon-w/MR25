@@ -37,6 +37,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Please add a password']
     },
+    userrole: {
+      /*User role is 0 if normal and 1 if admin*/ 
+      type: Number,
+    },
     resetPasswordToken: {
       type: String
     },

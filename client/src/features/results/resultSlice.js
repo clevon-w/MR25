@@ -45,6 +45,25 @@ export const createResult = createAsyncThunk(
   }
 );
 
+//update result
+export const updateResult = createAsyncThunk(
+  "results/updateResult",
+  async (result, thunkAPI) => {
+    try {
+      return await resultService.updateResult(result);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+
 export const resultSlice = createSlice({
   name: "result",
   initialState,
@@ -76,6 +95,20 @@ export const resultSlice = createSlice({
         state.results = action.payload;
       })
       .addCase(createResult.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.results = null;
+      })
+      .addCase(updateResult.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateResult.fulfilled, (state, action) => {
+        state.isSuccess = true;
+        state.isLoading = false;
+        state.results = action.payload;
+      })
+      .addCase(updateResult.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

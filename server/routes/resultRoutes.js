@@ -14,7 +14,7 @@ router.route('/')
 
 router.route('/:id')
       .get(protect, resultController.findUserResults)
-      .patch(protect, resultController.updateResult)
+      .patch( resultController.updateResult)
       .delete(protect, resultController.deleteResult)
 
 module.exports = router

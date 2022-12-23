@@ -14,6 +14,7 @@ import MyAccount from "./pages/MyAccount";
 import MyResults from "./pages/MyResults";
 import UpdateUser from "./pages/UpdateUser";
 import UploadSuccess from "./pages/UploadSuccess";
+import AdminPage from "./pages/AdminPage";
 import { Container, Box } from "@chakra-ui/react";
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
             <Route path="/MyResults" element={<MyResults />} />
             <Route path="/UpdateUser" element={<UpdateUser />} />
             <Route path="/UploadSuccess" element={<UploadSuccess />} />
+            <Route path="/AdminPage" element={<AdminPage />} />
           </Routes>
         </Container>
       </Box>
