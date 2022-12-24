@@ -104,6 +104,8 @@ function AdminPage() {
     dispatch(getResults());
   }
 
+  var reversedRes = [...results].reverse();
+
   if (isLoading) {
     return <Runningman />;
   } else {
@@ -146,7 +148,7 @@ function AdminPage() {
                 <UsersItem user={user} index={index} />
               ))
             )
-          ) : results.length == 0 || !Array.isArray(results) ? (
+          ) : reversedRes.length == 0 || !Array.isArray(reversedRes) ? (
             <HStack justifyContent={"center"}>
               <MdSearchOff size={"5em"} />
               <Text fontSize={"md"} fontWeight={700}>
@@ -154,7 +156,7 @@ function AdminPage() {
               </Text>
             </HStack>
           ) : (
-            results.map((result, index) => (
+            reversedRes.map((result, index) => (
               <AdminResultItem result={result} user={user} index={index} />
             ))
           )}
