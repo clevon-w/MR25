@@ -20,36 +20,47 @@ function UsersItem(props) {
           <Box borderRadius={"lg"} bg={"primary.200"} p={2.5}>
             {"#" + String(props.index + 1).padStart(3, "0")}
           </Box>
-          <Flex direction={"column"}>
-            <Text fontWeight={400} fontSize={"sm"} color={"primary.800"}>
-              {props.user.firstName + " " + props.user.lastName}
-            </Text>
-            <Text fontWeight={400} fontSize={"sm"} color={"primary.600"}>
-              {props.user.email}
-            </Text>
+          <Flex direction={["column", "row"]}>
+            <Flex direction={"column"}>
+              <Text fontWeight={400} fontSize={"sm"} color={"primary.800"}>
+                {props.user.firstName + " " + props.user.lastName}
+              </Text>
+              <Text fontWeight={400} fontSize={"sm"} color={"primary.600"}>
+                {props.user.email}
+              </Text>
+            </Flex>
+            <Flex direction={["row", "column"]}>
+              <Text
+                fontWeight={700}
+                fontSize={"sm"}
+                color={"primary.800"}
+                mr={2}
+              >
+                User Role:
+              </Text>
+              <Text fontWeight={400} fontSize={"sm"} color={"primary.600"}>
+                {props.user.userrole === 1 ? "Admin" : "Runner"}
+              </Text>
+            </Flex>
+
+            <Flex direction={["row", "column"]}>
+              <Text
+                fontWeight={700}
+                fontSize={"sm"}
+                color={"primary.800"}
+                mr={2}
+              >
+                Registration Status:
+              </Text>
+              <Text fontWeight={400} fontSize={"sm"} color={"primary.600"}>
+                {props.user.registeredEvents.length === 0
+                  ? "Not Registered"
+                  : props.user.registeredEvents[0]["634e3415d68ee70244ecc53f"]
+                      .pending}
+              </Text>
+            </Flex>
           </Flex>
         </HStack>
-
-        <Flex direction={"column"}>
-          <Text fontWeight={700} fontSize={"sm"} color={"primary.800"}>
-            User Role
-          </Text>
-          <Text fontWeight={400} fontSize={"sm"} color={"primary.600"}>
-            {props.user.userrole === 1 ? "Admin" : "Runner"}
-          </Text>
-        </Flex>
-
-        <Flex direction={"column"}>
-          <Text fontWeight={700} fontSize={"sm"} color={"primary.800"}>
-            Registration Status
-          </Text>
-          <Text fontWeight={400} fontSize={"sm"} color={"primary.600"}>
-            {props.user.registeredEvents.length === 0
-              ? "Not Registered"
-              : props.user.registeredEvents[0]["634e3415d68ee70244ecc53f"]
-                  .pending}
-          </Text>
-        </Flex>
       </Flex>
     </Flex>
   );

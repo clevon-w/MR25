@@ -23,6 +23,7 @@ import {
   AlertDialogFooter,
   Stack,
   useDisclosure,
+  VStack,
 } from "@chakra-ui/react";
 import { CheckIcon } from "@chakra-ui/icons";
 import { formatDateDDMonYYYY } from "../utils/helperFunctions";
@@ -188,8 +189,32 @@ function AdminResultItem(props) {
             direction={["column", "row"]}
           >
             <Flex direction={["row", "column"]}>
+              <VStack alignItems={"start"} spacing={2} mr={4}>
+                <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
+                  Name:
+                </Text>
+                <Text
+                  fontWeight={400}
+                  fontSize={"sm"}
+                  color={"primary.800"}
+                  pb={2.5}
+                >
+                  {props.result.firstName + " " + props.result.lastName}
+                </Text>
+              </VStack>
+              <VStack alignItems={"start"} spacing={2}>
+                <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
+                  Age:
+                </Text>
+                <Text fontWeight={400} fontSize={"sm"} color={"primary.800"}>
+                  {props.result.age}
+                </Text>
+              </VStack>
+            </Flex>
+
+            <Flex direction={"column"}>
               <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
-                Name:
+                Run Timing:
               </Text>
               <Text
                 fontWeight={400}
@@ -197,92 +222,94 @@ function AdminResultItem(props) {
                 color={"primary.800"}
                 pb={2.5}
               >
-                {props.result.firstName + " " + props.result.lastName}
-              </Text>
-              <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
-                Age:
-              </Text>
-              <Text fontWeight={400} fontSize={"sm"} color={"primary.800"}>
-                {props.result.age}
-              </Text>
-            </Flex>
-
-            <Flex direction={["row", "column"]}>
-              <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
-                Run Timing:
-              </Text>
-              <Text fontWeight={400} fontSize={"md"} color={"primary.800"}>
                 {props.result.runTiming}
               </Text>
             </Flex>
 
             <Flex direction={["row", "column"]}>
-              <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
-                Run Date:
-              </Text>
-              <Text
-                fontWeight={400}
-                fontSize={"sm"}
-                color={"primary.600"}
-                pb={2.5}
-              >
-                {formatDateDDMonYYYY(props.result.runDate)}
-              </Text>
-              <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
-                Upload Date:
-              </Text>
-              <Text fontWeight={400} fontSize={"sm"} color={"primary.600"}>
-                {formatDateDDMonYYYY(props.result.createdAt)}
-              </Text>
+              <VStack alignItems={"start"} spacing={2} mr={4}>
+                <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
+                  Run Date:
+                </Text>
+                <Text
+                  fontWeight={400}
+                  fontSize={"sm"}
+                  color={"primary.600"}
+                  pb={2.5}
+                >
+                  {formatDateDDMonYYYY(props.result.runDate)}
+                </Text>
+              </VStack>
+              <VStack alignItems={"start"} spacing={2}>
+                <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
+                  Upload Date:
+                </Text>
+                <Text fontWeight={400} fontSize={"sm"} color={"primary.600"}>
+                  {formatDateDDMonYYYY(props.result.createdAt)}
+                </Text>
+              </VStack>
             </Flex>
 
             <Flex direction={["row", "column"]}>
-              <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
-                API:
-              </Text>
-              <Text
-                fontWeight={400}
-                fontSize={"md"}
-                color={"primary.800"}
-                pb={2.5}
-              >
-                {props.result.calculatedAPI}
-              </Text>
+              <VStack alignItems={"start"} spacing={2} mr={4}>
+                <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
+                  API:
+                </Text>
+                <Text
+                  fontWeight={400}
+                  fontSize={"md"}
+                  color={"primary.800"}
+                  pb={2.5}
+                >
+                  {props.result.calculatedAPI}
+                </Text>
+              </VStack>
 
-              <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
-                API Verified:
-              </Text>
-              <Text fontWeight={400} fontSize={"md"} color={"primary.800"}>
-                {props.result.apiVerified ? "True" : "False"}
-              </Text>
+              <VStack alignItems={"start"} spacing={2}>
+                <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
+                  API Verified:
+                </Text>
+                <Text fontWeight={400} fontSize={"md"} color={"primary.800"}>
+                  {props.result.apiVerified ? "True" : "False"}
+                </Text>
+              </VStack>
             </Flex>
 
             <Flex direction={["row", "column"]}>
-              <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
-                Loops:
-              </Text>
-              <Text
-                fontWeight={400}
-                fontSize={"md"}
-                color={"primary.800"}
-                pb={2.5}
-              >
-                {props.result.loops}
-              </Text>
+              <VStack alignItems={"start"} spacing={2} mr={4}>
+                <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
+                  Loops:
+                </Text>
+                <Text
+                  fontWeight={400}
+                  fontSize={"md"}
+                  color={"primary.800"}
+                  pb={2.5}
+                >
+                  {props.result.loops}
+                </Text>
+              </VStack>
 
-              <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
-                Loops Verified:
-              </Text>
-              <Text fontWeight={400} fontSize={"md"} color={"primary.800"}>
-                {props.result.loopsVerified ? "True" : "False"}
-              </Text>
+              <VStack alignItems={"start"} spacing={2}>
+                <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
+                  Loops Verified:
+                </Text>
+                <Text fontWeight={400} fontSize={"md"} color={"primary.800"}>
+                  {props.result.loopsVerified ? "True" : "False"}
+                </Text>
+              </VStack>
             </Flex>
 
-            <Flex direction={["row", "column"]}>
+            <Flex direction={"column"}>
               <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
                 Rejected:
               </Text>
-              <Text fontWeight={400} fontSize={"md"} color={"primary.800"}>
+              <Text
+                fontWeight={400}
+                fontSize={"md"}
+                color={"primary.800"}
+                pb={2.5}
+              >
                 {props.result.rejected ? "True" : "False"}
               </Text>
             </Flex>
@@ -296,7 +323,7 @@ function AdminResultItem(props) {
           >
             <FormControl
               display={"flex"}
-              direction={["column", "row"]}
+              flexDirection={["column", "row"]}
               justifyContent={"space-evenly"}
             >
               <Checkbox
