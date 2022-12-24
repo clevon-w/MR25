@@ -185,8 +185,9 @@ function AdminResultItem(props) {
             borderBottomRadius={"none"}
             justifyContent={"space-between"}
             p={4}
+            direction={["column", "row"]}
           >
-            <Flex direction={"column"}>
+            <Flex direction={["row", "column"]}>
               <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
                 Name:
               </Text>
@@ -206,7 +207,7 @@ function AdminResultItem(props) {
               </Text>
             </Flex>
 
-            <Flex direction={"column"}>
+            <Flex direction={["row", "column"]}>
               <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
                 Run Timing:
               </Text>
@@ -215,7 +216,7 @@ function AdminResultItem(props) {
               </Text>
             </Flex>
 
-            <Flex direction={"column"}>
+            <Flex direction={["row", "column"]}>
               <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
                 Run Date:
               </Text>
@@ -235,7 +236,7 @@ function AdminResultItem(props) {
               </Text>
             </Flex>
 
-            <Flex direction={"column"}>
+            <Flex direction={["row", "column"]}>
               <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
                 API:
               </Text>
@@ -256,7 +257,7 @@ function AdminResultItem(props) {
               </Text>
             </Flex>
 
-            <Flex direction={"column"}>
+            <Flex direction={["row", "column"]}>
               <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
                 Loops:
               </Text>
@@ -277,7 +278,7 @@ function AdminResultItem(props) {
               </Text>
             </Flex>
 
-            <Flex direction={"column"}>
+            <Flex direction={["row", "column"]}>
               <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
                 Rejected:
               </Text>
@@ -293,7 +294,11 @@ function AdminResultItem(props) {
             alignItems={"center"}
             p={2.5}
           >
-            <FormControl display={"flex"} justifyContent={"space-evenly"}>
+            <FormControl
+              display={"flex"}
+              direction={["column", "row"]}
+              justifyContent={"space-evenly"}
+            >
               <Checkbox
                 name="apiVerified"
                 defaultChecked={apiVerified}
