@@ -23,7 +23,6 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
   ModalFooter,
   ModalBody,
   ModalCloseButton,
@@ -40,7 +39,6 @@ import {
 // import { FiImage } from 'react-icons/fi'
 import { createResult, resetResult } from "../features/results/resultSlice";
 import { formatDateDDMonYYYY, changeTimezone } from "../utils/helperFunctions";
-import RaceInstructions from "../components/RaceInstructions";
 // import FileUpload from '../components/FileUpload';
 // import { useForm } from 'react-hook-form';
 
@@ -195,6 +193,20 @@ function UploadResults() {
     dispatch(createResult(resultData));
   };
 
+  const clickSubmit = () => {
+    // Validate number of loops and run distance
+    if (Math.floor(runDistance / 10) != loops) {
+      toast({
+        title:
+          "We noticed that your run distance does not tally with the number of loops you ran. Do double check these values once more!",
+        status: "error",
+        isClosable: true,
+      });
+    } else {
+      onAD1Open();
+    }
+  };
+
   // MODAL SCRIPTS
   const [checked, setIsChecked] = useState(false);
   const {
@@ -218,12 +230,15 @@ function UploadResults() {
     onOpen: onAD1Open,
     onClose: onAD1Close,
   } = useDisclosure();
+
   const cancelAD1Ref = useRef();
+
   const {
     isOpen: isAD2Open,
     onOpen: onAD2Open,
     onClose: onAD2Close,
   } = useDisclosure();
+
   const cancelAD2Ref = useRef();
 
   const closeAD1 = () => {
@@ -611,7 +626,7 @@ function UploadResults() {
               size="lg"
               fontSize="lg"
               fontWeight="700"
-              onClick={onAD1Open}
+              onClick={clickSubmit}
             >
               Upload Now
             </Button>
