@@ -5,7 +5,7 @@
 
 import { Text, Box, Flex, HStack } from "@chakra-ui/react";
 import { MdVerified } from "react-icons/md";
-import { formatDateDDMonYYYY } from "../utils/helperFunctions";
+import { formatDateDDMonYYYY, changeTimezone } from "../utils/helperFunctions";
 
 function ResultItem(props) {
   // const finalist = props.index <= 8 && props.result.verified;
@@ -42,7 +42,12 @@ function ResultItem(props) {
             {props.result.apiVerified ? <MdVerified /> : null}
           </HStack>
           <Text fontWeight={400} fontSize={"sm"} color={"primary.600"}>
-            {formatDateDDMonYYYY(props.result.runDate)}
+            {formatDateDDMonYYYY(
+              changeTimezone(
+                new Date(props.result.runDate),
+                "Asia/Singapore"
+              ).toISOString()
+            )}
           </Text>
         </Flex>
       </Flex>

@@ -58,13 +58,18 @@ function Leaderboard() {
     var gender = filterParam.genderMember.split("_")[0],
       member = filterParam.genderMember.split("_")[1];
     if (filterParam.eventFormat === "A") {
+      var cutoff = new Date("December 30, 2022 23:00:00 GMT+00:00"); // 7am SGT in UTC (1 day behind)
+
       // Filter based on gender and search
       let filteredResults = results.filter((result) => {
+        var created = new Date(result.createdAt);
+
         // Check if gender and member status of result is same as filter
         if (
           result.gender === gender &&
           result.member === member &&
-          !result.rejected
+          !result.rejected &&
+          created.getTime() < cutoff.getTime() // results created before finals only, not counting the finals in the previous events
         ) {
           // Check for string typed into search bar
           return searchParam.some((attr) => {
@@ -99,13 +104,18 @@ function Leaderboard() {
 
       return duplicatesRemoved;
     } else if (filterParam.eventFormat === "B") {
+      var cutoff = new Date("December 30, 2022 23:00:00 GMT+00:00"); // 7am SGT in UTC (1 day behind)
+
       // Filter based on gender and search
       let filteredResults = results.filter((result) => {
+        var created = new Date(result.createdAt);
+
         // Check if gender of result is same and gender filter and if the result is verified
         if (
           result.gender === gender &&
           result.member === member &&
-          !result.rejected
+          !result.rejected &&
+          created.getTime() < cutoff.getTime() // results created before finals only, not counting the finals in the previous events
         ) {
           // Check for string typed into search bar
           return searchParam.some((attr) => {
@@ -164,11 +174,79 @@ function Leaderboard() {
 
       return sortedFilteredResults;
     } else if (filterParam.eventFormat === "C") {
-      return [];
+      var start = new Date("December 30, 2022 23:00:00 GMT+00:00"); // 7am SGT in UTC (1 day behind)
+      var end = new Date("December 31, 2022 11:00:00 GMT+00:00"); // 7pm SGT in UTC
+
+      // Filter based on gender and search
+      let filteredResults = results.filter((result) => {
+        var created = new Date(result.createdAt);
+        // result.createdAt.split("T")[1].split(".")[0]
+        // Check if gender of result is same and gender filter and if the result is verified
+        if (
+          result.gender === gender && // check gender
+          result.member === member && // check membership status
+          !result.rejected && // check if result is rejected
+          result.runDateString == "Wed Dec 28 2022" && // check if the result was uploaded on the correct date (31 dec)
+          created.getTime() >= start.getTime() && // check if the result was uploaded in the correct timeframe (7am to 7pm)
+          created.getTime() <= end.getTime()
+        ) {
+          // Check for string typed into search bar
+          return searchParam.some((attr) => {
+            return (
+              result[attr]
+                .toString()
+                .toLowerCase()
+                .indexOf(query.toLowerCase()) > -1
+            );
+          });
+        }
+        return false;
+      });
+
+      let accumulateFiltered = {};
+
+      for (let idx in filteredResults) {
+        let currRes = filteredResults[idx];
+        if (currRes.userId in accumulateFiltered) {
+          // take the value of the dictionary
+          let currValue = accumulateFiltered[currRes.userId];
+
+          // create a copy of the currValue that is inside accumulateFiltered
+          let currCopy = { ...currValue };
+
+          // add the loops
+          currCopy.loops += currRes.loops;
+
+          // and verified status
+          currCopy.loopsVerified &= currRes.loopsVerified;
+
+          // compare dates and keep the latest date
+          if (currCopy.runDate < currRes.runDate) {
+            currCopy.runDate = currRes.runDate;
+          }
+
+          // reassign it back into accumulateFiltered
+          accumulateFiltered[currRes.userId] = currCopy;
+        } else {
+          // create new key value pair
+          accumulateFiltered[currRes.userId] = currRes;
+        }
+      }
+
+      let arrayOfAccumulatedLoops = Object.values(accumulateFiltered);
+
+      // Sort the filtered results based on number of loop
+      let sortedFilteredResults = arrayOfAccumulatedLoops.sort(
+        (resultA, resultB) => {
+          const loopdiff =
+            parseFloat(resultB.loops) - parseFloat(resultA.loops);
+          const agediff = resultB.age - resultA.age;
+          return loopdiff == 0 ? agediff : loopdiff;
+        }
+      );
+
+      return sortedFilteredResults;
     }
-    // when the time comes you will have to do this
-    // else if (filterParam.eventFormat === "C") {}
-    // first filter step code is repeated, if C also requires the same thing then abstract it to before the event format checking
   }
 
   const handleChange = (e) => {

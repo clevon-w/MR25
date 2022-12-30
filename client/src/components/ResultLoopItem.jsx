@@ -5,7 +5,7 @@
 
 import { Text, Box, Flex, HStack } from "@chakra-ui/react";
 import { MdVerified } from "react-icons/md";
-import { formatDateDDMonYYYY } from "../utils/helperFunctions";
+import { formatDateDDMonYYYY, changeTimezone } from "../utils/helperFunctions";
 
 function ResultLoopItem(props) {
   return (
@@ -35,7 +35,13 @@ function ResultLoopItem(props) {
             {props.result.loopsVerified ? <MdVerified /> : null}
           </HStack>
           <Text fontWeight={400} fontSize={"sm"} color={"primary.800"}>
-            {"Last ran: " + formatDateDDMonYYYY(props.result.runDate)}
+            {"Last ran: " +
+              formatDateDDMonYYYY(
+                changeTimezone(
+                  new Date(props.result.runDate),
+                  "Asia/Singapore"
+                ).toISOString()
+              )}
           </Text>
         </Flex>
       </Flex>
