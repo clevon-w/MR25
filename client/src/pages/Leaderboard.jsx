@@ -175,7 +175,7 @@ function Leaderboard() {
       return sortedFilteredResults;
     } else if (filterParam.eventFormat === "C") {
       var start = new Date("December 30, 2022 23:00:00 GMT+00:00"); // 7am SGT in UTC (1 day behind)
-      var end = new Date("December 31, 2022 11:00:00 GMT+00:00"); // 7pm SGT in UTC
+      var end = new Date("December 31, 2022 12:00:00 GMT+00:00"); // 8pm SGT in UTC
 
       // Filter based on gender and search
       let filteredResults = results.filter((result) => {
