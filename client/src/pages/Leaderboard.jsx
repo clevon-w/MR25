@@ -22,6 +22,12 @@ import {
 import { SearchIcon } from "@chakra-ui/icons";
 import { MdSearchOff, MdVerified } from "react-icons/md";
 import Runningman from "../components/Runningman";
+import {
+  maleMemberArr,
+  maleGuestArr,
+  femaleMemberArr,
+  femaleGuestArr,
+} from "../utils/eventCResults";
 
 function Leaderboard() {
   const dispatch = useDispatch();
@@ -174,78 +180,90 @@ function Leaderboard() {
 
       return sortedFilteredResults;
     } else if (filterParam.eventFormat === "C") {
-      var start = new Date("December 30, 2022 23:00:00 GMT+00:00"); // 7am SGT in UTC (1 day behind)
-      var end = new Date("December 31, 2022 12:00:00 GMT+00:00"); // 8pm SGT in UTC
+      // var start = new Date("December 30, 2022 23:00:00 GMT+00:00"); // 7am SGT in UTC (1 day behind)
+      // var end = new Date("December 31, 2022 12:00:00 GMT+00:00"); // 8pm SGT in UTC
 
-      // Filter based on gender and search
-      let filteredResults = results.filter((result) => {
-        var created = new Date(result.createdAt);
-        // result.createdAt.split("T")[1].split(".")[0]
-        // Check if gender of result is same and gender filter and if the result is verified
-        if (
-          result.gender === gender && // check gender
-          result.member === member && // check membership status
-          !result.rejected && // check if result is rejected
-          result.runDateString == "Sat Dec 31 2022" && // check if the result was uploaded on the correct date (31 dec)
-          created.getTime() >= start.getTime() && // check if the result was uploaded in the correct timeframe (7am to 7pm)
-          created.getTime() <= end.getTime()
-        ) {
-          // Check for string typed into search bar
-          return searchParam.some((attr) => {
-            return (
-              result[attr]
-                .toString()
-                .toLowerCase()
-                .indexOf(query.toLowerCase()) > -1
-            );
-          });
-        }
-        return false;
-      });
+      // // Filter based on gender and search
+      // let filteredResults = results.filter((result) => {
+      //   var created = new Date(result.createdAt);
+      //   // result.createdAt.split("T")[1].split(".")[0]
+      //   // Check if gender of result is same and gender filter and if the result is verified
+      //   if (
+      //     result.gender === gender && // check gender
+      //     result.member === member && // check membership status
+      //     !result.rejected && // check if result is rejected
+      //     result.runDateString == "Sat Dec 31 2022" && // check if the result was uploaded on the correct date (31 dec)
+      //     created.getTime() >= start.getTime() && // check if the result was uploaded in the correct timeframe (7am to 7pm)
+      //     created.getTime() <= end.getTime()
+      //   ) {
+      //     // Check for string typed into search bar
+      //     return searchParam.some((attr) => {
+      //       return (
+      //         result[attr]
+      //           .toString()
+      //           .toLowerCase()
+      //           .indexOf(query.toLowerCase()) > -1
+      //       );
+      //     });
+      //   }
+      //   return false;
+      // });
 
-      let accumulateFiltered = {};
+      // let accumulateFiltered = {};
 
-      for (let idx in filteredResults) {
-        let currRes = filteredResults[idx];
-        if (currRes.userId in accumulateFiltered) {
-          // take the value of the dictionary
-          let currValue = accumulateFiltered[currRes.userId];
+      // for (let idx in filteredResults) {
+      //   let currRes = filteredResults[idx];
+      //   if (currRes.userId in accumulateFiltered) {
+      //     // take the value of the dictionary
+      //     let currValue = accumulateFiltered[currRes.userId];
 
-          // create a copy of the currValue that is inside accumulateFiltered
-          let currCopy = { ...currValue };
+      //     // create a copy of the currValue that is inside accumulateFiltered
+      //     let currCopy = { ...currValue };
 
-          // add the loops
-          currCopy.loops += currRes.loops;
+      //     // add the loops
+      //     currCopy.loops += currRes.loops;
 
-          // and verified status
-          currCopy.loopsVerified &= currRes.loopsVerified;
+      //     // and verified status
+      //     currCopy.loopsVerified &= currRes.loopsVerified;
 
-          // compare dates and keep the latest date
-          if (currCopy.runDate < currRes.runDate) {
-            currCopy.runDate = currRes.runDate;
-          }
+      //     // compare dates and keep the latest date
+      //     if (currCopy.runDate < currRes.runDate) {
+      //       currCopy.runDate = currRes.runDate;
+      //     }
 
-          // reassign it back into accumulateFiltered
-          accumulateFiltered[currRes.userId] = currCopy;
-        } else {
-          // create new key value pair
-          accumulateFiltered[currRes.userId] = currRes;
-        }
+      //     // reassign it back into accumulateFiltered
+      //     accumulateFiltered[currRes.userId] = currCopy;
+      //   } else {
+      //     // create new key value pair
+      //     accumulateFiltered[currRes.userId] = currRes;
+      //   }
+      // }
+
+      // let arrayOfAccumulatedLoops = Object.values(accumulateFiltered);
+
+      // // Sort the filtered results based on number of loop
+      // let sortedFilteredResults = arrayOfAccumulatedLoops.sort(
+      //   (resultA, resultB) => {
+      //     const loopdiff =
+      //       parseFloat(resultB.loops) - parseFloat(resultA.loops);
+      //     const agediff = resultB.age - resultA.age;
+      //     return loopdiff == 0 ? agediff : loopdiff;
+      //   }
+      // );
+      // console.log(sortedFilteredResults);
+      // return sortedFilteredResults;
+
+      if (gender == "Male" && member == "yes") {
+        return maleMemberArr;
+      } else if (gender == "Male" && member == "no") {
+        return maleGuestArr;
+      } else if (gender == "Female" && member == "yes") {
+        return femaleMemberArr;
+      } else if (gender == "Female" && member == "no") {
+        return femaleGuestArr;
+      } else {
+        return [];
       }
-
-      let arrayOfAccumulatedLoops = Object.values(accumulateFiltered);
-
-      // Sort the filtered results based on number of loop
-      let sortedFilteredResults = arrayOfAccumulatedLoops.sort(
-        (resultA, resultB) => {
-          const loopdiff =
-            parseFloat(resultB.loops) - parseFloat(resultA.loops);
-          const agediff = resultB.age - resultA.age;
-          return loopdiff == 0 ? agediff : loopdiff;
-        }
-      );
-      console.log(sortedFilteredResults);
-      return sortedFilteredResults;
     }
   }
 

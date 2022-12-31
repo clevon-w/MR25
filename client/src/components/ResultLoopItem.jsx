@@ -28,21 +28,34 @@ function ResultLoopItem(props) {
         </HStack>
 
         <Flex direction={"column"} alignItems={"end"}>
-          <HStack>
-            <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
-              {props.result.loops + " loops"}
-            </Text>
-            {props.result.loopsVerified ? <MdVerified /> : null}
-          </HStack>
-          <Text fontWeight={400} fontSize={"sm"} color={"primary.800"}>
-            {"Last ran: " +
-              formatDateDDMonYYYY(
-                changeTimezone(
-                  new Date(props.result.runDate),
-                  "Asia/Singapore"
-                ).toISOString()
-              )}
-          </Text>
+          {props.result.loops != null ? (
+            <>
+              <HStack>
+                <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
+                  {props.result.loops + " loops"}
+                </Text>
+                {props.result.loopsVerified ? <MdVerified /> : null}
+              </HStack>
+              <Text fontWeight={400} fontSize={"sm"} color={"primary.800"}>
+                {"Last ran: " +
+                  formatDateDDMonYYYY(
+                    changeTimezone(
+                      new Date(props.result.runDate),
+                      "Asia/Singapore"
+                    ).toISOString()
+                  )}
+              </Text>
+            </>
+          ) : (
+            <>
+              <Text fontWeight={700} fontSize={"md"} color={"primary.800"}>
+                DQ
+              </Text>
+              <Text fontWeight={400} fontSize={"sm"} color={"primary.800"}>
+                {props.result.DQreason}
+              </Text>
+            </>
+          )}
         </Flex>
       </Flex>
     </Flex>
