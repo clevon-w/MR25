@@ -333,7 +333,7 @@ function Leaderboard() {
             <AlertIcon color={"accents.blue"} />
             {filterParam.eventFormat === "A"
               ? "The Age Performance Index is an indication of how close the participant is to the extrapolated age standard (100 being equal; >100 - exceeding the age standard) calculated based on the MR25 All-Inclusive 10.5km Trail Performance Index, a performance grading system that factors the runner’s age and gender."
-              : "In the event of tie, the ranking shown in this live result shall deem “Pending Ratification” due to the rule of “runner who completed the last run earlier wins” which requires manual calculation."}
+              : "All results ratified."}
           </Alert>
         ) : null}
 
