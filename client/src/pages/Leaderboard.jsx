@@ -37,7 +37,7 @@ function Leaderboard() {
   const [searchParam] = useState(["firstName", "lastName"]);
   const [query, setQuery] = useState("");
   const [filterParam, setFilterParam] = useState({
-    eventFormat: "A",
+    eventFormat: "C",
     genderMember: "Male_yes",
   });
 
@@ -58,7 +58,7 @@ function Leaderboard() {
     var gender = filterParam.genderMember.split("_")[0],
       member = filterParam.genderMember.split("_")[1];
     if (filterParam.eventFormat === "A") {
-      var cutoff = new Date("December 30, 2022 23:00:00 GMT+00:00"); // 7am SGT in UTC (1 day behind)
+      var cutoff = new Date("December 26, 2022 23:00:00 GMT+00:00"); // 7am SGT in UTC (1 day behind)
 
       // Filter based on gender and search
       let filteredResults = results.filter((result) => {
@@ -104,7 +104,7 @@ function Leaderboard() {
 
       return duplicatesRemoved;
     } else if (filterParam.eventFormat === "B") {
-      var cutoff = new Date("December 30, 2022 23:00:00 GMT+00:00"); // 7am SGT in UTC (1 day behind)
+      var cutoff = new Date("December 26, 2022 23:00:00 GMT+00:00"); // 7am SGT in UTC (1 day behind)
 
       // Filter based on gender and search
       let filteredResults = results.filter((result) => {
@@ -287,7 +287,7 @@ function Leaderboard() {
             <Select onChange={handleChange} name="eventFormat">
               <option value={"A"}>Event A - Age Performance Index</option>
               <option value={"B"}>Event B - Most Number of 10.5km Loops</option>
-              <option value={"C"}>
+              <option value={"C"} selected={"selected"}>
                 Event C - Seoul Garden-MR25 Ultramarathon
               </option>
             </Select>
