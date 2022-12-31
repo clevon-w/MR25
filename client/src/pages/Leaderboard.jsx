@@ -186,7 +186,7 @@ function Leaderboard() {
           result.gender === gender && // check gender
           result.member === member && // check membership status
           !result.rejected && // check if result is rejected
-          result.runDateString == "Wed Dec 28 2022" && // check if the result was uploaded on the correct date (31 dec)
+          result.runDateString == "Sat Dec 31 2022" && // check if the result was uploaded on the correct date (31 dec)
           created.getTime() >= start.getTime() && // check if the result was uploaded in the correct timeframe (7am to 7pm)
           created.getTime() <= end.getTime()
         ) {
