@@ -244,7 +244,7 @@ function Leaderboard() {
           return loopdiff == 0 ? agediff : loopdiff;
         }
       );
-
+      console.log(sortedFilteredResults);
       return sortedFilteredResults;
     }
   }
