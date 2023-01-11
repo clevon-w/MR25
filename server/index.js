@@ -6,6 +6,7 @@
 // import express, mongoose and middleware
 const path = require("path");
 const express = require("express");
+const cors = require("cors");
 const mongoose = require("mongoose");
 const errorMiddleware = require("./middleware/errorMiddleware");
 const connectDB = require("./config/db");
@@ -33,8 +34,13 @@ conn.once("open", () => {
 const app = express();
 
 // middleware
+var corsOptions = {
+  origin: "http://mr-25.vercel.app",
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors(corsOptions));
 
 // setup routes to mongodb
 app.use("/api/users", require("./routes/userRoutes"));
