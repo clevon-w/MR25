@@ -4,11 +4,12 @@
 
 import axios from "axios";
 
-const API_URL = process.env.BASE_URL + "/api/events/";
+const axiosIntance = axios.create({ baseURL: process.env.BASE_URL });
+const API_URL = "/api/events/";
 
 // Get all events
 const getEvents = async () => {
-  const response = await axios.get(API_URL);
+  const response = await axiosIntance.get(API_URL);
   return response.data;
 };
 
