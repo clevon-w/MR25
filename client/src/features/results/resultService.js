@@ -1,29 +1,29 @@
-import axios from 'axios'
+import axios from "axios";
 
-const API_URL = '/api/results/'
+const API_URL = process.env.BASE_URL + "/api/results/";
 
 //Get results
 const getResults = async () => {
-  const response = await axios.get(API_URL)
-  return response.data
-}
+  const response = await axios.get(API_URL);
+  return response.data;
+};
 
 //Creates new result
 const createResult = async (resultData, token) => {
   const config = {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.post(API_URL, resultData, config);
+
+  if (response.data) {
+    localStorage.setItem("result", JSON.stringify(response.data));
   }
 
-  const response = await axios.post(API_URL, resultData, config)
-  
-  if (response.data) {
-    localStorage.setItem('result', JSON.stringify(response.data))
-  }
-  
-  return response.data
-}
+  return response.data;
+};
 
 const updateResult = async (resultData) => {
   const response = await axios.patch(API_URL + resultData.id, resultData.data);
@@ -34,7 +34,9 @@ const updateResult = async (resultData) => {
 };
 
 const resultService = {
-  getResults, createResult, updateResult
-}
+  getResults,
+  createResult,
+  updateResult,
+};
 
-export default resultService
+export default resultService;

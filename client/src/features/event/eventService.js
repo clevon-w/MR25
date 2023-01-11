@@ -4,7 +4,7 @@
 
 import axios from "axios";
 
-const API_URL = "/api/events/";
+const API_URL = process.env.BASE_URL + "/api/events/";
 
 // Get all events
 const getEvents = async () => {
