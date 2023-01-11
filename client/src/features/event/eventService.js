@@ -4,7 +4,7 @@
 
 import axios from "axios";
 
-const axiosIntance = axios.create({ baseURL: process.env.BASE_URL });
+const axiosIntance = axios.create({ baseURL: "https://mr-25-api.vercel.app" });
 const API_URL = "/api/events/";
 
 // Get all events
