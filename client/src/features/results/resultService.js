@@ -1,10 +1,11 @@
 import axios from "axios";
 
+const axiosInstance = axios.create({ baseURL: "https://mr-25-api.vercel.app" });
 const API_URL = process.env.BASE_URL + "/api/results/";
 
 //Get results
 const getResults = async () => {
-  const response = await axios.get(API_URL);
+  const response = await axiosInstance.get(API_URL);
   return response.data;
 };
 
@@ -16,7 +17,7 @@ const createResult = async (resultData, token) => {
     },
   };
 
-  const response = await axios.post(API_URL, resultData, config);
+  const response = await axiosInstance.post(API_URL, resultData, config);
 
   if (response.data) {
     localStorage.setItem("result", JSON.stringify(response.data));
@@ -26,7 +27,10 @@ const createResult = async (resultData, token) => {
 };
 
 const updateResult = async (resultData) => {
-  const response = await axios.patch(API_URL + resultData.id, resultData.data);
+  const response = await axiosInstance.patch(
+    API_URL + resultData.id,
+    resultData.data
+  );
   if (response.data) {
     localStorage.setItem("result", JSON.stringify(response.data));
   }

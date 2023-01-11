@@ -4,11 +4,12 @@
 
 import axios from "axios";
 
+const axiosIsntance = axios.create({ baseURL: "https://mr-25-api.vercel.app" });
 const API_URL = process.env.BASE_URL + "/api/users/";
 
 // Register user
 const register = async (userData) => {
-  const response = await axios.post(API_URL, userData);
+  const response = await axiosIsntance.post(API_URL, userData);
   if (response.data) {
     localStorage.setItem("user", JSON.stringify(response.data));
   }
@@ -17,7 +18,7 @@ const register = async (userData) => {
 
 // Login user
 const login = async (userData) => {
-  const response = await axios.post(API_URL + "login", userData);
+  const response = await axiosIsntance.post(API_URL + "login", userData);
   if (response.data) {
     localStorage.setItem("user", JSON.stringify(response.data));
   }
@@ -26,19 +27,25 @@ const login = async (userData) => {
 
 // Forget password
 const forgetPassword = async (userData) => {
-  const response = await axios.post(API_URL + "forgetPassword", userData);
+  const response = await axiosIsntance.post(
+    API_URL + "forgetPassword",
+    userData
+  );
   return response.data;
 };
 
 // Reset password
 const authenticateResetPassword = async (token) => {
-  const response = await axios.get(API_URL + "reset/" + token);
+  const response = await axiosIsntance.get(API_URL + "reset/" + token);
   return response.data;
 };
 
 // Update user
 const update = async (userData) => {
-  const response = await axios.patch(API_URL + userData.id, userData.data);
+  const response = await axiosIsntance.patch(
+    API_URL + userData.id,
+    userData.data
+  );
   if (response.data) {
     localStorage.setItem("user", JSON.stringify(response.data));
   }
@@ -47,7 +54,7 @@ const update = async (userData) => {
 
 // reset password for user
 const resetPw = async (userData) => {
-  const response = await axios.patch(
+  const response = await axiosIsntance.patch(
     API_URL + "updatePasswordViaEmail",
     userData
   );

@@ -4,12 +4,12 @@
 
 import axios from "axios";
 
-const axiosIntance = axios.create({ baseURL: "https://mr-25-api.vercel.app" });
+const axiosInstance = axios.create({ baseURL: "https://mr-25-api.vercel.app" });
 const API_URL = "/api/events/";
 
 // Get all events
 const getEvents = async () => {
-  const response = await axiosIntance.get(API_URL);
+  const response = await axiosInstance.get(API_URL);
   return response.data;
 };
 
