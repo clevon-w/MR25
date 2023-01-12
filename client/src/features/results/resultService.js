@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({ baseURL: "https://mr-25-api.vercel.app" });
-const API_URL = process.env.BASE_URL + "/api/results/";
+const API_URL = "/api/results/";
 
 //Get results
 const getResults = async () => {
